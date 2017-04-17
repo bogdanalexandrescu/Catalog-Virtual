@@ -1,0 +1,52 @@
+#vbox1 {
+
+  /*-fx-background-color:  #728C9A;*/
+  -fx-background-color:  #008FE9;
+
+}
+
+#vbox2 {
+
+ -fx-background-color: #ffffff;
+
+}
+
+
+
+
+
+#textField {
+    -fx-text-box-border: transparent;
+    -fx-background-color: #F7FDFF;
+    -fx-text-fill:  #000000;
+    -fx-border-radius: 0;
+    -fx-padding: 5 5 5 5;
+    -fx-background-radius: 5;
+    -fx-max-width: 250;
+    -fx-border-color: #015CD4 ;
+     -fx-border-width: 0.2px ;
+
+
+}
+
+
+
+
+#text {
+    -fx-text-fill: #728C9A;
+}
+
+#btnLogout {
+    -fx-background-color: linear-gradient(#ffffff   , #ffffff  );
+    -fx-text-fill:  #008FE9;
+
+
+}
+
+
+#btnEditProfile {
+    -fx-background-color: linear-gradient(orange  , orangered );
+    -fx-text-fill:  #ffffff;
+
+
+}
