@@ -6,7 +6,7 @@ package client;
 public class MainClient {
     public static void main(String[] args) {
 
-        //GUI.launch(GUI.class);
+        GUI.launch(GUI.class);
         Client client = new Client ("localhost",9999);
         client.start();
 
