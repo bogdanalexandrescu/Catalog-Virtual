@@ -13,6 +13,10 @@ public class Absence implements Serializable {
     public Absence(String data) {
         this.data = data;
     }
+    
+    public Absence(){
+    	
+    }
 
     public String getData() {
         return data;

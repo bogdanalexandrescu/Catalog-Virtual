@@ -1,41 +1,53 @@
 package server;
 
+import java.util.ArrayList;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+import database.Database;
+
 /**
  * Created by teo on 16.04.2017.
  */
+@XmlRootElement
 public class Headmaster {
 
-    String name;
-    String username;
-    String password;
+	String name;
+	ArrayList<Student> students;
+	Database db;
 
-    public Headmaster(String name, String username, String password) {
-        this.name = name;
-        this.username = username;
-        this.password = password;
-    }
+	public Headmaster(String name, ArrayList<Student> students, Database db) {
+		super();
+		this.name = name;
+		this.students = students;
+		this.db = db;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public Headmaster(){
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public ArrayList<Student> getStudents() {
+		return students;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setStudents(ArrayList<Student> students) {
+		this.students = students;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public Database getDb() {
+		return db;
+	}
+
+	public void setDb(Database db) {
+		this.db = db;
+	}
+
 }

@@ -2,43 +2,41 @@ package server;
 
 import java.util.ArrayList;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Created by teo on 16.04.2017.
  */
+@XmlRootElement
 public class Student  {
 
     String name;
-    ArrayList<Mark> marks;
-    ArrayList<Absence> absences;
-
-
-    public Student(String name, ArrayList<Mark> marks, ArrayList<Absence> absences) {
-        this.name = name;
-        this.marks = marks;
-        this.absences = absences;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public ArrayList<Mark> getMarks() {
-        return marks;
-    }
-
-    public void setMarks(ArrayList<Mark> marks) {
-        this.marks = marks;
-    }
-
-    public ArrayList<Absence> getAbsences() {
-        return absences;
-    }
-
-    public void setAbsences(ArrayList<Absence> absences) {
-        this.absences = absences;
-    }
+    ArrayList<Subject> subjects = new ArrayList<Subject>();
+    
+    
+	public Student(String name, ArrayList<Subject> subjects) {
+		super();
+		this.name = name;
+		this.subjects = subjects;
+	}
+	public Student(){
+	}
+	
+	public String getName() {
+		return name;
+	}
+	@XmlElement
+	public void setName(String name) {
+		this.name = name;
+	}
+	public ArrayList<Subject> getSubjects() {
+		return subjects;
+	}
+	@XmlElement(name="subject")
+	public void setSubjects(ArrayList<Subject> subjects) {
+		this.subjects = subjects;
+	}
+   
+    
 }
