@@ -27,7 +27,7 @@ public class Database {
 
 			// STEP 3: Open a connection
 			System.out.println("Connecting to a selected database...");
-			conn = getDBConnection();
+			conn = DatabaseHelper.getInstance().getConnection();
 			// if(conn.equals(null))
 			// System.out.println("teo");
 			System.out.println("Connected database successfully...");
@@ -48,8 +48,6 @@ public class Database {
 			// finally block used to close resources
 			if (pstmt != null)
 				pstmt.close();
-			if (conn != null)
-				conn.close();
 		} // end try
 		System.out.println("Goodbye!");
 	}
@@ -62,7 +60,7 @@ public class Database {
 
 			// STEP 3: Open a connection
 			System.out.println("Connecting to a selected database...");
-			conn = getDBConnection();
+			conn = DatabaseHelper.getInstance().getConnection();
 			System.out.println("Connected database successfully...");
 
 			System.out.println("Inserting records into the table...");
@@ -81,8 +79,6 @@ public class Database {
 			// finally block used to close resources
 			if (pstmt != null)
 				pstmt.close();
-			if (conn != null)
-				conn.close();
 		} // end try
 		System.out.println("Goodbye!");
 	}
@@ -95,7 +91,7 @@ public class Database {
 
 			// STEP 3: Open a connection
 			System.out.println("Connecting to a selected database...");
-			conn = getDBConnection();
+			conn = DatabaseHelper.getInstance().getConnection();
 			System.out.println("Connected database successfully...");
 
 			System.out.println("Inserting records into the table...");
@@ -117,8 +113,6 @@ public class Database {
 			// finally block used to close resources
 			if (pstmt != null)
 				pstmt.close();
-			if (conn != null)
-				conn.close();
 		} // end try
 		System.out.println("Goodbye!");
 	}
@@ -131,7 +125,7 @@ public class Database {
 
 			// STEP 3: Open a connection
 			System.out.println("Connecting to a selected database...");
-			conn = getDBConnection();
+			conn = DatabaseHelper.getInstance().getConnection();
 			System.out.println("Connected database successfully...");
 
 			System.out.println("Inserting records into the table...");
@@ -166,7 +160,7 @@ public class Database {
 
 			// STEP 3: Open a connection
 			System.out.println("Connecting to a selected database...");
-			conn = getDBConnection();
+			conn = DatabaseHelper.getInstance().getConnection();
 			System.out.println("Connected database successfully...");
 
 			System.out.println("Inserting records into the table...");
@@ -188,8 +182,6 @@ public class Database {
 			// finally block used to close resources
 			if (pstmt != null)
 				pstmt.close();
-			if (conn != null)
-				conn.close();
 		} // end try
 		System.out.println("Goodbye!");
 	}
@@ -202,7 +194,7 @@ public class Database {
 
 			// STEP 3: Open a connection
 			System.out.println("Connecting to a selected database...");
-			conn = getDBConnection();
+			conn = DatabaseHelper.getInstance().getConnection();
 			System.out.println("Connected database successfully...");
 
 			System.out.println("Inserting records into the table...");
@@ -225,8 +217,6 @@ public class Database {
 			// finally block used to close resources
 			if (pstmt != null)
 				pstmt.close();
-			if (conn != null)
-				conn.close();
 		} // end try
 		System.out.println("Goodbye!");
 	}
@@ -239,7 +229,7 @@ public class Database {
 
 			// STEP 3: Open a connection
 			System.out.println("Connecting to a selected database...");
-			conn = getDBConnection();
+			conn = DatabaseHelper.getInstance().getConnection();
 			System.out.println("Connected database successfully...");
 
 			System.out.println("Inserting records into the table...");
@@ -260,8 +250,6 @@ public class Database {
 			// finally block used to close resources
 			if (pstmt != null)
 				pstmt.close();
-			if (conn != null)
-				conn.close();
 		} // end try
 		System.out.println("Goodbye!");
 	}
@@ -274,7 +262,7 @@ public class Database {
 
 			// STEP 3: Open a connection
 			System.out.println("Connecting to a selected database...");
-			conn = getDBConnection();
+			conn = DatabaseHelper.getInstance().getConnection();
 			System.out.println("Connected database successfully...");
 
 			System.out.println("Inserting records into the table...");
@@ -296,8 +284,6 @@ public class Database {
 			// finally block used to close resources
 			if (pstmt != null)
 				pstmt.close();
-			if (conn != null)
-				conn.close();
 		} // end try
 		System.out.println("Goodbye!");
 	}
@@ -312,7 +298,7 @@ public class Database {
 
 			// STEP 3: Open a connection
 			System.out.println("Connecting to a selected database...");
-			conn = getDBConnection();
+			conn = DatabaseHelper.getInstance().getConnection();
 			System.out.println("Connected database successfully...");
 
 			String sql = "select id from accounts where nume=? and parola=? and rol=?";
@@ -334,8 +320,6 @@ public class Database {
 			// finally block used to close resources
 			if (pstmt != null)
 				pstmt.close();
-			if (conn != null)
-				conn.close();
 			if (rs != null)
 				rs.close();
 		} // end try
@@ -354,7 +338,7 @@ public class Database {
 
 			// STEP 3: Open a connection
 			System.out.println("Connecting to a selected database...");
-			conn = getDBConnection();
+			conn = DatabaseHelper.getInstance().getConnection();
 			System.out.println("Connected database successfully...");
 
 			String sql = "select nume from materie where id=(select id_materie from accounts where nume=?)";
@@ -376,8 +360,6 @@ public class Database {
 			// finally block used to close resources
 			if (pstmt != null)
 				pstmt.close();
-			if (conn != null)
-				conn.close();
 			if (rs != null)
 				rs.close();
 		} // end try
@@ -396,7 +378,7 @@ public class Database {
 
 			// STEP 3: Open a connection
 			System.out.println("Connecting to a selected database...");
-			conn = getDBConnection();
+			conn = DatabaseHelper.getInstance().getConnection();
 			System.out.println("Connected database successfully...");
 
 			String sql = "select nume from elevi";
@@ -416,8 +398,6 @@ public class Database {
 			// finally block used to close resources
 			if (pstmt != null)
 				pstmt.close();
-			if (conn != null)
-				conn.close();
 			if (rs != null)
 				rs.close();
 		} // end try
@@ -436,7 +416,7 @@ public class Database {
 
 			// STEP 3: Open a connection
 			System.out.println("Connecting to a selected database...");
-			conn = getDBConnection();
+			conn = DatabaseHelper.getInstance().getConnection();
 			System.out.println("Connected database successfully...");
 
 			String sql = "select nume from accounts where rol='profesor'";
@@ -456,8 +436,6 @@ public class Database {
 			// finally block used to close resources
 			if (pstmt != null)
 				pstmt.close();
-			if (conn != null)
-				conn.close();
 			if (rs != null)
 				rs.close();
 		} // end try
@@ -476,7 +454,7 @@ public class Database {
 
 			// STEP 3: Open a connection
 			System.out.println("Connecting to a selected database...");
-			conn = getDBConnection();
+			conn = DatabaseHelper.getInstance().getConnection();
 			System.out.println("Connected database successfully...");
 
 			String sql = "select nume from accounts where id_materie = (select id from materie where nume=?)";
@@ -496,8 +474,6 @@ public class Database {
 			// finally block used to close resources
 			if (pstmt != null)
 				pstmt.close();
-			if (conn != null)
-				conn.close();
 			if (rs != null)
 				rs.close();
 		} // end try
@@ -516,7 +492,7 @@ public class Database {
 
 			// STEP 3: Open a connection
 			System.out.println("Connecting to a selected database...");
-			conn = getDBConnection();
+			conn = DatabaseHelper.getInstance().getConnection();
 			System.out.println("Connected database successfully...");
 			String sql = "select nume from materie";
 			pstmt = conn.prepareStatement(sql);
@@ -535,8 +511,6 @@ public class Database {
 			// finally block used to close resources
 			if (pstmt != null)
 				pstmt.close();
-			if (conn != null)
-				conn.close();
 			if (rs != null)
 				rs.close();
 		} // end try
@@ -557,7 +531,7 @@ public class Database {
 
 			// STEP 3: Open a connection
 			System.out.println("Connecting to a selected database...");
-			conn = getDBConnection();
+			conn = DatabaseHelper.getInstance().getConnection();
 			System.out.println("Connected database successfully...");
 			String sql = "select id_materie from elev_materie where id_elev = (select id from elevi where nume=?)";
 			String sql2 = "select nume from materie where id=?";
@@ -584,8 +558,6 @@ public class Database {
 				pstmt.close();
 			if (pstmt2 != null)
 				pstmt2.close();
-			if (conn != null)
-				conn.close();
 			if (rs != null)
 				rs.close();
 			if (rs2 != null)
@@ -608,7 +580,7 @@ public class Database {
 
 			// STEP 3: Open a connection
 			System.out.println("Connecting to a selected database...");
-			conn = getDBConnection();
+			conn = DatabaseHelper.getInstance().getConnection();
 			System.out.println("Connected database successfully...");
 			String sql = "select id_elev from elev_materie where id_materie = (select id from materie where nume=?)";
 			String sql2 = "select nume from elevi where id=?";
@@ -635,8 +607,6 @@ public class Database {
 				pstmt.close();
 			if (pstmt2 != null)
 				pstmt2.close();
-			if (conn != null)
-				conn.close();
 			if (rs != null)
 				rs.close();
 			if (rs2 != null)
@@ -660,7 +630,7 @@ public class Database {
 			Database db = new Database();
 			// STEP 3: Open a connection
 			System.out.println("Connecting to a selected database...");
-			conn = getDBConnection();
+			conn = DatabaseHelper.getInstance().getConnection();
 			System.out.println("Connected database successfully...");
 			String sql = "select nota,to_date(data,'YY-MM-DD') from note where id_materie = (select id from materie where nume=?) and id_elev = (select id from elevi where nume=?)";
 			pstmt = conn.prepareStatement(sql);
@@ -697,8 +667,6 @@ public class Database {
 			// finally block used to close resources
 			if (pstmt != null)
 				pstmt.close();
-			if (conn != null)
-				conn.close();
 			if (rs != null)
 				rs.close();
 		} // end try
@@ -730,8 +698,6 @@ public class Database {
 			// finally block used to close resources
 			if (pstmt != null)
 				pstmt.close();
-			if (conn != null)
-				conn.close();
 		} // end try
 
 		System.out.println("Goodbye!");
@@ -743,15 +709,15 @@ public class Database {
 		// System.out.println(db.selectProfesorByMaterie("Matematica"));
 		// db.insertNotaElevWithDate("Teodor Sposib",
 		// "Matematica",10,"2017-05-11 00:00:00.0");
-		Student student = db.selectRaportElev("Teodor Sposib");
+		//Student student = db.selectRaportElev("Teodor Sposib");
 		XMLConvert xml = new XMLConvert();
-		// xml.convertRaporStudentToXML(student);
+		 xml.convertRaporStudentToXML("Teodor Sposib");
 		// xml.convertStudentsToXML();
 		// db.insertNotaElev("Teodor Sposib", "Matematica",10);
 
 		// xml.convertStudentsToXML();
 		// StudentsWrapper sw =
-		xml.insertStudentsFromXML("C:\\Users\\Bogdan\\Desktop\\file.xml");
+		//xml.insertStudentsFromXML("C:\\Users\\Bogdan\\Desktop\\file.xml");
 		// System.out.println(sw.getStudents().get(0).getName());
 		// for(Student s : sw.getStudents()){
 		// System.out.println(s.getName());
