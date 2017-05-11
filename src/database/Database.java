@@ -28,8 +28,8 @@ public class Database {
 			// STEP 3: Open a connection
 			System.out.println("Connecting to a selected database...");
 			conn = getDBConnection();
-			//if(conn.equals(null))
-			//	System.out.println("teo");
+			// if(conn.equals(null))
+			// System.out.println("teo");
 			System.out.println("Connected database successfully...");
 
 			System.out.println("Inserting records into the table...");
@@ -171,11 +171,48 @@ public class Database {
 
 			System.out.println("Inserting records into the table...");
 			String sql = "INSERT INTO Note (ID,ID_ELEV,ID_MATERIE,NOTA,DATA)" + "VALUES"
-					+ "(seq_note.nextval,(select id from elevi where nume=?),(select id from materie where nume = ? ),?,sysdate)";
+					+ "(seq_note.nextval,(select id from elevi where nume=?),(select id from materie where nume = ? ),?,TO_DATE(sysdate,'YY-MM-DD'))";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, nume);
 			pstmt.setString(2, materie);
 			pstmt.setInt(3, nota);
+			pstmt.executeUpdate();
+
+		} catch (SQLException se) {
+			// Handle errors for JDBC
+			se.printStackTrace();
+		} catch (Exception e) {
+			// Handle errors for Class.forName
+			e.printStackTrace();
+		} finally {
+			// finally block used to close resources
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		} // end try
+		System.out.println("Goodbye!");
+	}
+
+	public void insertNotaElevWithDate(String nume, String materie, int nota, String data) throws SQLException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			// STEP 2: Register JDBC driver
+
+			// STEP 3: Open a connection
+			System.out.println("Connecting to a selected database...");
+			conn = getDBConnection();
+			System.out.println("Connected database successfully...");
+
+			System.out.println("Inserting records into the table...");
+			String sql = "INSERT INTO Note (ID,ID_ELEV,ID_MATERIE,NOTA,DATA)" + "VALUES"
+					+ "(seq_note.nextval,(select id from elevi where nume=?),(select id from materie where nume = ? ),?,TO_DATE(?,'DD-MM-YY'))";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, nume);
+			pstmt.setString(2, materie);
+			pstmt.setInt(3, nota);
+			pstmt.setString(4, data.substring(2, 10));
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {
@@ -207,10 +244,46 @@ public class Database {
 
 			System.out.println("Inserting records into the table...");
 			String sql = "INSERT INTO ABSENTE (ID,ID_ELEV,ID_MATERIE,DATA)" + "VALUES"
-					+ "(seq_absente.nextval,(select id from elevi where nume=?),(select id from materie where nume = ? ),sysdate)";
+					+ "(seq_absente.nextval,(select id from elevi where nume=?),(select id from materie where nume = ? ),TO_DATE(sysdate,'YY-MM-DD'))";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, nume);
 			pstmt.setString(2, materie);
+			pstmt.executeUpdate();
+
+		} catch (SQLException se) {
+			// Handle errors for JDBC
+			se.printStackTrace();
+		} catch (Exception e) {
+			// Handle errors for Class.forName
+			e.printStackTrace();
+		} finally {
+			// finally block used to close resources
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		} // end try
+		System.out.println("Goodbye!");
+	}
+
+	public void insertAbsentaElevWithDate(String nume, String materie,String data) throws SQLException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			// STEP 2: Register JDBC driver
+
+			// STEP 3: Open a connection
+			System.out.println("Connecting to a selected database...");
+			conn = getDBConnection();
+			System.out.println("Connected database successfully...");
+
+			System.out.println("Inserting records into the table...");
+			String sql = "INSERT INTO ABSENTE (ID,ID_ELEV,ID_MATERIE,DATA)" + "VALUES"
+					+ "(seq_absente.nextval,(select id from elevi where nume=?),(select id from materie where nume = ? ),TO_DATE(?,'DD-MM-YY'))";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, nume);
+			pstmt.setString(2, materie);
+			pstmt.setString(4, data.substring(2, 10));
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {
@@ -339,7 +412,7 @@ public class Database {
 		System.out.println("Goodbye!");
 		return numeElevi;
 	}
-	
+
 	public ArrayList<String> selectNumeProfesori() throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -380,7 +453,7 @@ public class Database {
 	public String selectProfesorByMaterie(String materie) throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String profesor=null;
+		String profesor = null;
 		try {
 			// STEP 2: Register JDBC driver
 
@@ -393,7 +466,7 @@ public class Database {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, materie);
 			ResultSet rs = pstmt.executeQuery();
-			if(rs.next())
+			if (rs.next())
 				profesor = rs.getString(1);
 
 		} catch (SQLException se) {
@@ -413,6 +486,7 @@ public class Database {
 		System.out.println("Goodbye!");
 		return profesor;
 	}
+
 	public ArrayList<String> selectNumeMaterii() throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -462,13 +536,13 @@ public class Database {
 			conn = getDBConnection();
 			System.out.println("Connected database successfully...");
 			String sql = "select id_materie from elev_materie where id_elev = (select id from elevi where nume=?)";
-			String sql2 ="select nume from materie where id=?";
+			String sql2 = "select nume from materie where id=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt2 = conn.prepareStatement(sql2);
 			pstmt.setString(1, nume);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				pstmt2.setLong(1,rs.getInt(1));
+				pstmt2.setLong(1, rs.getInt(1));
 				ResultSet rs2 = pstmt2.executeQuery();
 				rs2.next();
 				numeMaterii.add(rs2.getString(1));
@@ -493,7 +567,7 @@ public class Database {
 		System.out.println("Goodbye!");
 		return numeMaterii;
 	}
-	
+
 	public ArrayList<String> selectEleviByMaterie(String nume) throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -507,13 +581,13 @@ public class Database {
 			conn = getDBConnection();
 			System.out.println("Connected database successfully...");
 			String sql = "select id_elev from elev_materie where id_materie = (select id from materie where nume=?)";
-			String sql2 ="select nume from elevi where id=?";
+			String sql2 = "select nume from elevi where id=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt2 = conn.prepareStatement(sql2);
 			pstmt.setString(1, nume);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				pstmt2.setLong(1,rs.getInt(1));
+				pstmt2.setLong(1, rs.getInt(1));
 				ResultSet rs2 = pstmt2.executeQuery();
 				rs2.next();
 				numeElevi.add(rs2.getString(1));
@@ -538,14 +612,14 @@ public class Database {
 		System.out.println("Goodbye!");
 		return numeElevi;
 	}
-	
+
 	public Subject selectRaportElevByMaterie(String elev, String materie) throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ArrayList<Absence> absences = new ArrayList<Absence>();
 		ArrayList<Mark> marks = new ArrayList<Mark>();
-		Subject subject=null;
-		String profesor=null;
+		Subject subject = null;
+		String profesor = null;
 		try {
 			// STEP 2: Register JDBC driver
 			Database db = new Database();
@@ -553,31 +627,31 @@ public class Database {
 			System.out.println("Connecting to a selected database...");
 			conn = getDBConnection();
 			System.out.println("Connected database successfully...");
-			String sql = "select nota,data from note where id_materie = (select id from materie where nume=?) and id_elev = (select id from elevi where nume=?)";
+			String sql = "select nota,to_date(data,'YY-MM-DD') from note where id_materie = (select id from materie where nume=?) and id_elev = (select id from elevi where nume=?)";
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setString(1, materie);
 			pstmt.setString(2, elev);
 			ResultSet rs = pstmt.executeQuery();
-			
-			while(rs.next()){
-				marks.add(new Mark(rs.getInt(1),rs.getString(2)));
+
+			while (rs.next()) {
+				marks.add(new Mark(rs.getInt(1), rs.getString(2)));
+
 			}
-			
-			
-			sql = "select data from absente where id_materie = (select id from materie where nume=?) and id_elev = (select id from elevi where nume=?)";
+
+			sql = "select to_date(data,'YY-MM-DD') from absente where id_materie = (select id from materie where nume=?) and id_elev = (select id from elevi where nume=?)";
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setString(1, materie);
 			pstmt.setString(2, elev);
 			rs = pstmt.executeQuery();
-			
-			while(rs.next()){
+
+			while (rs.next()) {
 				absences.add(new Absence(rs.getString(1)));
 			}
-			
+
 			profesor = db.selectProfesorByMaterie(materie);
-			subject = new Subject(materie,profesor,marks,absences);
+			subject = new Subject(materie, profesor, marks, absences);
 
 		} catch (SQLException se) {
 			// Handle errors for JDBC
@@ -596,7 +670,7 @@ public class Database {
 		System.out.println("Goodbye!");
 		return subject;
 	}
-	
+
 	public Student selectRaportElev(String elev) throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -605,11 +679,11 @@ public class Database {
 		try {
 			Database db = new Database();
 			ArrayList<String> materiiByElev = db.selectMateriiByElev(elev);
-			for(String str : materiiByElev){
+			for (String str : materiiByElev) {
 				subjects.add(db.selectRaportElevByMaterie(elev, str));
 			}
-			
-			student = new Student(elev,subjects);
+
+			student = new Student(elev, subjects);
 		} catch (SQLException se) {
 			// Handle errors for JDBC
 			se.printStackTrace();
@@ -627,23 +701,28 @@ public class Database {
 		System.out.println("Goodbye!");
 		return student;
 	}
-	
 
 	public static void main(String[] args) throws SQLException {
 		Database db = new Database();
-		//System.out.println(db.selectProfesorByMaterie("Matematica"));
-		//Student student = db.selectRaportElev("Teodor Sposib");
-		//XMLConvert xml = new XMLConvert();
+		// System.out.println(db.selectProfesorByMaterie("Matematica"));
+		// db.insertNotaElevWithDate("Teodor Sposib",
+		// "Matematica",10,"2017-05-11 00:00:00.0");
+		Student student = db.selectRaportElev("Teodor Sposib");
+		XMLConvert xml = new XMLConvert();
 		//xml.convertRaporStudentToXML(student);
 		//xml.convertStudentsToXML();
-		//StudentsWrapper sw = xml.insertStudentsFromXML("C:\\Users\\Bogdan\\Desktop\\file.xml");
-		//System.out.println(sw.getStudents().get(0).getName());
-		//for(Student s : sw.getStudents()){
-		//	System.out.println(s.getName());
-		//}
-		//System.out.println(db.selectNumeElevi());
-		//db.insertProfesor("Gigel","gigel","Matematica");
-		//System.out.print(db.checkAccount("Gigel","gigel","profesor"));
+		// db.insertNotaElev("Teodor Sposib", "Matematica",10);
+
+		// xml.convertStudentsToXML();
+		// StudentsWrapper sw =
+		xml.insertStudentsFromXML("C:\\Users\\Bogdan\\Desktop\\file.xml");
+		// System.out.println(sw.getStudents().get(0).getName());
+		// for(Student s : sw.getStudents()){
+		// System.out.println(s.getName());
+		// }
+		// System.out.println(db.selectNumeElevi());
+		// db.insertProfesor("Gigel","gigel","Matematica");
+		// System.out.print(db.checkAccount("Gigel","gigel","profesor"));
 	}
 
 	private static Connection getDBConnection() {

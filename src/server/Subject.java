@@ -11,8 +11,8 @@ public class Subject {
 
 	String name;
 	String nameTeacher;
-	ArrayList<Mark> marks;
-	ArrayList<Absence> absences;
+	ArrayList<Mark> marks = new ArrayList<Mark>();
+	ArrayList<Absence> absences = new ArrayList<Absence>();
 
 	public Subject(String name, String nameTeacher, ArrayList<Mark> marks, ArrayList<Absence> absences) {
 		super();
