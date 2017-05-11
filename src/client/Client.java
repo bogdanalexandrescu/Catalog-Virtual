@@ -17,7 +17,7 @@ public class Client {
     private Socket socket;
     private ObjectInputStream input;
     private ObjectOutputStream output;
-    private String message;
+    private Object message;
     private Scanner scanner;
     private MessageProcessor processor;
 
@@ -70,7 +70,7 @@ public class Client {
                     try {
 
 
-                        message = (String) input.readObject();
+                        message =  input.readObject();
                         System.out.println(message);
                         processor.process(message);
                         if (message.equals("Thank you"))
@@ -95,7 +95,7 @@ public class Client {
 
     }
 
-    public void sendMessage(String message) {
+    public void sendMessage(Object message) {
 
         try {
             output.writeObject(message);

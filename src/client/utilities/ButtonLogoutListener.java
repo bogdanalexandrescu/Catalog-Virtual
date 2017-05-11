@@ -19,7 +19,10 @@ public class ButtonLogoutListener implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        gui.loginScreen(gui.getBp());
+        gui.getProcessor().getClient().sendMessage("Logout");
+
+
+
     }
 
 }
