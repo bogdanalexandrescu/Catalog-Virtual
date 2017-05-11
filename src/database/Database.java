@@ -266,7 +266,7 @@ public class Database {
 		System.out.println("Goodbye!");
 	}
 
-	public void insertAbsentaElevWithDate(String nume, String materie,String data) throws SQLException {
+	public void insertAbsentaElevWithDate(String nume, String materie, String data) throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -305,6 +305,8 @@ public class Database {
 	public boolean checkAccount(String nume, String parola, String rol) throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		boolean check = false;
 		try {
 			// STEP 2: Register JDBC driver
 
@@ -318,9 +320,10 @@ public class Database {
 			pstmt.setString(1, nume);
 			pstmt.setString(2, parola);
 			pstmt.setString(3, rol);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
+			if (rs.next())
+				check = true;
 
-			return rs.next();
 		} catch (SQLException se) {
 			// Handle errors for JDBC
 			se.printStackTrace();
@@ -333,15 +336,19 @@ public class Database {
 				pstmt.close();
 			if (conn != null)
 				conn.close();
+			if (rs != null)
+				rs.close();
 		} // end try
 
 		System.out.println("Goodbye!");
-		return false;
+		return check;
 	}
 
 	public String selectMaterieByProfesor(String nume) throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		String materie = "";
+		ResultSet rs = null;
 		try {
 			// STEP 2: Register JDBC driver
 
@@ -353,11 +360,12 @@ public class Database {
 			String sql = "select nume from materie where id=(select id_materie from accounts where nume=?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, nume);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				return rs.getString("NUME");
+				materie = rs.getString("NUME");
 			}
+
 		} catch (SQLException se) {
 			// Handle errors for JDBC
 			se.printStackTrace();
@@ -370,16 +378,19 @@ public class Database {
 				pstmt.close();
 			if (conn != null)
 				conn.close();
+			if (rs != null)
+				rs.close();
 		} // end try
 
 		System.out.println("Goodbye!");
-		return "";
+		return materie;
 	}
 
 	public ArrayList<String> selectNumeElevi() throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ArrayList<String> numeElevi = new ArrayList<String>();
+		ResultSet rs = null;
 		try {
 			// STEP 2: Register JDBC driver
 
@@ -390,7 +401,7 @@ public class Database {
 
 			String sql = "select nume from elevi";
 			pstmt = conn.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				numeElevi.add(rs.getString(1));
 			}
@@ -407,6 +418,8 @@ public class Database {
 				pstmt.close();
 			if (conn != null)
 				conn.close();
+			if (rs != null)
+				rs.close();
 		} // end try
 
 		System.out.println("Goodbye!");
@@ -417,6 +430,7 @@ public class Database {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ArrayList<String> numeProfesori = new ArrayList<String>();
+		ResultSet rs = null;
 		try {
 			// STEP 2: Register JDBC driver
 
@@ -427,7 +441,7 @@ public class Database {
 
 			String sql = "select nume from accounts where rol='profesor'";
 			pstmt = conn.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				numeProfesori.add(rs.getString(1));
 			}
@@ -444,6 +458,8 @@ public class Database {
 				pstmt.close();
 			if (conn != null)
 				conn.close();
+			if (rs != null)
+				rs.close();
 		} // end try
 
 		System.out.println("Goodbye!");
@@ -454,6 +470,7 @@ public class Database {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String profesor = null;
+		ResultSet rs = null;
 		try {
 			// STEP 2: Register JDBC driver
 
@@ -465,7 +482,7 @@ public class Database {
 			String sql = "select nume from accounts where id_materie = (select id from materie where nume=?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, materie);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			if (rs.next())
 				profesor = rs.getString(1);
 
@@ -481,6 +498,8 @@ public class Database {
 				pstmt.close();
 			if (conn != null)
 				conn.close();
+			if (rs != null)
+				rs.close();
 		} // end try
 
 		System.out.println("Goodbye!");
@@ -491,6 +510,7 @@ public class Database {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ArrayList<String> numeMaterii = new ArrayList<String>();
+		ResultSet rs = null;
 		try {
 			// STEP 2: Register JDBC driver
 
@@ -500,7 +520,7 @@ public class Database {
 			System.out.println("Connected database successfully...");
 			String sql = "select nume from materie";
 			pstmt = conn.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				numeMaterii.add(rs.getString(1));
 			}
@@ -517,6 +537,8 @@ public class Database {
 				pstmt.close();
 			if (conn != null)
 				conn.close();
+			if (rs != null)
+				rs.close();
 		} // end try
 
 		System.out.println("Goodbye!");
@@ -528,6 +550,8 @@ public class Database {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
 		ArrayList<String> numeMaterii = new ArrayList<String>();
+		ResultSet rs = null;
+		ResultSet rs2 = null;
 		try {
 			// STEP 2: Register JDBC driver
 
@@ -540,10 +564,10 @@ public class Database {
 			pstmt = conn.prepareStatement(sql);
 			pstmt2 = conn.prepareStatement(sql2);
 			pstmt.setString(1, nume);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				pstmt2.setLong(1, rs.getInt(1));
-				ResultSet rs2 = pstmt2.executeQuery();
+				rs2 = pstmt2.executeQuery();
 				rs2.next();
 				numeMaterii.add(rs2.getString(1));
 			}
@@ -562,6 +586,10 @@ public class Database {
 				pstmt2.close();
 			if (conn != null)
 				conn.close();
+			if (rs != null)
+				rs.close();
+			if (rs2 != null)
+				rs2.close();
 		} // end try
 
 		System.out.println("Goodbye!");
@@ -573,6 +601,8 @@ public class Database {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
 		ArrayList<String> numeElevi = new ArrayList<String>();
+		ResultSet rs = null;
+		ResultSet rs2 = null;
 		try {
 			// STEP 2: Register JDBC driver
 
@@ -585,10 +615,10 @@ public class Database {
 			pstmt = conn.prepareStatement(sql);
 			pstmt2 = conn.prepareStatement(sql2);
 			pstmt.setString(1, nume);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				pstmt2.setLong(1, rs.getInt(1));
-				ResultSet rs2 = pstmt2.executeQuery();
+				rs2 = pstmt2.executeQuery();
 				rs2.next();
 				numeElevi.add(rs2.getString(1));
 			}
@@ -607,6 +637,10 @@ public class Database {
 				pstmt2.close();
 			if (conn != null)
 				conn.close();
+			if (rs != null)
+				rs.close();
+			if (rs2 != null)
+				rs2.close();
 		} // end try
 
 		System.out.println("Goodbye!");
@@ -620,6 +654,7 @@ public class Database {
 		ArrayList<Mark> marks = new ArrayList<Mark>();
 		Subject subject = null;
 		String profesor = null;
+		ResultSet rs = null;
 		try {
 			// STEP 2: Register JDBC driver
 			Database db = new Database();
@@ -632,11 +667,10 @@ public class Database {
 
 			pstmt.setString(1, materie);
 			pstmt.setString(2, elev);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				marks.add(new Mark(rs.getInt(1), rs.getString(2)));
-
 			}
 
 			sql = "select to_date(data,'YY-MM-DD') from absente where id_materie = (select id from materie where nume=?) and id_elev = (select id from elevi where nume=?)";
@@ -665,6 +699,8 @@ public class Database {
 				pstmt.close();
 			if (conn != null)
 				conn.close();
+			if (rs != null)
+				rs.close();
 		} // end try
 
 		System.out.println("Goodbye!");
@@ -709,8 +745,8 @@ public class Database {
 		// "Matematica",10,"2017-05-11 00:00:00.0");
 		Student student = db.selectRaportElev("Teodor Sposib");
 		XMLConvert xml = new XMLConvert();
-		//xml.convertRaporStudentToXML(student);
-		//xml.convertStudentsToXML();
+		// xml.convertRaporStudentToXML(student);
+		// xml.convertStudentsToXML();
 		// db.insertNotaElev("Teodor Sposib", "Matematica",10);
 
 		// xml.convertStudentsToXML();
