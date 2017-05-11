@@ -1,5 +1,7 @@
 package server;
 
+import database.Database;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -16,9 +18,11 @@ public class Server {
     private ExecutorService threadPool;
     private TeacherThread teacherThread;
     private final int portNumber = 9999;
+    private Database db;
 
     public Server() {
 
+        db = new Database();
         threadPool = Executors.newCachedThreadPool();
 
 
@@ -38,7 +42,7 @@ public class Server {
 
                 clientSocket = serverSocket.accept();
 
-                teacherThread = new TeacherThread(clientSocket,this,"Teacher");
+                teacherThread = new TeacherThread(clientSocket,this,"Teacher",db);
                 threadPool.execute(teacherThread);
 
                 System.out.println("A new teacher has connected");
