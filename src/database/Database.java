@@ -28,6 +28,8 @@ public class Database {
 			// STEP 3: Open a connection
 			System.out.println("Connecting to a selected database...");
 			conn = getDBConnection();
+			//if(conn.equals(null))
+			//	System.out.println("teo");
 			System.out.println("Connected database successfully...");
 
 			System.out.println("Inserting records into the table...");
@@ -631,14 +633,17 @@ public class Database {
 		Database db = new Database();
 		//System.out.println(db.selectProfesorByMaterie("Matematica"));
 		//Student student = db.selectRaportElev("Teodor Sposib");
-		XMLConvert xml = new XMLConvert();
+		//XMLConvert xml = new XMLConvert();
 		//xml.convertRaporStudentToXML(student);
 		//xml.convertStudentsToXML();
-		StudentsWrapper sw = xml.insertStudentsFromXML("C:\\Users\\Bogdan\\Desktop\\file.xml");
+		//StudentsWrapper sw = xml.insertStudentsFromXML("C:\\Users\\Bogdan\\Desktop\\file.xml");
 		//System.out.println(sw.getStudents().get(0).getName());
-		for(Student s : sw.getStudents()){
-			System.out.println(s.getName());
-		}
+		//for(Student s : sw.getStudents()){
+		//	System.out.println(s.getName());
+		//}
+		//System.out.println(db.selectNumeElevi());
+		//db.insertProfesor("Gigel","gigel","Matematica");
+		//System.out.print(db.checkAccount("Gigel","gigel","profesor"));
 	}
 
 	private static Connection getDBConnection() {

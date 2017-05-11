@@ -19,12 +19,15 @@ public class Client {
     private ObjectOutputStream output;
     private String message;
     private Scanner scanner;
+    private MessageProcessor processor;
 
     public Client(String IP, int port){
 
         this.IP = IP;
         this.port = port;
         scanner = new Scanner(System.in);
+        processor = new MessageProcessor(this);
+
 
     }
 
@@ -58,26 +61,38 @@ public class Client {
 
         System.out.println("You are connected!!");
 
-        while( true ){
+        final Thread thread = new Thread(new Runnable()
+        {
+            @Override
+            public void run() {
+                while( true ){
 
-            try {
-                message = (String) input.readObject();
-                System.out.println(message);
-                if (message.equals("Thank you"))
-                    break;
-                if (message.equals("Say something except Finish")) {
-                    String line = "";
-                    line = scanner.nextLine();
-                    sendMessage(line);
+                    try {
+
+
+                        message = (String) input.readObject();
+                        System.out.println(message);
+                        processor.process(message);
+                        if (message.equals("Thank you"))
+                            break;
+                        if (message.equals("Say something except Finish")) {
+                            String line = "";
+                            line = scanner.nextLine();
+                            sendMessage(line);
+                        }
+
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                close();
             }
-        }
-        close();
+        });
+        thread.start();
+
+
     }
 
     public void sendMessage(String message) {

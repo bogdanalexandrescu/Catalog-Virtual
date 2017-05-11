@@ -19,11 +19,19 @@ public class ButtonLoginListener implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
 
+        gui.getProcessor().getClient().sendMessage("Login");
+        gui.getProcessor().getClient().sendMessage(gui.getTxtUserName().getText());
+        System.out.println(gui.getTxtUserName().getText());
+        gui.getProcessor().getClient().sendMessage(gui.getPf().getText());
+        System.out.println(gui.getPf().getText());
+
         if(gui.getCb().getSelectionModel().getSelectedItem() != null) {
             if (gui.getCb().getSelectionModel().getSelectedItem().equals("Teacher")) {
-                gui.teacherMode(gui.getBp(),1,"Students");
+                gui.getProcessor().getClient().sendMessage("profesor");
+                //gui.teacherMode(gui.getBp(),1,"Students");
             } else {
-                gui.headmasterMode(gui.getBp());
+                gui.getProcessor().getClient().sendMessage("director");
+                //gui.headmasterMode(gui.getBp());
             }
         }
 

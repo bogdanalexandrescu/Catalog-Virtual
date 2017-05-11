@@ -25,10 +25,17 @@ import javafx.stage.Stage;
 /**
  * Created by teo on 17.04.2017.
  */
-public class GUI extends Application{
+public class GUI {
 
     private BorderPane bp ;
     private ChoiceBox cb;
+    private MessageProcessor processor;
+    private TextField txtUserName;
+    private PasswordField pf;
+
+    public GUI(MessageProcessor messageProcessor) {
+        processor = messageProcessor;
+    }
 
     public BorderPane getBp() {
         return bp;
@@ -39,10 +46,33 @@ public class GUI extends Application{
         return cb;
     }
 
+    public MessageProcessor getProcessor() {
+        return processor;
+    }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void setProcessor(MessageProcessor processor) {
+        this.processor = processor;
+    }
 
+    public TextField getTxtUserName() {
+        return txtUserName;
+    }
+
+    public void setTxtUserName(String txtUserName) {
+        this.txtUserName.setText(txtUserName);
+    }
+
+    public PasswordField getPf() {
+        return pf;
+    }
+
+    public void setPf(String pf) {
+        this.pf.setText(pf);
+    }
+
+    public void display(){
+
+        Stage primaryStage = new Stage();
         primaryStage.setTitle("JavaFX 2 Login");
 
         bp = new BorderPane();
@@ -97,7 +127,7 @@ public class GUI extends Application{
         textUsername.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
         textUsername.setTextFill(Color.web("663F15"));
 
-        TextField txtUserName = new TextField();
+        txtUserName = new TextField();
         txtUserName.setPadding(new Insets(0,0,0,0));
         txtUserName.setFocusTraversable(false);
         txtUserName.setFont(Font.font("Courier New", FontWeight.NORMAL, 15));
@@ -107,7 +137,7 @@ public class GUI extends Application{
         textPassword.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
         textPassword.setTextFill(Color.web("663F15"));
 
-        PasswordField pf = new PasswordField();
+        pf = new PasswordField();
         pf.setPadding(new Insets(0,0,0,0));
         pf.setFocusTraversable(false);
         pf.setFont(Font.font("Courier New", FontWeight.NORMAL, 15));
@@ -835,6 +865,7 @@ public class GUI extends Application{
         vbox1.setId("vbox1");
         return vbox1;
     }
+
 
 
 
