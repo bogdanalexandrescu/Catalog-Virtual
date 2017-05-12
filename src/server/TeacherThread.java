@@ -21,8 +21,6 @@ public class TeacherThread implements Runnable {
     private String name;
     private Database db;
 
-
-
     public TeacherThread(Socket socket, Server server,String name, Database db)
     {
 
@@ -52,14 +50,23 @@ public class TeacherThread implements Runnable {
                 if (message.equals("Login")) {
 
                     String name = (String) readMessage();
-                    System.out.println(name);
                     String password = (String) readMessage();
-                    System.out.println(password);
                     String job =  (String) readMessage();
-                    System.out.println(job);
                     if(db.checkAccount(name,password,job) == true){
                         System.out.println("AcceptLogin");
                         sendMessage("AcceptLogin");
+                        ArrayList<String> data = new ArrayList<String>();
+                        data.add("Teacher");
+                        data.add(name);
+                        data.add(db.selectMaterieByProfesor(name));
+                        data.add("" + db.selectEleviByMaterie(db.selectMaterieByProfesor(name)).size());
+                        sendMessage(data);
+                        ArrayList<String> students = new ArrayList<String>();
+                        students = db.selectEleviByMaterie("Matematica");
+                        students.add(0,"Students");
+                        sendMessage(students);
+
+
                     }
                     else{
                         System.out.println("DeclineLogin");
@@ -70,21 +77,38 @@ public class TeacherThread implements Runnable {
 
                 }
 
-                if (message.equals("Insert Names")) {
-                    ArrayList<String> strings = db.selectNumeElevi();
-                    for(int i = 0 ; i < strings.size(); i++){
-                        //System.out.println(strings.get(i));
-                        sendMessage(strings.get(i));
+                if (message.equals("AddMark")) {
 
+                    String name = (String) readMessage();
+                    String subject = (String) readMessage();
+                    int mark =  (int) readMessage();
+                    if(mark >= 1 && mark <= 10){
+                        System.out.print(name + " " + subject + " " + mark);
+                        db.insertNotaElev(name,subject,mark);
+                        sendMessage("successfully added");
+                    }
+                    else{
+
+                        sendMessage("unsuccessfully added");
                     }
 
 
                 }
 
-                if (message.equals("Finish")) {
-                    sendMessage("Thank you");
+                if (message.equals("AddAbsence")) {
 
-                    break;
+                    String name = (String) readMessage();
+                    String subject = (String) readMessage();
+                    db.insertAbsentaElev(name,subject);
+
+
+
+                }
+
+                if (message.equals("Logout")) {
+                    sendMessage("Logout");
+
+
                 }
             }
         }catch (IOException e) {
@@ -102,7 +126,7 @@ public class TeacherThread implements Runnable {
         return input.readObject();
     }
 
-    public void sendMessage(String message){
+    public void sendMessage(Object message){
         try {
             output.writeObject(message);
             output.flush();

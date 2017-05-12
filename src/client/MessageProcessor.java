@@ -1,5 +1,10 @@
 package client;
 
+import javafx.application.Platform;
+import javafx.stage.Stage;
+
+import java.util.ArrayList;
+
 /**
  * Created by teo on 10.05.2017.
  */
@@ -21,29 +26,103 @@ public class MessageProcessor {
             //System.out.println((Card) messageReceived);
             sendCard((Card) messageReceived);
         }
-        else if (messageReceived instanceof Integer)
+        else */
+        if (messageReceived instanceof ArrayList<?> && ((ArrayList) messageReceived).get(0) instanceof String)
         {
-            //System.out.println((Integer) messageReceived);
-            sendTotal(messageReceived.toString());
+            System.out.println("merge");
+            processArrayListString((ArrayList<String>) messageReceived);
         }
-        */if (messageReceived instanceof String)
+        if (messageReceived instanceof String)
         {
             String message = messageReceived.toString();
             processString(message);
         }
 
     }
+    private void processArrayListString(ArrayList<String> message)
+    {
+        if(message.get(0).equals("Teacher"))
+        {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // Update UI here.
+                    gui.setTextNameTeacher(message.get(1));
+                    gui.setTextNameSubject(message.get(2));
+                    gui.setTextNumberStudents(message.get(3));
+                }
+            });
+        }
+        if(message.get(0).equals("Students"))
+        {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // Update UI here.
+                    System.out.println("Afiseaza Students");
+                    gui.setStudents(message);
+                }
+            });
+        }
+
+    }
 
     private void processString(String message)
     {
-        if(message.contains("DeclineLogin"))
+        if(message.equals("DeclineLogin"))
         {
             gui.setPf("");
             gui.setTxtUserName("");
         }
-        if(message.contains("AcceptLogin"))
+        if(message.equals("AcceptLogin"))
         {
-            //gui.teacherMode(gui.getBp(),1,"Students");
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // Update UI here.
+                    gui.teacherMode(gui.getBp(),1,"Students");
+                }
+            });
+
+        }
+        if(message.equals("unsuccessfully added"))
+        {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // Update UI here.
+                    gui.setTextMessage("Note: unsuccessfully added");
+                }
+            });
+
+        }
+        if(message.equals("successfully added"))
+        {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // Update UI here.
+                    gui.setTextMessage("Note: successfully added");
+                }
+            });
+
+        }
+        if(message.equals("Logout"))
+        {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // Update UI here.
+                    gui.loginScreen(gui.getBp());
+                    while(!gui.getStages().isEmpty()){
+                        Stage stage = gui.getStages().remove(gui.getStages().size() - 1);
+                        stage.close();
+                    }
+                   // Stage stage = (Stage) gui.getMarkStudent().getScene().getWindow();
+                    //stage.close();
+                }
+            });
+
         }
 
     }

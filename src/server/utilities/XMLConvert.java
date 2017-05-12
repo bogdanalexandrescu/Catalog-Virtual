@@ -11,15 +11,17 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import database.Database;
+import server.Absence;
+import server.Mark;
 import server.Student;
 import server.StudentsWrapper;
 import server.Subject;
 
 public class XMLConvert {
-	public void convertRaporStudentToXML(Student student) {
-
+	public void convertRaporStudentToXML(String nume) {
+		Database db = new Database();
 		try {
-
+			Student student = db.selectRaportElev(nume);
 			File file = new File("C:\\Users\\Bogdan\\Desktop\\file.xml");
 			JAXBContext jaxbContext = JAXBContext.newInstance(Student.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
@@ -32,11 +34,14 @@ public class XMLConvert {
 
 		} catch (JAXBException e) {
 			e.printStackTrace();
+		} catch (SQLException sql) {
+			sql.printStackTrace();
 		}
 	}
 
-	public StudentsWrapper insertStudentsFromXML(String fileURL) {
+	public void insertStudentsFromXML(String fileURL) {
 		StudentsWrapper sw = null;
+		Database db = new Database();
 		try {
 
 			File file = new File(fileURL);
@@ -44,27 +49,37 @@ public class XMLConvert {
 
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 			sw = (StudentsWrapper) jaxbUnmarshaller.unmarshal(file);
-			System.out.println(sw);
+			for (Student s : sw.getStudents()) {
+				db.insertElevi(s.getName());
+				for (Subject sb : s.getSubjects()) {
+					db.insertElevMaterie(s.getName(), sb.getName());
+					for (Mark m : sb.getMarks()) {
+						db.insertNotaElevWithDate(s.getName(), sb.getName(), m.getMark(), m.getData());
+					}
+					for (Absence a : sb.getAbsences()) {
+						db.insertAbsentaElevWithDate(s.getName(), sb.getName(), a.getData());
+					}
+				}
+			}
 
 		} catch (JAXBException e) {
 			e.printStackTrace();
+		} catch (SQLException sql) {
+			sql.printStackTrace();
 		}
-		return sw;
+
 	}
-	
-	public void convertStudentsToXML() throws SQLException {
+
+	public void convertStudentsToXML() {
 		StudentsWrapper sw = new StudentsWrapper();
 		Database db = new Database();
-		
+
 		try {
 			ArrayList<Student> students = new ArrayList<Student>();
 			ArrayList<String> numeElevi = db.selectNumeElevi();
-			for(String elev: numeElevi){
-				ArrayList<String> numeMaterii = db.selectMateriiByElev(elev);
-				ArrayList<Subject> subjects = new ArrayList<Subject>();
-				for(String materie: numeMaterii)
-					subjects.add(new Subject(materie,db.selectProfesorByMaterie(materie),null,null));
-				students.add(new Student(elev,subjects));
+			numeElevi = db.selectNumeElevi();
+			for (String nume : numeElevi) {
+				students.add(db.selectRaportElev(nume));
 			}
 			sw.setStudents(students);
 			File file = new File("C:\\Users\\Bogdan\\Desktop\\file.xml");
@@ -79,6 +94,8 @@ public class XMLConvert {
 
 		} catch (JAXBException e) {
 			e.printStackTrace();
+		} catch (SQLException sql) {
+			sql.printStackTrace();
 		}
 	}
 
