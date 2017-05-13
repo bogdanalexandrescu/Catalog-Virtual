@@ -28,10 +28,8 @@ public class ButtonLoginListener implements EventHandler<ActionEvent> {
         if(gui.getCb().getSelectionModel().getSelectedItem() != null) {
             if (gui.getCb().getSelectionModel().getSelectedItem().equals("Teacher")) {
                 gui.getProcessor().getClient().sendMessage("profesor");
-                //gui.teacherMode(gui.getBp(),1,"Students");
             } else {
-                gui.getProcessor().getClient().sendMessage("director");
-                //gui.headmasterMode(gui.getBp());
+                gui.getProcessor().getClient().sendMessage("admin");
             }
         }
 

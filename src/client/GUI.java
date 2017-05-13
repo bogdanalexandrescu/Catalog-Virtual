@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import server.Subject;
 
 import java.util.ArrayList;
 
@@ -42,6 +43,15 @@ public class GUI {
     private Label textMessage;
     private ArrayList<Stage> stages;
     private ArrayList<TextField> mark;
+    private ArrayList<TextField> data;
+
+    public ArrayList<TextField> getData() {
+        return data;
+    }
+
+    public void setData(ArrayList<TextField> data) {
+        this.data = data;
+    }
 
     public ArrayList<TextField> getMark() {
         return mark;
@@ -78,7 +88,9 @@ public class GUI {
         this.students = students;
         for(int i = 0 ; i < students.size() - 1; i++){
             TextField tf = new TextField("");
+            TextField tf1 = new TextField("");
             mark.add(tf);
+            data.add(tf1);
 
         }
         addStudents(menu,students);
@@ -273,6 +285,7 @@ public class GUI {
     public void teacherMode(BorderPane bp,int presentation, String title){
         stages = new ArrayList<Stage>();
         mark = new ArrayList<TextField>();
+        data = new ArrayList<TextField>();
         HBox hbox = new HBox();
         VBox vbox1;
         if(presentation == 1){
@@ -294,7 +307,7 @@ public class GUI {
         GridPane tableBar = new GridPane();
         tableBar.setPadding(new Insets(50,0,0,55));
         if(presentation == 1){
-            tableBar.add(rankingTopInitialization("#008FE9","Name","Mark","Abs.","Sit.",515),0,0);
+            tableBar.add(rankingTopInitialization("#008FE9","Name","Mark","Data","Options",515),0,0);
         }
         if(presentation == 2 || presentation == 3){
             tableBar.add(rankingTopInitialization("#008FE9","Name","Edit","Delete","",515),0,0);
@@ -347,7 +360,7 @@ public class GUI {
 
         vboxTable.add(menusp,0,0);
 
-        textMessage = new Label("Ceva");
+        textMessage = new Label("");
         textMessage.setPadding(new Insets(10,0,0,0));
         textMessage.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
         textMessage.setStyle("-fx-text-fill: linear-gradient(orange   , orangered  ) ;") ;
@@ -405,6 +418,7 @@ public class GUI {
             vboxAddGridPane.add(backButtonPane,1,0);
             vbox2.getChildren().add(vboxAdd);
             vbox2.getChildren().add(vboxAddGridPane);
+            vbox2.getChildren().add(textMessage);
         }
 
 
@@ -418,6 +432,7 @@ public class GUI {
 
         hbox.getChildren().add(vbox1);
         hbox.getChildren().add(vbox2);
+
 
         bp.setCenter(hbox);
     }
@@ -638,7 +653,7 @@ public class GUI {
         return buttonAbcecnce;
     }
 
-    private GridPane rankingTopInitialization(String color,String string,String stringOne, String stringTwo,String stringThree, double width){
+    private GridPane rankingTopInitialization(String color,String stringMark,String stringData,String stringOne, String stringTwo, double width){
 
             GridPane messagePane = new GridPane();
             messagePane.setPrefSize(width,30);
@@ -652,7 +667,12 @@ public class GUI {
             textRanking.setStyle("-fx-text-fill:  #ffffff;");
             textRanking.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
 
-            Label textName = new Label(string);
+            Label textMark = new Label(stringMark);
+            textMark.setFocusTraversable(false);
+            textMark.setStyle("-fx-text-fill:  #ffffff;");
+            textMark.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
+
+            Label textName = new Label(stringData);
             textName.setFocusTraversable(false);
             textName.setStyle("-fx-text-fill:  #ffffff;");
             textName.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
@@ -667,18 +687,15 @@ public class GUI {
             textWins.setStyle("-fx-text-fill:  #ffffff;");
             textWins.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
 
-            Label textSituation = new Label(stringThree);
-            textSituation.setFocusTraversable(false);
-            textSituation.setStyle("-fx-text-fill:  #ffffff;");
-            textSituation.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
 
 
             messagePane.add(textRanking,1,0);
-            messagePane.add(textName,3,0);
+            messagePane.add(textMark,3,0);
+            messagePane.add(textName,26,0);
             if(width == 515){
-                messagePane.add(textLevel,32,0);
-                messagePane.add(textWins,36,0);
-                messagePane.add(textSituation,37,0);
+                messagePane.add(textLevel,28,0);
+                messagePane.add(textWins,32,0);
+
             }
 
 
@@ -694,7 +711,7 @@ public class GUI {
     private void addStudents(VBox vbox, ArrayList<String> students){
         vbox.getChildren().clear();
         for(int i = 1; i < students.size(); i++){
-            rankInitialization(vbox,i,"#C1DCFE", students.get(i),"Add","Add","S");
+            rankInitialization(vbox,i,"#C1DCFE", students.get(i),"M","A","S");
         }
     }
 
@@ -702,7 +719,7 @@ public class GUI {
 
         GridPane messagePane = new GridPane();
         messagePane.setPrefSize(500,40);
-        messagePane.setHgap(10);
+        messagePane.setHgap(8);
         messagePane.setVgap(5);
         messagePane.setStyle("-fx-background-color: " + color + ";");
 
@@ -714,7 +731,7 @@ public class GUI {
 
         Label textName = new Label(name);
         textName.setPadding(new Insets(5,0,0,0));
-        textName.setPrefWidth(260);
+        textName.setPrefWidth(250);
         textName.setFocusTraversable(false);
         textName.setStyle("-fx-text-fill:  #663F15;");
         textName.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
@@ -723,14 +740,24 @@ public class GUI {
         gpMark.setPadding(new Insets(8,0,0,0));
 
         TextField markStudent = getMark().get(number - 1);
-        markStudent.setPrefWidth(40);
+        markStudent.setPrefWidth(29);
         markStudent.setFocusTraversable(false);
         markStudent.setFont(Font.font("Courier New", FontWeight.NORMAL, 11));
 
         gpMark.add(markStudent,0,0);
 
+        GridPane gpData = new GridPane();
+        gpData.setPadding(new Insets(8,0,0,0));
+
+        TextField dataStudent = getData().get(number - 1);
+        dataStudent.setPrefWidth(70);
+        dataStudent.setFocusTraversable(false);
+        dataStudent.setFont(Font.font("Courier New", FontWeight.NORMAL, 11));
+
+        gpData.add(dataStudent,0,0);
+
         GridPane buttonsPane = new GridPane();
-        buttonsPane.setHgap(10);
+        buttonsPane.setHgap(5);
         buttonsPane.setVgap(5);
         buttonsPane.setPadding(new Insets(8,0,0,0));
 
@@ -738,20 +765,20 @@ public class GUI {
         Button buttonMark = new Button(buttonOne);
         buttonMark.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
         buttonMark.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
-        buttonMark.setPrefSize(30,15);
+        buttonMark.setPrefSize(15,15);
         buttonMark.setOnAction(new ButtonAddMark(this,name,textNameSubject.getText()));
 
 
         Button buttonAbcecnce = new Button(buttonTwo);
         buttonAbcecnce.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
         buttonAbcecnce.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
-        buttonAbcecnce.setPrefSize(30,15);
+        buttonAbcecnce.setPrefSize(15,15);
         buttonAbcecnce.setOnAction(new ButtonAddAbsence(this,name,textNameSubject.getText()));
 
         Button buttonSituation = new Button(buttonThree);
         buttonSituation.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
         buttonSituation.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
-        buttonSituation.setPrefSize(30,15);
+        buttonSituation.setPrefSize(15,15);
         buttonSituation.setOnAction(new ButtonSituationStudent(this,name,textNameSubject.getText()));
 
 
@@ -764,8 +791,9 @@ public class GUI {
 
         messagePane.add(textRanking,1,0);
         messagePane.add(gpMark,5,0);
+        messagePane.add(gpData,6,0);
         messagePane.add(textName,4,0);
-        messagePane.add(buttonsPane,6,0);
+        messagePane.add(buttonsPane,7,0);
 
 
 
@@ -981,94 +1009,136 @@ public class GUI {
         return vbox1;
     }
 
-    public void displayAddMark(Stage primaryStage,String name, String subject){
+    public void displayAddMark(Stage primaryStage,String name, Subject subject){
 
-        primaryStage.setTitle("JavaFX 2 Login");
+
+
+
+
 
         VBox vBox = new VBox();
-        vBox.setPrefSize(300,220);
+        vBox.setPrefSize(410,350);
+        ScrollPane menusp = new ScrollPane();
+        menusp.setPrefSize(420,350);
+        menusp.setContent(vBox);
 
 
-        Label title = new Label("Add Mark");
-        title.setPadding(new Insets(10,0,0,105));
-        title.setFont(Font.font("Courier New", FontWeight.BOLD, 20));
-        title.setTextFill(Color.web("663F15"));
+        Label title = new Label("Student Situation");
+        title.setPadding(new Insets(10,0,0,85));
+        title.setFont(Font.font("Courier New", FontWeight.BOLD, 24));
+        title.setTextFill(Color.web("728C9A"));
 
 
 
         Label student = new Label("Student:");
-        student.setPadding(new Insets(20,0,0,20));
+        student.setPadding(new Insets(50,0,0,20));
         student.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
-        student.setTextFill(Color.web("663F15"));
+        student.setTextFill(Color.web("728C9A"));
 
         Label nameStudent = new Label(name);
-        nameStudent.setPadding(new Insets(-20,0,0,110));
+        nameStudent.setPadding(new Insets(-20,0,0,100));
         nameStudent.setWrapText(true);
         nameStudent.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
-        nameStudent.setTextFill(Color.web("663F15"));
+        nameStudent.setStyle("-fx-text-fill: linear-gradient(orange   , orangered  ) ;") ;
+
+        Label sbj = new Label("Subject:");
+        sbj.setPadding(new Insets(20,0,0,20));
+        sbj.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
+        sbj.setTextFill(Color.web("728C9A"));
+
+        Label nameSbj = new Label(subject.getName());
+        nameSbj.setPadding(new Insets(-20,0,0,110));
+        nameSbj.setWrapText(true);
+        nameSbj.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
+        nameSbj.setStyle("-fx-text-fill: linear-gradient(orange   , orangered  ) ;") ;
+
+        Label teacher = new Label("Teacher:");
+        teacher.setPadding(new Insets(20,0,0,20));
+        teacher.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
+        teacher.setTextFill(Color.web("728C9A"));
+
+        Label nameTeacher = new Label(subject.getNameTeacher());
+        nameTeacher.setPadding(new Insets(-20,0,0,110));
+        nameTeacher.setWrapText(true);
+        nameTeacher.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
+        nameTeacher.setStyle("-fx-text-fill: linear-gradient(orange   , orangered  ) ;") ;
+
+
+        Label marks = new Label("Marks:");
+        marks.setPadding(new Insets(20,0,0,20));
+        marks.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
+        marks.setTextFill(Color.web("728C9A"));
 
 
 
-        HBox hbox1 = new HBox();
+        VBox hbox1 = new VBox();
+        hbox1.setPadding(new Insets(-39,0,0,70));
 
-        Label mark = new Label("Mark:");
-        mark.setPadding(new Insets(15,0,0,20));
-        mark.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
-        mark.setTextFill(Color.web("663F15"));
+        for(int i = 0 ; i < subject.getMarks().size(); i++ ){
+            Label mark = new Label(subject.getMarks().get(i).toString());
+            mark.setPadding(new Insets(20,0,0,20));
+            mark.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
+            mark.setStyle("-fx-text-fill: linear-gradient(orange   , orangered  ) ;") ;
+            hbox1.getChildren().add(mark);
 
-        GridPane gp = new GridPane();
-        gp.setPrefSize(180,20);
-        gp.setPadding(new Insets(10,0,0,40));
+        }
 
-        markStudent = new TextField();
-        markStudent.setPadding(new Insets(0,0,0,0));
-        markStudent.setFocusTraversable(false);
-        markStudent.setFont(Font.font("Courier New", FontWeight.NORMAL, 15));
-
-        gp.add(markStudent,0,0);
-        hbox1.getChildren().add(mark);
-        hbox1.getChildren().add(gp);
+        Label absences = new Label("Absences:");
+        absences.setPadding(new Insets(20,0,0,20));
+        absences.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
+        absences.setTextFill(Color.web("728C9A"));
 
 
 
-        VBox btnEnterPane = new VBox();
-        btnEnterPane.setPadding(new Insets(30,0,0,105));
+        VBox hbox2 = new VBox();
+        hbox2.setPadding(new Insets(-39,0,0,100));
+        for(int i = 0 ; i < subject.getAbsences().size(); i++ ){
+            Label mark = new Label(subject.getAbsences().get(i).toString());
+            mark.setPadding(new Insets(20,0,0,20));
+            mark.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
+            mark.setStyle("-fx-text-fill: linear-gradient(orange   , orangered  ) ;") ;
+            hbox2.getChildren().add(mark);
 
-        Button btnEnter = new Button("Enter");
-        btnEnter.setTextFill(Color.web("ffffff"));
-        btnEnter.setPrefWidth(100);
-        btnEnter.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
-
-
-        btnEnter.setOnAction(new ButtonEnterMark(this,name,subject));
+        }
 
 
 
-        btnEnterPane.getChildren().add(btnEnter);
+
+
+
 
 
         vBox.getChildren().add(title);
         vBox.getChildren().add(student);
         vBox.getChildren().add(nameStudent);
+        vBox.getChildren().add(sbj);
+        vBox.getChildren().add(nameSbj);
+        vBox.getChildren().add(teacher);
+        vBox.getChildren().add(nameTeacher);
+        vBox.getChildren().add(marks);
         vBox.getChildren().add(hbox1);
-        vBox.getChildren().add(btnEnterPane);
-        vBox.getChildren().add(textMessage);
+        vBox.getChildren().add(absences);
+        vBox.getChildren().add(hbox2);
+
+
+
+
+
+
         vBox.setId("vbox2");
-        title.setId("text");
-        student.setId("text");
-        nameStudent.setId("text");
-        mark.setId("text");
-        markStudent.setId("textField");
-        btnEnter.setId("btnEditProfile");
+
+
+
+
 
 
 
 
         //Adding BorderPane to the scene and loading CSS
-        Scene scene = new Scene(vBox);
+        Scene scene = new Scene(menusp);
         scene.getStylesheets().add(getClass().getClassLoader().getResource("client/resources/gui.css").toExternalForm());
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Add Mark");
+        primaryStage.setTitle("Situation");
         primaryStage.setResizable(false);
         primaryStage.show();
     }

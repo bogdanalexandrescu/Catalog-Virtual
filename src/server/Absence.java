@@ -30,8 +30,7 @@ public class Absence implements Serializable {
 
     @Override
     public String toString() {
-        return "Absence{" +
-                "data='" + data +
-                '}';
+        return "* " +
+                "date = '" + data + "'" ;
     }
 }

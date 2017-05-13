@@ -30,8 +30,9 @@ public class ButtonSituationStudent implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        Stage stage = new Stage();
-        gui.getStages().add(stage);
-        gui.displayAddMark(stage,name,subject);
+        gui.getProcessor().getClient().sendMessage("StudentSituation");
+        gui.getProcessor().getClient().sendMessage(name);
+        gui.getProcessor().getClient().sendMessage(subject);
+
     }
 }

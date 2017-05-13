@@ -1,5 +1,6 @@
 package server;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -7,7 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 /**
  * Created by teo on 16.04.2017.
  */
-public class Subject {
+public class Subject implements Serializable{
 
 	String name;
 	String nameTeacher;
@@ -61,4 +62,13 @@ public class Subject {
 		this.absences = absences;
 	}
 
+	@Override
+	public String toString() {
+		return "Subject{" +
+				"name='" + name + '\'' +
+				", nameTeacher='" + nameTeacher + '\'' +
+				", marks=" + marks +
+				", absences=" + absences +
+				'}';
+	}
 }
