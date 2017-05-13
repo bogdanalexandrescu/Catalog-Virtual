@@ -905,6 +905,48 @@ public class Database {
 		} // end try
 		System.out.println("Goodbye!");
 	}
+	
+	public void updateNumeMaterie(String numeVechi, String numeNou) throws SQLException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			// STEP 2: Register JDBC driver
+
+			// STEP 3: Open a connection
+			System.out.println("Connecting to a selected database...");
+			conn = DatabaseHelper.getInstance().getConnection();
+			System.out.println("Connected database successfully...");
+
+			// String sql = "select id from note where ID_MATERIE = (Select
+			// id_Materie from accounts where nume=?)";
+			// pstmt = conn.prepareStatement(sql);
+			// pstmt.setString(1, nume);
+			// rs = pstmt.executeQuery();
+			// if (rs.next()) {
+
+			String sql = "UPDATE MATERIE set Nume=? where nume=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, numeNou);
+			pstmt.setString(2, numeVechi);
+			pstmt.executeUpdate();
+			// }
+
+		} catch (SQLException se) {
+			// Handle errors for JDBC
+			se.printStackTrace();
+		} catch (Exception e) {
+			// Handle errors for Class.forName
+			e.printStackTrace();
+		} finally {
+			// finally block used to close resources
+			if (pstmt != null)
+				pstmt.close();
+			if (rs != null)
+				rs.close();
+		} // end try
+		System.out.println("Goodbye!");
+	}
 
 	public void deleteNotaElev(String nume, String materie, int nota, String data) throws SQLException {
 		Connection conn = null;
