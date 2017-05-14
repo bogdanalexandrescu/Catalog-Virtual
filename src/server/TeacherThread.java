@@ -164,7 +164,28 @@ public class TeacherThread implements Runnable {
 
                 if (message.equals("Logout")) {
                     sendMessage("Logout");
+                }
 
+                if (message.equals("Back")) {
+                    sendMessage("Back");
+                }
+
+
+                if (message.equals("SeeTeachers")) {
+                    ArrayList<String> data = new ArrayList<String>();
+                    data = db.selectNumeProfesori();
+                    data.add(0,"SeeTeachers");
+                    int nr = data.size() - 1;
+                    for(int i = 0; i < nr; i++){
+                        data.add(db.selectMaterieByProfesor(data.get(1 + i)));
+                    }
+                    sendMessage(data);
+
+
+                    //ArrayList<String> students = new ArrayList<String>();
+                    //students = db.selectEleviByMaterie("Matematica");
+                    //students.add(0,"Students");
+                    //sendMessage(students);
 
                 }
             }

@@ -58,9 +58,10 @@ public class MessageProcessor {
                 @Override
                 public void run() {
                     // Update UI here.
-                    //gui.setTextNameTeacher(message.get(1));
-                    //gui.setTextNameSubject(message.get(2));
-                    //gui.setTextNumberStudents(message.get(3));
+                    gui.setTextNameHeadmaster(message.get(1));
+                    gui.setTextNumberTeachers(message.get(2));
+                    gui.setTextTotalNumberStudents(message.get(3));
+                    gui.setTextTotalNumberSubjects(message.get(4));
 
                 }
             });
@@ -76,6 +77,22 @@ public class MessageProcessor {
                 }
             });
         }
+        if(message.get(0).equals("SeeTeachers"))
+        {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // Update UI here.
+                    System.out.print(1111111);
+                    gui.teacherMode(gui.getBp(),2,"Teachers");
+
+                    gui.setStudents(message);
+
+                }
+            });
+
+        }
+
         if(message.get(0).equals("AddedMark"))
         {
             Platform.runLater(new Runnable() {
@@ -111,6 +128,17 @@ public class MessageProcessor {
         {
             gui.setPf("");
             gui.setTxtUserName("");
+        }
+        if(message.equals("Back"))
+        {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // Update UI here.
+                    gui.headmasterMode(gui.getBp());
+                }
+            });
+
         }
         if(message.equals("Note: wrong date or invalid date format (dd/MM/yyyy)"))
         {
@@ -165,16 +193,19 @@ public class MessageProcessor {
                 public void run() {
                     // Update UI here.
                     gui.loginScreen(gui.getBp());
-                    while(!gui.getStages().isEmpty()){
-                        Stage stage = gui.getStages().remove(gui.getStages().size() - 1);
-                        stage.close();
+                    if(gui.getStages() != null){
+
+                        while(!gui.getStages().isEmpty()){
+                            Stage stage = gui.getStages().remove(gui.getStages().size() - 1);
+                            stage.close();
+                        }
                     }
-                   // Stage stage = (Stage) gui.getMarkStudent().getScene().getWindow();
-                    //stage.close();
                 }
             });
 
         }
+
+
 
     }
 

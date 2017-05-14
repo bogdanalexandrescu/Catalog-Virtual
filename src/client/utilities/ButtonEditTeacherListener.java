@@ -18,6 +18,7 @@ public class ButtonEditTeacherListener implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
 
-        gui.teacherMode(gui.getBp(),2,"Teachers");
+        gui.getProcessor().getClient().sendMessage("SeeTeachers");
+
     }
 }

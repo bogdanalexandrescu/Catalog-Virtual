@@ -20,7 +20,8 @@ public class ButtonBackListener implements EventHandler<ActionEvent> {
 
         if(gui.getCb().getSelectionModel().getSelectedItem() != null) {
 
-                gui.headmasterMode(gui.getBp());
+                gui.getProcessor().getClient().sendMessage("Back");
+
         }
 
     }
