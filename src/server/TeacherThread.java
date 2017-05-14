@@ -181,11 +181,20 @@ public class TeacherThread implements Runnable {
                     }
                     sendMessage(data);
 
+                }
 
-                    //ArrayList<String> students = new ArrayList<String>();
-                    //students = db.selectEleviByMaterie("Matematica");
-                    //students.add(0,"Students");
-                    //sendMessage(students);
+                if (message.equals("SeeSubjects")) {
+                    ArrayList<String> data = new ArrayList<String>();
+                    data = db.selectNumeMaterii();
+                    data.add(0,"SeeSubjects");
+                    sendMessage(data);
+
+                }
+                if (message.equals("SeeStudents")) {
+                    ArrayList<String> data = new ArrayList<String>();
+                    data = db.selectNumeElevi();
+                    data.add(0,"SeeStudents");
+                    sendMessage(data);
 
                 }
             }

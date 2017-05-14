@@ -83,9 +83,36 @@ public class MessageProcessor {
                 @Override
                 public void run() {
                     // Update UI here.
-                    System.out.print(1111111);
-                    gui.teacherMode(gui.getBp(),2,"Teachers");
 
+                    gui.teacherMode(gui.getBp(),2,"Teachers");
+                    gui.setStudents(message);
+
+                }
+            });
+
+        }
+        if(message.get(0).equals("SeeStudents"))
+        {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // Update UI here.
+
+                    gui.teacherMode(gui.getBp(),4,"Students");
+                    gui.setStudents(message);
+
+                }
+            });
+
+        }
+        if(message.get(0).equals("SeeSubjects"))
+        {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // Update UI here.
+
+                    gui.teacherMode(gui.getBp(),3,"Subjects");
                     gui.setStudents(message);
 
                 }

@@ -408,6 +408,7 @@ public class Database {
 		} // end try
 
 		System.out.println("Goodbye!");
+		Collections.sort(numeElevi);
 		return numeElevi;
 	}
 

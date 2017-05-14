@@ -348,8 +348,14 @@ public class GUI {
         if(presentation == 1){
             tableBar.add(rankingTopInitialization("#008FE9","Name","","Mark","Data","Options",515,"Students"),0,0);
         }
-        if(presentation == 2 || presentation == 3){
-            tableBar.add(rankingTopInitialization("#008FE9","Name","Subj.","Name","Edit","Delete",515,"Headmaster"),0,0);
+        if(presentation == 2){
+            tableBar.add(rankingTopInitialization("#008FE9","Name","Subj.","Name","Edit","Delete",515,"HeadmasterTeachers"),0,0);
+        }
+        if(presentation == 3){
+            tableBar.add(rankingTopInitialization("#008FE9","Name","","Name","Edit","Delete",515,"HeadmasterSubjects"),0,0);
+        }
+        if(presentation == 4){
+            tableBar.add(rankingTopInitialization("#008FE9","Name","","","Edit","Delete",515,"HeadmasterStudents"),0,0);
         }
 
 
@@ -745,7 +751,7 @@ public class GUI {
 
                 }
             }
-            if(option.equals("Headmaster")){
+            if(option.equals("HeadmasterTeachers")){
                 Label textMat = new Label("Subj.");
                 textMat.setPadding(new Insets(0,0,0,8));
                 textMat.setFocusTraversable(false);
@@ -762,6 +768,31 @@ public class GUI {
                     messagePane.add(textWins, 27, 0);
                 }
             }
+        if(option.equals("HeadmasterSubjects")){
+
+
+            textName.setPadding(new Insets(0,0,0,17));
+            textLevel.setPadding(new Insets(0,0,0,10));
+            textWins.setPadding(new Insets(0,0,0,-15));
+            messagePane.add(textName,26,0);
+            if(width == 515) {
+                messagePane.add(textLevel, 28, 0);
+                messagePane.add(textWins, 32, 0);
+            }
+        }
+
+        if(option.equals("HeadmasterStudents")){
+
+
+
+            textLevel.setPadding(new Insets(0,0,0,5));
+            textWins.setPadding(new Insets(0,0,0,-7));
+            if(width == 515) {
+                messagePane.add(textLevel, 35, 0);
+                messagePane.add(textWins, 38, 0);
+            }
+        }
+
 
 
 
@@ -792,6 +823,16 @@ public class GUI {
                 rankInitialization(vbox,i,"#C1DCFE", students.get(i),students.get(i + (students.size() - 1) / 2),"M","A","S",option);
             }
         }
+        if(option.equals("SeeSubjects")){
+            for(int i = 1; i < students.size() ; i++){
+                rankInitialization(vbox,i,"#C1DCFE", students.get(i),"","M","A","S",option);
+            }
+        }
+        if(option.equals("SeeStudents")){
+            for(int i = 1; i < students.size() ; i++){
+                rankInitialization(vbox,i,"#C1DCFE", students.get(i),"","M","A","S",option);
+            }
+        }
     }
 
     private void rankInitialization(VBox discution, int number, String color,String name,String subject, String buttonOne, String buttonTwo, String buttonThree,String option){
@@ -815,17 +856,19 @@ public class GUI {
         textName.setStyle("-fx-text-fill:  #663F15;");
         textName.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
 
-        GridPane gpData = new GridPane();
-        gpData.setPadding(new Insets(8,0,0,0));
 
-        TextField dataStudent = getData().get(number - 1);
-        dataStudent.setPrefWidth(70);
-        dataStudent.setFocusTraversable(false);
-        dataStudent.setFont(Font.font("Courier New", FontWeight.NORMAL, 11));
-
-        gpData.add(dataStudent,0,0);
 
         if(option.equals("Students")){
+            GridPane gpData = new GridPane();
+            gpData.setPadding(new Insets(8,0,0,0));
+
+            TextField dataStudent = getData().get(number - 1);
+            dataStudent.setPrefWidth(70);
+            dataStudent.setFocusTraversable(false);
+            dataStudent.setFont(Font.font("Courier New", FontWeight.NORMAL, 11));
+
+            gpData.add(dataStudent,0,0);
+
             GridPane gpMark = new GridPane();
             gpMark.setPadding(new Insets(8,0,0,0));
 
@@ -872,10 +915,20 @@ public class GUI {
 
 
             messagePane.add(gpMark,5,0);
+            messagePane.add(gpData,6,0);
             messagePane.add(buttonsPane,7,0);
 
         }
         if(option.equals("SeeTeachers")){
+            GridPane gpData = new GridPane();
+            gpData.setPadding(new Insets(8,0,0,0));
+
+            TextField dataStudent = getData().get(number - 1);
+            dataStudent.setPrefWidth(70);
+            dataStudent.setFocusTraversable(false);
+            dataStudent.setFont(Font.font("Courier New", FontWeight.NORMAL, 11));
+
+            gpData.add(dataStudent,0,0);
 
             textName.setPrefWidth(205);
             dataStudent.setPrefWidth(50);
@@ -920,7 +973,78 @@ public class GUI {
 
             messagePane.add(buttonsPane,7,0);
             messagePane.add(gpMark,5,0);
+            messagePane.add(gpData,6,0);
 
+        }
+        if(option.equals("SeeSubjects")){
+            GridPane gpData = new GridPane();
+            gpData.setPadding(new Insets(8,0,0,0));
+
+            TextField dataStudent = getData().get(number - 1);
+            dataStudent.setPrefWidth(70);
+            dataStudent.setFocusTraversable(false);
+            dataStudent.setFont(Font.font("Courier New", FontWeight.NORMAL, 11));
+
+            gpData.add(dataStudent,0,0);
+
+            dataStudent.setPrefWidth(50);
+            textName.setPrefWidth(245);
+
+            GridPane buttonsPane = new GridPane();
+            buttonsPane.setHgap(5);
+            buttonsPane.setVgap(5);
+            buttonsPane.setPadding(new Insets(8,0,0,0));
+
+
+            Button buttonMark = new Button("Edit");
+            buttonMark.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
+            buttonMark.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
+            buttonMark.setPrefSize(65,15);
+
+
+
+            Button buttonAbcecnce = new Button("Delete");
+            buttonAbcecnce.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
+            buttonAbcecnce.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
+            buttonAbcecnce.setPrefSize(65,15);
+
+
+            buttonsPane.add(buttonMark,0,0);
+            buttonsPane.add(buttonAbcecnce,1,0);
+            messagePane.add(gpData,6,0);
+
+            messagePane.add(buttonsPane,7,0);
+            //messagePane.add(gpMark,5,0);
+        }
+
+        if(option.equals("SeeStudents")){
+
+            textName.setPrefWidth(295);
+
+            GridPane buttonsPane = new GridPane();
+            buttonsPane.setHgap(5);
+            buttonsPane.setVgap(5);
+            buttonsPane.setPadding(new Insets(8,0,0,0));
+
+
+            Button buttonMark = new Button("Edit");
+            buttonMark.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
+            buttonMark.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
+            buttonMark.setPrefSize(65,15);
+
+
+
+            Button buttonAbcecnce = new Button("Delete");
+            buttonAbcecnce.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
+            buttonAbcecnce.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
+            buttonAbcecnce.setPrefSize(65,15);
+
+
+            buttonsPane.add(buttonMark,0,0);
+            buttonsPane.add(buttonAbcecnce,1,0);
+
+            messagePane.add(buttonsPane,7,0);
+            //messagePane.add(gpMark,5,0);
         }
 
 
@@ -929,7 +1053,7 @@ public class GUI {
 
         messagePane.add(textRanking,1,0);
         messagePane.add(textName,4,0);
-        messagePane.add(gpData,6,0);
+
 
         discution.getChildren().add(messagePane);
 
