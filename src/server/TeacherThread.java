@@ -67,10 +67,13 @@ public class TeacherThread implements Runnable {
                         data.add(db.selectMaterieByProfesor(name));
                         data.add("" + db.selectEleviByMaterie(db.selectMaterieByProfesor(name)).size());
                         sendMessage(data);
-                        ArrayList<String> students = new ArrayList<String>();
-                        students = db.selectEleviByMaterie(db.selectMaterieByProfesor(name));
-                        students.add(0,"Students");
-                        sendMessage(students);
+                        if(db.selectEleviByMaterie(db.selectMaterieByProfesor(name)).size() != 0){
+                            ArrayList<String> students = new ArrayList<String>();
+                            students = db.selectEleviByMaterie(db.selectMaterieByProfesor(name));
+                            students.add(0,"Students");
+                            sendMessage(students);
+                        }
+
 
                     }
                     else{
@@ -86,7 +89,7 @@ public class TeacherThread implements Runnable {
                             data.add("" + db.selectNumeElevi().size());
                             data.add("" + db.selectNumeMaterii().size());
                             sendMessage(data);
-                            System.out.print(3);
+
                         }
                         else{
                             System.out.println("DeclineLogin");
@@ -149,6 +152,35 @@ public class TeacherThread implements Runnable {
 
 
                 }
+                if (message.equals("EditName")) {
+                    ArrayList<String> dataAbsence = new ArrayList<String>();
+
+                    String name = (String) readMessage();
+                    String subject = (String) readMessage();
+                    String newName = (String) readMessage();
+                    if(subject.equals("Teachers")){
+                        db.updateNumeProfesor(name,newName);
+                        ArrayList<String> data = new ArrayList<String>();
+                        data = db.selectNumeProfesori();
+                        data.add(0,"SeeTeachers");
+                        int nr = data.size() - 1;
+                        for(int i = 0; i < nr; i++){
+                            data.add(db.selectMaterieByProfesor(data.get(1 + i)));
+                        }
+                        sendMessage(data);
+                    }
+                    if(subject.equals("Subjects")){
+                        db.updateNumeMaterie(name,newName);
+                        ArrayList<String> data = new ArrayList<String>();
+                        data = db.selectNumeMaterii();
+                        data.add(0,"SeeSubjects");
+                        sendMessage(data);
+                    }
+
+
+
+
+                }
 
                 if (message.equals("StudentSituation")) {
                     ArrayList<Object> data = new ArrayList<Object>();
@@ -187,6 +219,7 @@ public class TeacherThread implements Runnable {
                     ArrayList<String> data = new ArrayList<String>();
                     data = db.selectNumeMaterii();
                     data.add(0,"SeeSubjects");
+                    System.out.println(data.size());
                     sendMessage(data);
 
                 }

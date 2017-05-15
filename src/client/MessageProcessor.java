@@ -32,6 +32,7 @@ public class MessageProcessor {
             String message = messageReceived.toString();
             processString(message);
         }
+
         if (messageReceived instanceof ArrayList<?> && ((ArrayList) messageReceived).get(0) instanceof String && ((ArrayList) messageReceived).get(1) instanceof Subject)
         {
             processStudentSituation((ArrayList<Object>) messageReceived);

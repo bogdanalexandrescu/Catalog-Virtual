@@ -2,13 +2,7 @@ package client;
 
 
 import client.utilities.*;
-import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -968,6 +962,7 @@ public class GUI {
             buttonMark.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
             buttonMark.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
             buttonMark.setPrefSize(65,15);
+            buttonMark.setOnAction(new ButtonEditName(this,name,textTitle.getText()));
 
 
 
@@ -1010,6 +1005,7 @@ public class GUI {
             buttonMark.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
             buttonMark.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
             buttonMark.setPrefSize(65,15);
+            buttonMark.setOnAction(new ButtonEditName(this,name,textTitle.getText()));
 
 
 
