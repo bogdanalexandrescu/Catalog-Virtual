@@ -822,6 +822,74 @@ public class Database {
 		System.out.println("Goodbye!");
 	}
 
+	// merge doar daca materie nu este asignata unui profesor sau unui elev
+	public void deleteMaterie(String nume) throws SQLException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		boolean condition1 = false;
+		boolean condition2 = false;
+		try {
+			// STEP 2: Register JDBC driver
+
+			// STEP 3: Open a connection
+			System.out.println("Connecting to a selected database...");
+			conn = DatabaseHelper.getInstance().getConnection();
+			System.out.println("Connected database successfully...");
+
+			// String sql = "select id from note where ID_MATERIE = (Select
+			// id_Materie from accounts where nume=?)";
+			// pstmt = conn.prepareStatement(sql);
+			// pstmt.setString(1, nume);
+			// rs = pstmt.executeQuery();
+			// if (rs.next()) {
+
+			String sql = "SELECT ID FROM ACCOUNTS WHERE ID_MATERIE=(SELECT ID FROM MATERIE WHERE NUME=?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, nume);
+			rs = pstmt.executeQuery();
+			if (rs.next() == false)
+				condition1 = true;
+
+			sql = "SELECT ID FROM ELEV_MATERIE WHERE ID_MATERIE=(SELECT ID FROM MATERIE WHERE NUME=?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, nume);
+			rs = pstmt.executeQuery();
+			if (rs.next() == false)
+				condition2 = true;
+
+			if (condition1 && condition2) {
+				sql = "DELETE from MATERIE where nume=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, nume);
+				int n = pstmt.executeUpdate();
+				System.out.println(n);
+			}
+			// }
+
+			// sql = "select id from absente where ID_MATERIE = (Select
+			// id_Materie from accounts where nume=?)";
+			// pstmt = conn.prepareStatement(sql);
+			// pstmt.setString(1, nume);
+			// rs = pstmt.executeQuery();
+			// if (rs.next()) {
+
+		} catch (SQLException se) {
+			// Handle errors for JDBC
+			se.printStackTrace();
+		} catch (Exception e) {
+			// Handle errors for Class.forName
+			e.printStackTrace();
+		} finally {
+			// finally block used to close resources
+			if (pstmt != null)
+				pstmt.close();
+			if (rs != null)
+				rs.close();
+		} // end try
+		System.out.println("Goodbye!");
+	}
+
 	public void updateNumeElev(String numeVechi, String numeNou) throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -1106,7 +1174,8 @@ public class Database {
 		// xml.convertRaporStudentToXML("Bogdan");
 		// xml.convertStudentsToXML();
 		// xml.convertStudentsToXML();
-
+		//db.insertMaterie("Logica");
+		db.deleteMaterie("Matematica");
 		// db.insertAbsentaElevWithDate("Bogdan", "Matematica", "10/05/2017");
 		// db.insertNotaElevWithDate("Bogdan", "Matematica",10, "10/05/2017");
 		// db.insertNotaElev("Teodor Sposib", "Matematica",10);
@@ -1117,7 +1186,7 @@ public class Database {
 		// xml.convertStudentsToXML();
 		// StudentsWrapper sw =
 		// db.deleteAbsentaElev("Bogdan", "Matematica", "10/05/2017");
-		db.deleteMaterieElev("Bogdan", "Matematica");
+		// db.deleteMaterieElev("Bogdan", "Matematica");
 		// System.out.println(sw.getStudents().get(0).getName());
 		// for(Student s : sw.getStudents()){
 		// System.out.println(s.getName());
