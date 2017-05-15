@@ -105,6 +105,7 @@ public class MessageProcessor {
             });
 
         }
+
         if(message.get(0).equals("SeeSubjects"))
         {
             Platform.runLater(new Runnable() {
@@ -167,6 +168,7 @@ public class MessageProcessor {
             });
 
         }
+
         if(message.equals("Note: wrong date or invalid date format (dd/MM/yyyy)"))
         {
             Platform.runLater(new Runnable() {

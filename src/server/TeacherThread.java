@@ -68,7 +68,7 @@ public class TeacherThread implements Runnable {
                         data.add("" + db.selectEleviByMaterie(db.selectMaterieByProfesor(name)).size());
                         sendMessage(data);
                         ArrayList<String> students = new ArrayList<String>();
-                        students = db.selectEleviByMaterie("Matematica");
+                        students = db.selectEleviByMaterie(db.selectMaterieByProfesor(name));
                         students.add(0,"Students");
                         sendMessage(students);
 
@@ -195,6 +195,41 @@ public class TeacherThread implements Runnable {
                     data = db.selectNumeElevi();
                     data.add(0,"SeeStudents");
                     sendMessage(data);
+
+
+                }
+                if (message.equals("Delete")) {
+                    String name = (String) readMessage();
+                    String subject = (String) readMessage();
+                    if(subject.equals("Subjects")){
+                        db.deleteMaterie(name);
+                        ArrayList<String> data = new ArrayList<String>();
+                        data = db.selectNumeMaterii();
+                        data.add(0,"SeeSubjects");
+                        sendMessage(data);
+
+                    }
+                    if(subject.equals("Students")){
+                        db.deleteElev(name);
+                        ArrayList<String> data = new ArrayList<String>();
+                        data = db.selectNumeElevi();
+                        data.add(0,"SeeStudents");
+                        sendMessage(data);
+
+
+                    }
+                    if(subject.equals("Teachers")){
+
+                        db.deleteProfesor(name);
+                        ArrayList<String> data = new ArrayList<String>();
+                        data = db.selectNumeProfesori();
+                        data.add(0,"SeeTeachers");
+                        int nr = data.size() - 1;
+                        for(int i = 0; i < nr; i++){
+                            data.add(db.selectMaterieByProfesor(data.get(1 + i)));
+                        }
+                        sendMessage(data);
+                    }
 
                 }
             }

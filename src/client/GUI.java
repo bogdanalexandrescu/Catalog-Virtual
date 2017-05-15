@@ -48,6 +48,15 @@ public class GUI {
     private ArrayList<Stage> stages;
     private ArrayList<TextField> mark;
     private ArrayList<TextField> data;
+    private Label textTitle;
+
+    public Label getTextTitle() {
+        return textTitle;
+    }
+
+    public void setTextTitle(String textTitle) {
+        this.textTitle.setText(textTitle);
+    }
 
     public Label getTextNameHeadmaster() {
         return textNameHeadmaster;
@@ -337,7 +346,7 @@ public class GUI {
         VBox vbox2 = new VBox();
         vbox2.setPrefSize(620,550);
 
-        Label textTitle = new Label(title);
+        textTitle = new Label(title);
         textTitle.setPadding(new Insets(40,0,0,0));
         textTitle.setWrapText(true);
         textTitle.setFont(Font.font("Courier New", FontWeight.BOLD, 35));
@@ -496,7 +505,7 @@ public class GUI {
         VBox vbox2 = new VBox();
         vbox2.setPrefSize(620,550);
 
-        Label textTitle = new Label("Menu");
+        textTitle = new Label("Menu");
         textTitle.setPadding(new Insets(40,0,0,0));
         textTitle.setWrapText(true);
         textTitle.setFont(Font.font("Courier New", FontWeight.BOLD, 35));
@@ -966,6 +975,7 @@ public class GUI {
             buttonAbcecnce.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
             buttonAbcecnce.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
             buttonAbcecnce.setPrefSize(65,15);
+            buttonAbcecnce.setOnAction(new ButtonDeleteListener(this,name,textTitle.getText()));
 
 
             buttonsPane.add(buttonMark,0,0);
@@ -1007,6 +1017,7 @@ public class GUI {
             buttonAbcecnce.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
             buttonAbcecnce.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
             buttonAbcecnce.setPrefSize(65,15);
+            buttonAbcecnce.setOnAction(new ButtonDeleteListener(this,name,textTitle.getText()));
 
 
             buttonsPane.add(buttonMark,0,0);
@@ -1038,6 +1049,7 @@ public class GUI {
             buttonAbcecnce.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
             buttonAbcecnce.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
             buttonAbcecnce.setPrefSize(65,15);
+            buttonAbcecnce.setOnAction(new ButtonDeleteListener(this,name,textTitle.getText()));
 
 
             buttonsPane.add(buttonMark,0,0);
