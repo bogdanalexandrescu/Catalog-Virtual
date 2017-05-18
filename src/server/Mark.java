@@ -41,6 +41,6 @@ public class Mark implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Mark{" + "data='" + data + '\'' + ", mark=" + mark + '}';
+		return "* " + "mark = " + mark + ", date = '" + data + '\''  ;
 	}
 }
