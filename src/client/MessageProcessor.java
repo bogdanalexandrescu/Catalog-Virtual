@@ -2,6 +2,7 @@ package client;
 
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import server.Student;
 import server.Subject;
 
 import java.util.ArrayList;
@@ -31,6 +32,11 @@ public class MessageProcessor {
         {
             String message = messageReceived.toString();
             processString(message);
+        }
+        if (messageReceived instanceof Student)
+        {
+            processStudentAllSituation((Student) messageReceived);
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         }
 
         if (messageReceived instanceof ArrayList<?> && ((ArrayList) messageReceived).get(0) instanceof String && ((ArrayList) messageReceived).get(1) instanceof Subject)
@@ -106,6 +112,20 @@ public class MessageProcessor {
             });
 
         }
+        if(message.get(0).equals("SituationOfStudents"))
+        {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // Update UI here.
+                    System.out.print("lala");
+                    gui.teacherMode(gui.getBp(),5,"Situation of Students");
+                    gui.setStudents(message);
+
+                }
+            });
+
+        }
 
         if(message.get(0).equals("SeeSubjects"))
         {
@@ -116,7 +136,7 @@ public class MessageProcessor {
 
                     gui.teacherMode(gui.getBp(),3,"Subjects");
                     gui.setStudents(message);
-
+                    System.out.println("buba3");
                 }
             });
 
@@ -249,6 +269,29 @@ public class MessageProcessor {
                 gui.getStages().add(stage);
 
                 gui.displayAddMark(stage,(String) message.get(0),(Subject) message.get(1));
+            }
+        });
+
+    }
+
+    private void processStudentAllSituation(Student message)
+    {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                // Update UI here.
+                Stage stage = new Stage();
+                gui.getStages().add(stage);
+                System.out.println(message.getName());
+
+                for(int i = 0; i < message.getSubjects().size(); i++){
+                    System.out.println(message.getSubjects().get(i).getName());
+                    System.out.println(message.getSubjects().get(i).getMarks());
+                    System.out.println(message.getSubjects().get(i).getAbsences());
+                }
+
+
+               gui.displayAddMark(stage,message);
             }
         });
 

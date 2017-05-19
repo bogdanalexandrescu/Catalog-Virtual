@@ -1,5 +1,6 @@
 package server;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -9,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Created by teo on 16.04.2017.
  */
 @XmlRootElement
-public class Student  {
+public class Student implements Serializable {
 
     String name;
     ArrayList<Subject> subjects = new ArrayList<Subject>();
@@ -22,6 +23,7 @@ public class Student  {
 	}
 	public Student(){
 	}
+
 	
 	public String getName() {
 		return name;

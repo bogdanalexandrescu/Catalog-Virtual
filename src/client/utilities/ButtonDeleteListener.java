@@ -1,5 +1,6 @@
-package client;
+package client.utilities;
 
+import client.GUI;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -24,6 +25,7 @@ public class ButtonDeleteListener implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         gui.getProcessor().getClient().sendMessage("Delete");
+        gui.getProcessor().getClient().sendMessage(gui.getTextNameHeadmaster().getText());
         gui.getProcessor().getClient().sendMessage(name);
         gui.getProcessor().getClient().sendMessage(subject);
 

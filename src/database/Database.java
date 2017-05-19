@@ -3,6 +3,7 @@ package database;
 //STEP 1. Import required packages
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import server.Absence;
 import server.Mark;
@@ -401,6 +402,7 @@ public class Database {
 		} // end try
 
 		System.out.println("Goodbye!");
+		Collections.sort(numeElevi);
 		return numeElevi;
 	}
 
@@ -439,6 +441,7 @@ public class Database {
 		} // end try
 
 		System.out.println("Goodbye!");
+		Collections.sort(numeProfesori);
 		return numeProfesori;
 	}
 
@@ -514,6 +517,7 @@ public class Database {
 		} // end try
 
 		System.out.println("Goodbye!");
+		Collections.sort(numeMaterii);
 		return numeMaterii;
 	}
 
@@ -563,6 +567,7 @@ public class Database {
 		} // end try
 
 		System.out.println("Goodbye!");
+		Collections.sort(numeMaterii);
 		return numeMaterii;
 	}
 
@@ -612,6 +617,7 @@ public class Database {
 		} // end try
 
 		System.out.println("Goodbye!");
+		Collections.sort(numeElevi);
 		return numeElevi;
 	}
 
@@ -1170,12 +1176,13 @@ public class Database {
 		// db.insertNotaElevWithDate("Teodor Sposib",
 		// "Matematica",10,"2017-05-11 00:00:00.0");
 		// Student student = db.selectRaportElev("Teodor Sposib");
-		XMLConvert xml = new XMLConvert();
+		//XMLConvert xml = new XMLConvert();
+		//db.insertProfesor("Ion", "", materie);
 		// xml.convertRaporStudentToXML("Bogdan");
 		// xml.convertStudentsToXML();
 		// xml.convertStudentsToXML();
 		//db.insertMaterie("Logica");
-		db.deleteMaterie("Matematica");
+		//db.deleteMaterie("Matematica");
 		// db.insertAbsentaElevWithDate("Bogdan", "Matematica", "10/05/2017");
 		// db.insertNotaElevWithDate("Bogdan", "Matematica",10, "10/05/2017");
 		// db.insertNotaElev("Teodor Sposib", "Matematica",10);
@@ -1194,7 +1201,9 @@ public class Database {
 		// System.out.println(db.selectNumeElevi());
 		// db.insertProfesor("Gigel","gigel","Matematica");
 		// System.out.print(db.checkAccount("Gigel","gigel","profesor"));
-
+		//db.insertElevi("Sposib Teodor");
+		//db.insertElevMaterie("Sposib Teodor","Matematica");
+		//db.insertElevMaterie("Sposib Teodor","Psihologie");
 	}
 
 	private static Connection getDBConnection() {
