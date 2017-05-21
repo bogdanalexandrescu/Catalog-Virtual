@@ -5,15 +5,15 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 /**
- * Created by teo on 19.05.2017.
+ * Created by teo on 21.05.2017.
  */
-public class ButtonLoadExportPath implements EventHandler<ActionEvent> {
+public class ButtonLoadImportPath implements EventHandler<ActionEvent> {
 
     private GUI gui;
 
 
 
-    public ButtonLoadExportPath(GUI gui) {
+    public ButtonLoadImportPath(GUI gui) {
         this.gui = gui;
 
     }
@@ -22,7 +22,7 @@ public class ButtonLoadExportPath implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        gui.setPathExport("C/Teo/Export");
+        gui.setPathImport("C/Teo/Import");
 
     }
 }

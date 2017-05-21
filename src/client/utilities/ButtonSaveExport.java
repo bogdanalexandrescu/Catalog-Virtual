@@ -23,9 +23,17 @@ public class ButtonSaveExport implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        System.out.println(gui.getStudentExport().getText());
-        System.out.println(option);
-        System.out.println(gui.getPathExport().getText());
+        if(option.equals("ExportStudents")){
+            System.out.println(option);
+            System.out.println(gui.getPathExport().getText());
+        }
+        if(option.equals("ExportSituation")){
+            System.out.println(gui.getStudentExport().getText());
+            System.out.println(option);
+            System.out.println(gui.getPathExport().getText());
+        }
+
+
 
     }
 }

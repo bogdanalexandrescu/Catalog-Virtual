@@ -226,6 +226,11 @@ public class TeacherThread implements Runnable {
 					sendMessage(data);
 
 				}
+				if (message.equals("SeeImportExport")) {
+
+					sendMessage("SeeImportExport");
+
+				}
                 if (message.equals("StudentAllSituation")) {
 
 

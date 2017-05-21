@@ -54,7 +54,16 @@ public class GUI {
 	private PasswordField addPass;
 	private TextField addSubject;
 	private TextField pathExport;
+	private TextField pathImport;
 	private TextField studentExport;
+
+	public TextField getPathImport() {
+		return pathImport;
+	}
+
+	public void setPathImport(String pathImport) {
+		this.pathImport.setText(pathImport);
+	}
 
 	public TextField getStudentExport() {
 		return studentExport;
@@ -398,6 +407,11 @@ public class GUI {
 					rankingTopInitialization("#008FE9", "Name", "", "", " ", "Situation", 515, "HeadmasterStudents"), 0,
 					0);
 		}
+		if (presentation == 6) {
+			tableBar.add(
+					rankingTopInitialization("#008FE9", "Option", "Path", "", "Load", "Save", 515, "HeadmasterStudents"), 0,
+					0);
+		}
 
 		GridPane vboxTable = new GridPane();
 		if (presentation == 1) {
@@ -448,6 +462,20 @@ public class GUI {
 			vboxAddGridPane.setPrefSize(400, 60);
 			vboxAddGridPane.setPadding(new Insets(0, 0, 0, 55));
 
+			GridPane backButtonPane = new GridPane();
+			backButtonPane.setPadding(new Insets(0, 0, 0, 20));
+
+			Button buttonBack = new Button("Back");
+			buttonBack.setFont(Font.font("Courier New", FontWeight.BOLD, 15));
+			buttonBack.setStyle(
+					"-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;-fx-border-color: linear-gradient(orange  , orangered ) ;\n"
+							+ "  -fx-border-width: 1.5px ; -fx-border-radius: 5;\n" + "    -fx-padding: 5 5 5 5;\n"
+							+ "    -fx-background-radius: 5;");
+			buttonBack.setPrefSize(60, 25);
+			buttonBack.setOnAction(new ButtonBackListener(this));
+
+			backButtonPane.add(buttonBack, 0, 0);
+
 			VBox boxAdd = new VBox();
 			// boxAdd.setPrefSize(400,30);
 			if (title.equals("Students")) {
@@ -470,20 +498,13 @@ public class GUI {
 				vboxAdd.add(rankingTopInitialization("#008FE9", "Option", "Options", "", "Name", "Add", 430, "HeadmasterSubjects"), 0, 0);
 				addOption(boxAdd, "#C1DCFE", "Add Subject", "Add");
 			}
+			if (title.equals("Import/Export Students")) {
+				rankInitialization(menu, 1, "#C1DCFE", "Import", "", "M", "A", "S", "Import/Export Students");
+				rankInitialization(menu, 2, "#C1DCFE", "Export", "", "M", "A", "S", "Import/Export Students");
+				backButtonPane.setPadding(new Insets(0, 0, 0, 450));
+			}
 
-			GridPane backButtonPane = new GridPane();
-			backButtonPane.setPadding(new Insets(0, 0, 0, 20));
 
-			Button buttonBack = new Button("Back");
-			buttonBack.setFont(Font.font("Courier New", FontWeight.BOLD, 15));
-			buttonBack.setStyle(
-					"-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;-fx-border-color: linear-gradient(orange  , orangered ) ;\n"
-							+ "  -fx-border-width: 1.5px ; -fx-border-radius: 5;\n" + "    -fx-padding: 5 5 5 5;\n"
-							+ "    -fx-background-radius: 5;");
-			buttonBack.setPrefSize(60, 25);
-			buttonBack.setOnAction(new ButtonBackListener(this));
-
-			backButtonPane.add(buttonBack, 0, 0);
 
 			vboxAddGridPane.add(boxAdd, 0, 0);
 			vboxAddGridPane.add(backButtonPane, 1, 0);
@@ -798,7 +819,7 @@ public class GUI {
 			messagePane.add(textName, 26, 0);
 			if (width == 515) {
 				messagePane.add(textLevel, 28, 0);
-				messagePane.add(textWins, 30, 0);
+				messagePane.add(textWins, 32, 0);
 			}
 			if (width == 430) {
 				messagePane.add(textLevel, 22, 0);
@@ -874,6 +895,63 @@ public class GUI {
 		textName.setFocusTraversable(false);
 		textName.setStyle("-fx-text-fill:  #663F15;");
 		textName.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
+
+		if(option.equals("Import/Export Students")){
+			messagePane.setPrefSize(513, 40);
+			textName.setPrefWidth(150);
+
+			GridPane XMLSituationPane = new GridPane();
+			XMLSituationPane.setHgap(10);
+			XMLSituationPane.setPadding(new Insets(8, 0, 0, 0));
+
+			if(number == 1){
+				pathImport = new TextField("Path Import");
+				pathImport.setEditable(false);
+				pathImport.setPrefSize(185,10);
+
+				XMLSituationPane.add(pathImport,0,0);
+			}
+			if(number == 2){
+				pathExport = new TextField("Path Export");
+				pathExport.setEditable(false);
+				pathExport.setPrefSize(185,10);
+
+				XMLSituationPane.add(pathExport,0,0);
+			}
+
+
+
+			GridPane buttonPane = new GridPane();
+			buttonPane.setHgap(5);
+			buttonPane.setPadding(new Insets(8, 0, 0, 0));
+
+			Button buttonLoad = new Button("Load");
+			buttonLoad.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
+			buttonLoad.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
+			buttonLoad.setPrefSize(50, 15);
+
+
+			Button buttonSave = new Button("Save");
+			buttonSave.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
+			buttonSave.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
+			buttonSave.setPrefSize(50, 15);
+
+
+			if(number == 1){
+				buttonLoad.setOnAction(new ButtonLoadImportPath(this));
+				buttonSave.setOnAction(new ButtonSaveExport(this,"ExportStudents"));
+			}
+			if(number == 2){
+				buttonLoad.setOnAction(new ButtonLoadExportPath(this));
+				buttonSave.setOnAction(new ButtonSaveImport(this,"ImportStudents"));
+			}
+
+			buttonPane.add(buttonLoad,0,0);
+			buttonPane.add(buttonSave,2,0);
+
+			messagePane.add(XMLSituationPane,5,0);
+			messagePane.add(buttonPane,6,0);
+		}
 
 		if (option.equals("Students")) {
 			GridPane gpData = new GridPane();

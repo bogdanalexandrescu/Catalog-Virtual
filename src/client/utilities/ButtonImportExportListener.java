@@ -17,6 +17,6 @@ public class ButtonImportExportListener implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        gui.loginScreen(gui.getBp());
+        gui.getProcessor().getClient().sendMessage("SeeImportExport");
     }
 }

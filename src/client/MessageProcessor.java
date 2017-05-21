@@ -190,6 +190,18 @@ public class MessageProcessor {
 
         }
 
+        if(message.equals("SeeImportExport"))
+        {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // Update UI here.
+                    gui.teacherMode(gui.getBp(),6,"Import/Export Students");
+                }
+            });
+
+        }
+
         if(message.equals("Note: wrong date or invalid date format (dd/MM/yyyy)"))
         {
             Platform.runLater(new Runnable() {
