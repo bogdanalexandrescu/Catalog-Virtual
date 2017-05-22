@@ -26,7 +26,10 @@ public class ButtonAddAdmin implements EventHandler<ActionEvent> {
 			gui.getProcessor().getClient().sendMessage(gui.getAddName().getText());
 			gui.getProcessor().getClient().sendMessage(gui.getAddPass().getText());
 			gui.getProcessor().getClient().sendMessage(gui.getAddSubject().getText());
+		} else if (string.equals("addStudent")) {
+			gui.getProcessor().getClient().sendMessage("addStudentInterfeceAdmin");
+
 		}
-		System.out.println("buba1");
+
 	}
 }

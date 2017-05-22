@@ -4,21 +4,16 @@ import java.util.ArrayList;
 
 import client.utilities.*;
 import javafx.collections.FXCollections;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -56,6 +51,30 @@ public class GUI {
 	private TextField pathExport;
 	private TextField pathImport;
 	private TextField studentExport;
+	private ArrayList<String> subjects;
+	private ArrayList<CheckBox> cbs;
+
+	public ArrayList<CheckBox> getCbs() {
+		return cbs;
+	}
+
+	public void setCbs(ArrayList<CheckBox> cbs) {
+		this.cbs = cbs;
+	}
+
+	public ArrayList<String> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(ArrayList<String> subjects) {
+		this.subjects = subjects;
+		System.out.println(subjects);
+		cbs = new ArrayList<CheckBox>();
+
+		for(int i = 1 ; i < subjects.size(); i++){
+			cbs.add(new CheckBox(subjects.get(i)));
+		}
+	}
 
 	public TextField getPathImport() {
 		return pathImport;
@@ -412,10 +431,19 @@ public class GUI {
 					rankingTopInitialization("#008FE9", "Option", "Path", "", "Load", "Save", 515, "HeadmasterStudents"), 0,
 					0);
 		}
+		if (presentation == 7) {
+			tableBar.add(
+					rankingTopInitialization("#008FE9", "Name", "", "", "Edit", "Delete", 515, "HeadmasterStudents"), 0,
+					0);
+		}
 
 		GridPane vboxTable = new GridPane();
 		if (presentation == 1) {
 			vboxTable.setPrefSize(400, 390);
+		} else if(presentation == 7){
+
+			vboxTable.setPrefSize(400, 150);
+
 		} else {
 			vboxTable.setPrefSize(400, 300);
 		}
@@ -478,10 +506,16 @@ public class GUI {
 
 			VBox boxAdd = new VBox();
 			// boxAdd.setPrefSize(400,30);
-			if (title.equals("Students")) {
-				vboxAdd.add(rankingTopInitialization("#008FE9", "Option", "Options", "", "Name", "Add", 430, ""), 0, 0);
-				addOption(boxAdd, "#C1DCFE", "Add Student", "Add");
-
+			if (title.equals("Students") ) {
+				if(presentation == 7){
+					vboxAdd.add(rankingTopInitialization("#008FE9", "Add Student", "Options", "", "Name", "Add", 430, ""), 0, 0);
+					boxAdd.setPrefSize(430,300);
+					addOption(boxAdd, "#C1DCFE", "Add Student", "7");
+				}
+				else{
+					vboxAdd.add(rankingTopInitialization("#008FE9", "Option", "Options", "", "Name", "Add", 430, ""), 0, 0);
+					addOption(boxAdd, "#C1DCFE", "Add Student", "Add");
+				}
 			}
 			if (title.equals("Situation of Students")) {
 				vboxAdd.add(rankingTopInitialization("#008FE9", "Option", "Options", "Name", "Path", "Options", 430, "StudentSituation"), 0, 0);
@@ -741,10 +775,16 @@ public class GUI {
 		messagePane.setVgap(5);
 		messagePane.setStyle("-fx-background-color: " + color + ";");
 
-		Label textRanking = new Label("Nr");
-		textRanking.setFocusTraversable(false);
-		textRanking.setStyle("-fx-text-fill:  #ffffff;");
-		textRanking.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
+
+		if(!stringMark.equals("Add Student")){
+			Label textRanking = new Label("Nr");
+			textRanking.setFocusTraversable(false);
+			textRanking.setStyle("-fx-text-fill:  #ffffff;");
+			textRanking.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
+			messagePane.add(textRanking, 1, 0);
+		}
+
+
 
 		Label textMark = new Label(stringMark);
 		textMark.setFocusTraversable(false);
@@ -837,7 +877,7 @@ public class GUI {
 			}
 		}
 
-		messagePane.add(textRanking, 1, 0);
+
 		messagePane.add(textMark, 3, 0);
 
 		return messagePane;
@@ -849,6 +889,13 @@ public class GUI {
 		if (option.equals("Students")) {
 			for (int i = 1; i < students.size(); i++) {
 				rankInitialization(vbox, i, "#C1DCFE", students.get(i), "", "M", "A", "S", option);
+
+			}
+		}
+		if (option.equals("addStudentInterface")) {
+			for (int i = 1; i < students.size(); i++) {
+				rankInitialization(vbox, i, "#C1DCFE", students.get(i), "", "M", "A", "S", option);
+
 			}
 		}
 		if (option.equals("SeeTeachers")) {
@@ -1102,7 +1149,7 @@ public class GUI {
 			// messagePane.add(gpMark,5,0);
 		}
 
-		if (option.equals("SeeStudents")) {
+		if (option.equals("SeeStudents") || option.equals("addStudentInterface")) {
 
 			textName.setPrefWidth(295);
 
@@ -1162,102 +1209,165 @@ public class GUI {
 		messagePane.setVgap(5);
 		messagePane.setStyle("-fx-background-color: " + color + ";");
 
-		Label textRanking = new Label("1");
-		textRanking.setPadding(new Insets(5, 0, 0, 0));
-		textRanking.setFocusTraversable(false);
-		textRanking.setStyle("-fx-text-fill:  #663F15;");
-		textRanking.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
+		if(buttonOne.equals("7")){
+			GridPane studentData = new GridPane();
+			studentData.setHgap(10);
+			studentData.setPadding(new Insets(8, 0, 0, 65));
 
-		Label textOption = new Label(option);
-		if(option.equals("Export XML Situation")) textOption.setText("Export");
-		textOption.setPadding(new Insets(5, 0, 0, 20));
-		textOption.setFocusTraversable(false);
-		textOption.setStyle("-fx-text-fill:  #663F15;");
-		textOption.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
+			addName = new TextField();
+			addName.setPrefSize(130, 10);
+			addName.setPromptText("Last Name");
+			addName.setOnKeyPressed(new EnterKeyAddStudentListener(this));
+			addSubject = new TextField();
+			addSubject.setPrefSize(130, 10);
+			addSubject.setPromptText("First Name");
+			addSubject.setOnKeyPressed(new EnterKeyAddStudentListener(this));
 
-		GridPane optionsTeacherPane = new GridPane();
-		optionsTeacherPane.setHgap(10);
-		optionsTeacherPane.setPadding(new Insets(8, 0, 0, 0));
+			studentData.add(addName, 0, 0);
+			studentData.add(addSubject, 2, 0);
 
-		addName = new TextField();
-		addName.setPrefSize(57, 10);
-		addPass = new PasswordField();
-		addPass.setPrefSize(57, 10);
-		addSubject = new TextField();
-		addSubject.setPrefSize(57, 10);
 
-		optionsTeacherPane.add(addName,0,0);
-		optionsTeacherPane.add(addPass,1,0);
-		optionsTeacherPane.add(addSubject,2,0);
 
-		GridPane buttonsPane = new GridPane();
-		buttonsPane.setPadding(new Insets(8, 0, 0, 0));
 
-		Button buttonAbcecnce = new Button(buttonOne);
-		buttonAbcecnce.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
-		buttonAbcecnce.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
-		buttonAbcecnce.setPrefSize(60, 15);
-		if(option.equals("Export XML Situation")){
-			GridPane XMLSituationPane = new GridPane();
-			XMLSituationPane.setHgap(10);
-			XMLSituationPane.setPadding(new Insets(8, 0, 0, 0));
+			FlowPane flowPane = new FlowPane();
+			flowPane.setPadding(new Insets(5,0,0,0));
+			flowPane.setVgap(10);
+			flowPane.setHgap(10);
 
-			studentExport = new TextField();
-			studentExport.setPrefSize(74,10);
 
-			pathExport = new TextField("Path");
-			pathExport.setEditable(false);
-			pathExport.setPrefSize(110,10);
 
-			XMLSituationPane.add(studentExport,0,0);
-			XMLSituationPane.add(pathExport,1,0);
+			for(int i = 0 ; i < subjects.size() - 1; i++){
+				flowPane.getChildren().add(cbs.get(i));
+				cbs.get(i).setOnKeyPressed(new EnterKeyAddSubjectListener(this,i));
+			}
 
 			GridPane buttonPane = new GridPane();
-			buttonPane.setHgap(5);
-			buttonPane.setPadding(new Insets(8, 0, 0, 0));
+			buttonPane.setHgap(10);
+			buttonPane.setPadding(new Insets(15, 0, 10, 120));
 
-			Button buttonLoad = new Button("Load");
+			Button buttonLoad = new Button("Next");
 			buttonLoad.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
 			buttonLoad.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
-			buttonLoad.setPrefSize(50, 15);
-			buttonLoad.setOnAction(new ButtonLoadExportPath(this));
+			buttonLoad.setPrefSize(80, 15);
+			buttonLoad.setOnAction(new ButtonNextStudent(this));
+			buttonLoad.setOnKeyPressed(new EnterKeyAddStudentListener(this));
 
-			Button buttonSave = new Button("Save");
+
+			Button buttonSave = new Button("Finish");
 			buttonSave.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
 			buttonSave.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
-			buttonSave.setPrefSize(50, 15);
-			buttonSave.setOnAction(new ButtonSaveExport(this,"ExportSituation"));
+			buttonSave.setPrefSize(80, 15);
 
-			buttonPane.add(buttonLoad,0,0);
-			buttonPane.add(buttonSave,1,0);
 
-			messagePane.add(XMLSituationPane, 3, 0);
-			messagePane.add(buttonPane, 4, 0);
+			buttonPane.add(buttonLoad, 0, 0);
+			buttonPane.add(buttonSave, 1, 0);
+
+
+			messagePane.add(studentData, 1, 0);
+			messagePane.add(flowPane,1,1);
+			messagePane.add(buttonPane, 1, 2);
 		}
-		if (option.equals("Add Subject")) {
-			buttonAbcecnce.setOnAction(new ButtonAddAdmin(this, "addSubject"));
+		else {
 
-			HBox namePane = new HBox();
-			namePane.setPadding(new Insets(8, 0, 0, 90));
-			namePane.getChildren().add(addName);
-			addName.setPrefSize(100, 10);
+			Label textRanking = new Label("1");
+			textRanking.setPadding(new Insets(5, 0, 0, 0));
+			textRanking.setFocusTraversable(false);
+			textRanking.setStyle("-fx-text-fill:  #663F15;");
+			textRanking.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
 
-			messagePane.add(namePane, 3, 0);
-			messagePane.add(buttonsPane, 4, 0);
-		} else if (option.equals("Add Teacher")) {
-			buttonAbcecnce.setOnAction(new ButtonAddAdmin(this, "addTeacher"));
-			messagePane.add(optionsTeacherPane,3,0);
-			messagePane.add(buttonsPane, 4, 0);
-		} else if (option.equals("Add Student")) {
+			Label textOption = new Label(option);
+			if (option.equals("Export XML Situation")) textOption.setText("Export");
+			textOption.setPadding(new Insets(5, 0, 0, 20));
+			textOption.setFocusTraversable(false);
+			textOption.setStyle("-fx-text-fill:  #663F15;");
+			textOption.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
+
+			GridPane optionsTeacherPane = new GridPane();
+			optionsTeacherPane.setHgap(10);
+			optionsTeacherPane.setPadding(new Insets(8, 0, 0, 0));
+
+			addName = new TextField();
+			addName.setPrefSize(57, 10);
+			addPass = new PasswordField();
+			addPass.setPrefSize(57, 10);
+			addSubject = new TextField();
+			addSubject.setPrefSize(57, 10);
+
+			optionsTeacherPane.add(addName, 0, 0);
+			optionsTeacherPane.add(addPass, 1, 0);
+			optionsTeacherPane.add(addSubject, 2, 0);
+
+			GridPane buttonsPane = new GridPane();
+			buttonsPane.setPadding(new Insets(8, 0, 0, 0));
+
+			Button buttonAbcecnce = new Button(buttonOne);
+			buttonAbcecnce.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
+			buttonAbcecnce.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
+			buttonAbcecnce.setPrefSize(60, 15);
+			if (option.equals("Export XML Situation")) {
+				GridPane XMLSituationPane = new GridPane();
+				XMLSituationPane.setHgap(10);
+				XMLSituationPane.setPadding(new Insets(8, 0, 0, 0));
+
+				studentExport = new TextField();
+				studentExport.setPrefSize(74, 10);
+
+				pathExport = new TextField("Path");
+				pathExport.setEditable(false);
+				pathExport.setPrefSize(110, 10);
+
+				XMLSituationPane.add(studentExport, 0, 0);
+				XMLSituationPane.add(pathExport, 1, 0);
+
+				GridPane buttonPane = new GridPane();
+				buttonPane.setHgap(5);
+				buttonPane.setPadding(new Insets(8, 0, 0, 0));
+
+				Button buttonLoad = new Button("Load");
+				buttonLoad.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
+				buttonLoad.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
+				buttonLoad.setPrefSize(50, 15);
+				buttonLoad.setOnAction(new ButtonLoadExportPath(this));
+
+				Button buttonSave = new Button("Save");
+				buttonSave.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
+				buttonSave.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
+				buttonSave.setPrefSize(50, 15);
+				buttonSave.setOnAction(new ButtonSaveExport(this, "ExportSituation"));
+
+				buttonPane.add(buttonLoad, 0, 0);
+				buttonPane.add(buttonSave, 1, 0);
+
+				messagePane.add(XMLSituationPane, 3, 0);
+				messagePane.add(buttonPane, 4, 0);
+			}
+			if (option.equals("Add Subject")) {
+				buttonAbcecnce.setOnAction(new ButtonAddAdmin(this, "addSubject"));
+
+				HBox namePane = new HBox();
+				namePane.setPadding(new Insets(8, 0, 0, 90));
+				namePane.getChildren().add(addName);
+				addName.setPrefSize(100, 10);
+
+				messagePane.add(namePane, 3, 0);
+				messagePane.add(buttonsPane, 4, 0);
+			} else if (option.equals("Add Teacher")) {
+				buttonAbcecnce.setOnAction(new ButtonAddAdmin(this, "addTeacher"));
+				messagePane.add(optionsTeacherPane, 3, 0);
+				messagePane.add(buttonsPane, 4, 0);
+			} else if (option.equals("Add Student")) {
+				buttonAbcecnce.setOnAction(new ButtonAddAdmin(this, "addStudent"));
+				messagePane.add(buttonsPane, 22, 0);
+			}
+
+			buttonsPane.add(buttonAbcecnce, 0, 0);
+			messagePane.add(textRanking, 1, 0);
+			messagePane.add(textOption, 2, 0);
 
 		}
-		buttonsPane.add(buttonAbcecnce, 0, 0);
-		messagePane.add(textRanking, 1, 0);
-		messagePane.add(textOption, 2, 0);
-
-
 
 		discution.getChildren().add(messagePane);
+
 
 	}
 

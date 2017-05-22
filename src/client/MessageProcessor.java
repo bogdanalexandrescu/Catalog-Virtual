@@ -112,6 +112,25 @@ public class MessageProcessor {
             });
 
         }
+        if(message.get(0).equals("addStudentInterface"))
+        {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // Update UI here.
+
+                    gui.teacherMode(gui.getBp(),7,"Students");
+                    gui.setStudents(message);
+
+                }
+            });
+
+        }
+        if(message.get(0).equals("addSubjectInterface"))
+        {
+            gui.setSubjects(message);
+
+        }
         if(message.get(0).equals("SituationOfStudents"))
         {
             Platform.runLater(new Runnable() {

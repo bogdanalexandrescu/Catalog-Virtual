@@ -276,6 +276,15 @@ public class TeacherThread implements Runnable {
 					sendMessage(data);
 
 				}
+				if (message.equals("addStudentInterfeceAdmin")) {
+					ArrayList<String> data = new ArrayList<String>();
+					data = db.selectNumeElevi();
+					data.add(0, "addStudentInterface");
+					sendMessage(data);
+					data = db.selectNumeMaterii();
+					data.add(0, "addSubjectInterface");
+					sendMessage(data);
+				}
                 if (message.equals("SituationOfStudents")) {
 
                     ArrayList<String> data = new ArrayList<String>();
@@ -283,6 +292,33 @@ public class TeacherThread implements Runnable {
                     data.add(0, "SituationOfStudents");
                     sendMessage(data);
                 }
+				if (message.equals("Add Student")) {
+
+					String name = (String) readMessage();
+					db.insertElevi(name);
+					ArrayList<String> data = ( ArrayList<String> ) readMessage();
+					for(int i = 0; i < data.size(); i++){
+						db.insertElevMaterie(name,data.get(i));
+					}
+
+					data = db.selectNumeElevi();
+					data.add(0, "addStudentInterface");
+					sendMessage(data);
+					data = db.selectNumeMaterii();
+					data.add(0, "addSubjectInterface");
+					sendMessage(data);
+				}
+				if (message.equals("Add Student Simple")) {
+
+					String name = (String) readMessage();
+					db.insertElevi(name);
+					ArrayList<String> data = db.selectNumeElevi();
+					data.add(0, "addStudentInterface");
+					sendMessage(data);
+					data = db.selectNumeMaterii();
+					data.add(0, "addSubjectInterface");
+					sendMessage(data);
+				}
 				if (message.equals("Delete")) {
 				    String headmasterName = (String) readMessage();
 					String name = (String) readMessage();

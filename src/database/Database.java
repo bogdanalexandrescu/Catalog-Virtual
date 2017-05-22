@@ -1204,6 +1204,7 @@ public class Database {
 		//db.insertElevi("Sposib Teodor");
 		//db.insertElevMaterie("Sposib Teodor","Matematica");
 		//db.insertElevMaterie("Sposib Teodor","Psihologie");
+
 	}
 
 	private static Connection getDBConnection() {
