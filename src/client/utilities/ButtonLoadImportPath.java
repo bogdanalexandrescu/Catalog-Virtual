@@ -3,6 +3,8 @@ package client.utilities;
 import client.GUI;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
  * Created by teo on 21.05.2017.
@@ -10,7 +12,7 @@ import javafx.event.EventHandler;
 public class ButtonLoadImportPath implements EventHandler<ActionEvent> {
 
     private GUI gui;
-
+    private FileChooser fc;
 
 
     public ButtonLoadImportPath(GUI gui) {
@@ -22,7 +24,11 @@ public class ButtonLoadImportPath implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        gui.setPathImport("C/Teo/Import");
-
+        fc = new FileChooser();
+        fc.setTitle("Select a file to load datas");
+        String path;
+        path = fc.showOpenDialog(new Stage()).getAbsolutePath().replace("\\","\\\\");
+        System.out.println(path);
+        gui.setPathImport(path);
     }
 }

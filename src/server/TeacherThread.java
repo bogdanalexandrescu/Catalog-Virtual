@@ -1,7 +1,9 @@
 package server;
 
 import database.Database;
+import server.utilities.XMLConvert;
 
+import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -43,6 +45,7 @@ public class TeacherThread implements Runnable {
 			input = new ObjectInputStream(socket.getInputStream());
 			output = new ObjectOutputStream(socket.getOutputStream());
 			output.flush();
+			XMLConvert xml = new XMLConvert();
 
 			Object message = "";
 
@@ -52,6 +55,31 @@ public class TeacherThread implements Runnable {
 
 				// sendMessage("Say something except Finish");
 				message = readMessage();
+				if (message.equals("ExportStudents")) {
+					String fileUrl = (String) readMessage();
+					xml.convertStudentsToXML(fileUrl);
+				}
+
+				if (message.equals("ExportSituation")) {
+					String nume = (String) readMessage();
+					String fileUrl = (String) readMessage();
+					xml.convertRaporStudentToXML(nume, fileUrl);
+				}
+
+				if (message.equals("ImportStudents")) {
+					ArrayList<String> data = new ArrayList<String>();
+					data.add(0, "ImportStudents");
+					String fileUrl = (String) readMessage();
+					try {
+						xml.insertStudentsFromXML(fileUrl);
+						data.add("Import Reusit");
+					} catch (JAXBException e) {
+						// TODO Auto-generated catch block
+						data.add("Import nereusit");
+						e.printStackTrace();
+					}
+					sendMessage(data);
+				}
 
 				if (message.equals("Login")) {
 
@@ -344,7 +372,7 @@ public class TeacherThread implements Runnable {
 					String subject = (String) readMessage();
 					String date = (String) readMessage();
 					if(checkData(date)){
-						db.deleteNotaElev(name,subject,10,date);
+						db.deleteNotaElev(name,subject,date);
 						ArrayList<String> data = new ArrayList<String>();
 						data.add("SendStudentName");
 						data.add(name);

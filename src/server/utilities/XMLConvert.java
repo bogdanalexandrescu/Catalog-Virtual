@@ -3,11 +3,11 @@ package server.utilities;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.UnmarshalException;
 import javax.xml.bind.Unmarshaller;
 
 import database.Database;
@@ -18,11 +18,11 @@ import server.StudentsWrapper;
 import server.Subject;
 
 public class XMLConvert {
-	public void convertRaporStudentToXML(String nume) {
+	public void convertRaporStudentToXML(String nume, String path) {
 		Database db = new Database();
 		try {
 			Student student = db.selectRaportElev(nume);
-			File file = new File("C:\\Users\\Bogdan\\Desktop\\file.xml");
+			File file = new File(path);
 			JAXBContext jaxbContext = JAXBContext.newInstance(Student.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
@@ -39,18 +39,19 @@ public class XMLConvert {
 		}
 	}
 
-	public void insertStudentsFromXML(String fileURL) {
+	public void insertStudentsFromXML(String fileURL) throws JAXBException {
 		StudentsWrapper sw = null;
 		Database db = new Database();
-		try {
 
-			File file = new File(fileURL);
-			JAXBContext jaxbContext = JAXBContext.newInstance(StudentsWrapper.class);
+		File file = new File(fileURL);
+		JAXBContext jaxbContext = JAXBContext.newInstance(StudentsWrapper.class);
 
-			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			sw = (StudentsWrapper) jaxbUnmarshaller.unmarshal(file);
-			for (Student s : sw.getStudents()) {
+		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+		sw = (StudentsWrapper) jaxbUnmarshaller.unmarshal(file);
+		for (Student s : sw.getStudents()) {
+			try {
 				db.insertElevi(s.getName());
+
 				for (Subject sb : s.getSubjects()) {
 					db.insertElevMaterie(s.getName(), sb.getName());
 					for (Mark m : sb.getMarks()) {
@@ -60,17 +61,15 @@ public class XMLConvert {
 						db.insertAbsentaElevWithDate(s.getName(), sb.getName(), a.getData());
 					}
 				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		} catch (SQLException sql) {
-			sql.printStackTrace();
 		}
 
 	}
 
-	public void convertStudentsToXML() {
+	public void convertStudentsToXML(String fileUrl) {
 		StudentsWrapper sw = new StudentsWrapper();
 		Database db = new Database();
 
@@ -82,7 +81,7 @@ public class XMLConvert {
 				students.add(db.selectRaportElev(nume));
 			}
 			sw.setStudents(students);
-			File file = new File("C:\\Users\\Bogdan\\Desktop\\file.xml");
+			File file = new File(fileUrl);
 			JAXBContext jaxbContext = JAXBContext.newInstance(StudentsWrapper.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 

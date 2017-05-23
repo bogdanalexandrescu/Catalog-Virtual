@@ -47,6 +47,16 @@ public class MessageProcessor {
     }
     private void processArrayListString(ArrayList<String> message)
     {
+        if (message.get(0).equals("ImportStudents")) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // Update UI here.
+                    gui.setPathImport(message.get(1));
+                }
+            });
+        }
+
         if(message.get(0).equals("Teacher"))
         {
             Platform.runLater(new Runnable() {
