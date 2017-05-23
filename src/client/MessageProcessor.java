@@ -126,6 +126,47 @@ public class MessageProcessor {
             });
 
         }
+        if(message.get(0).equals("editStudentsInterface"))
+        {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // Update UI here.
+
+                    gui.teacherMode(gui.getBp(),8,"Students");
+                    gui.setStudents(message);
+
+
+                }
+            });
+
+        }
+        if(message.get(0).equals("SendStudentName"))
+        {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // Update UI here.
+                    gui.getAddName().setText(message.get(1));
+
+                }
+            });
+
+        }
+        if(message.get(0).equals("editStudentInterface"))
+        {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // Update UI here.
+
+                    gui.setSubjects(message);
+
+
+                }
+            });
+
+        }
         if(message.get(0).equals("addSubjectInterface"))
         {
             gui.setSubjects(message);
@@ -285,7 +326,6 @@ public class MessageProcessor {
             });
 
         }
-
 
 
     }

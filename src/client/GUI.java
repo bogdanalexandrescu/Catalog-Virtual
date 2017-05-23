@@ -53,6 +53,24 @@ public class GUI {
 	private TextField studentExport;
 	private ArrayList<String> subjects;
 	private ArrayList<CheckBox> cbs;
+	private TextField deleteMarkAbsence;
+	private TextField nameStudent;
+
+	public TextField getNameStudent() {
+		return nameStudent;
+	}
+
+	public void setNameStudent(String nameStudent) {
+		this.nameStudent.setText(nameStudent);
+	}
+
+	public TextField getDeleteMarkAbsence() {
+		return deleteMarkAbsence;
+	}
+
+	public void setDeleteMarkAbsence(TextField deleteMarkAbsence) {
+		this.deleteMarkAbsence = deleteMarkAbsence;
+	}
 
 	public ArrayList<CheckBox> getCbs() {
 		return cbs;
@@ -69,6 +87,7 @@ public class GUI {
 	public void setSubjects(ArrayList<String> subjects) {
 		this.subjects = subjects;
 		System.out.println(subjects);
+		System.out.print("1111111111");
 		cbs = new ArrayList<CheckBox>();
 
 		for(int i = 1 ; i < subjects.size(); i++){
@@ -287,6 +306,7 @@ public class GUI {
 		primaryStage.setTitle("Catalog Virtual");
 		primaryStage.setResizable(false);
 		primaryStage.show();
+		primaryStage.setOnHiding(new ButtonCloseWindowListener(this));
 	}
 
 	public void loginScreen(BorderPane bp) {
@@ -401,6 +421,8 @@ public class GUI {
 		textTitle.setWrapText(true);
 		textTitle.setFont(Font.font("Courier New", FontWeight.BOLD, 35));
 		textTitle.setTextFill(Color.web("008FE9"));
+		deleteMarkAbsence = new TextField();
+		nameStudent = new TextField();
 
 		GridPane tableBar = new GridPane();
 		tableBar.setPadding(new Insets(50, 0, 0, 55));
@@ -431,16 +453,22 @@ public class GUI {
 					rankingTopInitialization("#008FE9", "Option", "Path", "", "Load", "Save", 515, "HeadmasterStudents"), 0,
 					0);
 		}
-		if (presentation == 7) {
+		if (presentation == 7 || presentation == 8) {
 			tableBar.add(
 					rankingTopInitialization("#008FE9", "Name", "", "", "Edit", "Delete", 515, "HeadmasterStudents"), 0,
 					0);
 		}
 
+
 		GridPane vboxTable = new GridPane();
 		if (presentation == 1) {
 			vboxTable.setPrefSize(400, 390);
-		} else if(presentation == 7){
+		} else if(presentation == 8){
+
+			vboxTable.setPrefSize(400, 150);
+
+		}
+		else if(presentation == 7){
 
 			vboxTable.setPrefSize(400, 150);
 
@@ -507,6 +535,12 @@ public class GUI {
 			VBox boxAdd = new VBox();
 			// boxAdd.setPrefSize(400,30);
 			if (title.equals("Students") ) {
+				if(presentation == 8){
+					vboxAdd.add(rankingTopInitialization("#008FE9", "Edit Student", "Options", "", "Name", "Add", 430, ""), 0, 0);
+					boxAdd.setPrefSize(430,300);
+					addOption(boxAdd, "#C1DCFE", "Add Student", "8");
+				}
+				else
 				if(presentation == 7){
 					vboxAdd.add(rankingTopInitialization("#008FE9", "Add Student", "Options", "", "Name", "Add", 430, ""), 0, 0);
 					boxAdd.setPrefSize(430,300);
@@ -776,7 +810,7 @@ public class GUI {
 		messagePane.setStyle("-fx-background-color: " + color + ";");
 
 
-		if(!stringMark.equals("Add Student")){
+		if(!stringMark.equals("Add Student") && !stringMark.equals("Edit Student")){
 			Label textRanking = new Label("Nr");
 			textRanking.setFocusTraversable(false);
 			textRanking.setStyle("-fx-text-fill:  #ffffff;");
@@ -893,6 +927,12 @@ public class GUI {
 			}
 		}
 		if (option.equals("addStudentInterface")) {
+			for (int i = 1; i < students.size(); i++) {
+				rankInitialization(vbox, i, "#C1DCFE", students.get(i), "", "M", "A", "S", option);
+
+			}
+		}
+		if (option.equals("editStudentsInterface")) {
 			for (int i = 1; i < students.size(); i++) {
 				rankInitialization(vbox, i, "#C1DCFE", students.get(i), "", "M", "A", "S", option);
 
@@ -1149,7 +1189,7 @@ public class GUI {
 			// messagePane.add(gpMark,5,0);
 		}
 
-		if (option.equals("SeeStudents") || option.equals("addStudentInterface")) {
+		if (option.equals("SeeStudents") || option.equals("addStudentInterface") || option.equals("editStudentsInterface")) {
 
 			textName.setPrefWidth(295);
 
@@ -1162,6 +1202,7 @@ public class GUI {
 			buttonMark.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
 			buttonMark.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
 			buttonMark.setPrefSize(65, 15);
+			buttonMark.setOnAction(new ButtonEditStudent(this, name));
 
 			Button buttonAbcecnce = new Button("Delete");
 			buttonAbcecnce.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
@@ -1209,12 +1250,113 @@ public class GUI {
 		messagePane.setVgap(5);
 		messagePane.setStyle("-fx-background-color: " + color + ";");
 
+		if(buttonOne.equals("8")){
+			GridPane studentData = new GridPane();
+			studentData.setHgap(10);
+			studentData.setPadding(new Insets(8, 0, 0, 0));
+
+			nameStudent.setPrefWidth(200);
+			nameStudent.setPromptText("Name");
+			nameStudent.setText(addName.getText());
+
+
+			studentData.add(nameStudent, 0, 0);
+
+			FlowPane flowPane = new FlowPane();
+			flowPane.setPadding(new Insets(5,0,0,0));
+			flowPane.setVgap(10);
+			flowPane.setHgap(10);
+
+			HBox hbox = new HBox();
+			hbox.setSpacing(50);
+
+
+			addSubject.setPrefWidth(200);
+			addSubject.setPromptText("Subject");
+
+			GridPane buttonsPane = new GridPane();
+			buttonsPane.setHgap(5);
+
+
+			Button buttonAbcecnce = new Button("Add");
+			buttonAbcecnce.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
+			buttonAbcecnce.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
+			buttonAbcecnce.setPrefSize(80, 15);
+			buttonAbcecnce.setOnAction(new ButtonOptionsStudents(this, nameStudent.getText(),"addSubject"));
+
+			Button buttonDelete = new Button("Delete");
+			buttonDelete.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
+			buttonDelete.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
+			buttonDelete.setPrefSize(80, 15);
+			buttonDelete.setOnAction(new ButtonOptionsStudents(this, nameStudent.getText(),"deleteSubject"));
+
+			buttonsPane.add(buttonAbcecnce,0,0);
+			buttonsPane.add(buttonDelete,1,0);
+
+			hbox.getChildren().add(addSubject);
+			hbox.getChildren().add(buttonsPane);
+
+			HBox hbox1 = new HBox();
+			hbox1.setSpacing(50);
+
+			deleteMarkAbsence.setPrefWidth(200);
+			deleteMarkAbsence.setPromptText("Date format dd/mm/yyyy");
+
+			GridPane buttonPane = new GridPane();
+			buttonPane.setHgap(5);
+
+
+			Button buttonMark = new Button("Mark");
+			buttonMark.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
+			buttonMark.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
+			buttonMark.setPrefSize(80, 15);
+			buttonMark.setOnAction(new ButtonOptionsStudents(this, nameStudent.getText(),"deleteMark"));
+
+			Button buttonAbssence = new Button("Absence");
+			buttonAbssence.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
+			buttonAbssence.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
+			buttonAbssence.setPrefSize(80, 15);
+			buttonAbssence.setOnAction(new ButtonOptionsStudents(this, nameStudent.getText(),"deleteAbsence"));
+
+			buttonPane.add(buttonMark,0,0);
+			buttonPane.add(buttonAbssence,1,0);
+
+			hbox1.getChildren().add(deleteMarkAbsence);
+			hbox1.getChildren().add(buttonPane);
+
+
+			for(int i = 0 ; i < subjects.size() - 1; i++){
+				flowPane.getChildren().add(cbs.get(i));
+				cbs.get(i).setOnKeyPressed(new EnterKeyAddSubjectListener(this,i));
+				cbs.get(i).setSelected(true);
+				cbs.get(i).setDisable(true);
+			}
+
+			GridPane finishPane = new GridPane();
+			finishPane.setPadding(new Insets(8, 0, 8, 160));
+
+			Button buttonFinish = new Button("Finish");
+			buttonFinish.setFont(Font.font("Courier New", FontWeight.BOLD, 14));
+			buttonFinish.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
+			buttonFinish.setPrefSize(90, 15);
+			buttonFinish.setOnAction(new ButtonOptionsStudents(this, nameStudent.getText(),"FinishEditStudent"));
+
+			finishPane.add(buttonFinish,0,0);
+
+			messagePane.add(studentData, 1, 0);
+			messagePane.add(flowPane,1,1);
+			messagePane.add(hbox,1,2);
+			messagePane.add(hbox1,1,3);
+			messagePane.add(finishPane,1,4);
+
+		}
+		else
 		if(buttonOne.equals("7")){
 			GridPane studentData = new GridPane();
 			studentData.setHgap(10);
 			studentData.setPadding(new Insets(8, 0, 0, 65));
 
-			addName = new TextField();
+
 			addName.setPrefSize(130, 10);
 			addName.setPromptText("Last Name");
 			addName.setOnKeyPressed(new EnterKeyAddStudentListener(this));
@@ -1257,6 +1399,7 @@ public class GUI {
 			buttonSave.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
 			buttonSave.setStyle("-fx-background-color: linear-gradient(orange  , orangered );-fx-text-fill:  #ffffff;");
 			buttonSave.setPrefSize(80, 15);
+			buttonSave.setOnAction(new ButtonEditStudentListener(this));
 
 
 			buttonPane.add(buttonLoad, 0, 0);
@@ -1266,6 +1409,7 @@ public class GUI {
 			messagePane.add(studentData, 1, 0);
 			messagePane.add(flowPane,1,1);
 			messagePane.add(buttonPane, 1, 2);
+
 		}
 		else {
 
@@ -1535,6 +1679,8 @@ public class GUI {
 	}
 
 	public void displayAddMark(Stage primaryStage, String name, Subject subject) {
+
+
 
 		VBox vBox = new VBox();
 		vBox.setPrefSize(410, 350);

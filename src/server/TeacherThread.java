@@ -158,6 +158,11 @@ public class TeacherThread implements Runnable {
 					sendMessage(data);
 				}
 
+				if (message.equals("Close App")) {
+					sendMessage("Close App");
+					break;
+				}
+
 				if (message.equals("addTeacherAdmin")) {
 				    String headmasterName = (String) readMessage();
 					String name = (String) readMessage();
@@ -285,6 +290,25 @@ public class TeacherThread implements Runnable {
 					data.add(0, "addSubjectInterface");
 					sendMessage(data);
 				}
+				if (message.equals("editStudentInterfeceAdmin")) {
+					String nume = (String) readMessage();
+					ArrayList<String> data = new ArrayList<String>();
+					data.add("SendStudentName");
+					data.add(nume);
+					sendMessage(data);
+
+					data = new ArrayList<String>();
+
+					data = db.selectMateriiByElev(nume);
+					data.add(0, "editStudentInterface");
+					sendMessage(data);
+
+
+					data = db.selectNumeElevi();
+					data.add(0, "editStudentsInterface");
+					sendMessage(data);
+
+				}
                 if (message.equals("SituationOfStudents")) {
 
                     ArrayList<String> data = new ArrayList<String>();
@@ -292,6 +316,115 @@ public class TeacherThread implements Runnable {
                     data.add(0, "SituationOfStudents");
                     sendMessage(data);
                 }
+				if (message.equals("AddStudentSubject")) {
+
+					String name = (String) readMessage();
+					String subject = (String) readMessage();
+					db.insertElevMaterie(name,subject);
+
+					ArrayList<String> data = new ArrayList<String>();
+					data.add("SendStudentName");
+					data.add(name);
+					sendMessage(data);
+
+					data = new ArrayList<String>();
+
+					data = db.selectMateriiByElev(name);
+					data.add(0, "editStudentInterface");
+					sendMessage(data);
+
+
+					data = db.selectNumeElevi();
+					data.add(0, "editStudentsInterface");
+					sendMessage(data);
+				}
+				if (message.equals("DeleteStudentMark")) {
+
+					String name = (String) readMessage();
+					String subject = (String) readMessage();
+					String date = (String) readMessage();
+					if(checkData(date)){
+						db.deleteNotaElev(name,subject,10,date);
+						ArrayList<String> data = new ArrayList<String>();
+						data.add("SendStudentName");
+						data.add(name);
+						sendMessage(data);
+
+						data = new ArrayList<String>();
+
+						data = db.selectMateriiByElev(name);
+						data.add(0, "editStudentInterface");
+						sendMessage(data);
+
+
+						data = db.selectNumeElevi();
+						data.add(0, "editStudentsInterface");
+						sendMessage(data);
+					}
+
+
+				}
+				if (message.equals("DeleteStudentAbsence")) {
+
+					String name = (String) readMessage();
+					String subject = (String) readMessage();
+					String date = (String) readMessage();
+					if(checkData(date)){
+						db.deleteAbsentaElev(name,subject,date);
+						ArrayList<String> data = new ArrayList<String>();
+						data.add("SendStudentName");
+						data.add(name);
+						sendMessage(data);
+
+						data = new ArrayList<String>();
+
+						data = db.selectMateriiByElev(name);
+						data.add(0, "editStudentInterface");
+						sendMessage(data);
+
+
+						data = db.selectNumeElevi();
+						data.add(0, "editStudentsInterface");
+						sendMessage(data);
+					}
+
+
+				}
+				if (message.equals("FinishEditStudent")) {
+
+					String oldName = (String) readMessage();
+					String newName = (String) readMessage();
+					db.updateNumeElev(oldName,newName);
+					ArrayList<String> data = new ArrayList<String>();
+					data = db.selectNumeElevi();
+					data.add(0, "SeeStudents");
+					sendMessage(data);
+
+
+				}
+
+				if (message.equals("DeleteStudentSubject")) {
+
+					String name = (String) readMessage();
+					String subject = (String) readMessage();
+					db.deleteMaterieElev(name,subject);
+
+					ArrayList<String> data = new ArrayList<String>();
+					data.add("SendStudentName");
+					data.add(name);
+					sendMessage(data);
+
+					data = new ArrayList<String>();
+
+					data = db.selectMateriiByElev(name);
+					data.add(0, "editStudentInterface");
+					sendMessage(data);
+
+
+					data = db.selectNumeElevi();
+					data.add(0, "editStudentsInterface");
+					sendMessage(data);
+				}
 				if (message.equals("Add Student")) {
 
 					String name = (String) readMessage();

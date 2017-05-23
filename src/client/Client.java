@@ -71,15 +71,11 @@ public class Client {
 
 
                         message =  input.readObject();
-                        System.out.println(message);
-                        processor.process(message);
-                        if (message.equals("Thank you"))
+                        if (message.equals("Close App"))
                             break;
-                        if (message.equals("Say something except Finish")) {
-                            String line = "";
-                            line = scanner.nextLine();
-                            sendMessage(line);
-                        }
+                        processor.process(message);
+
+
 
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
