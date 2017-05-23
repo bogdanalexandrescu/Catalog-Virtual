@@ -518,6 +518,8 @@ public class GUI {
 			vboxAddGridPane.setPrefSize(400, 60);
 			vboxAddGridPane.setPadding(new Insets(0, 0, 0, 55));
 
+
+
 			GridPane backButtonPane = new GridPane();
 			backButtonPane.setPadding(new Insets(0, 0, 0, 20));
 
@@ -529,6 +531,10 @@ public class GUI {
 							+ "    -fx-background-radius: 5;");
 			buttonBack.setPrefSize(60, 25);
 			buttonBack.setOnAction(new ButtonBackListener(this));
+
+			if(presentation == 7 || presentation == 8){
+				backButtonPane.setPadding(new Insets(50, 0, 0, 20));
+			}
 
 			backButtonPane.add(buttonBack, 0, 0);
 
@@ -1026,11 +1032,12 @@ public class GUI {
 
 			if(number == 1){
 				buttonLoad.setOnAction(new ButtonLoadImportPath(this));
-				buttonSave.setOnAction(new ButtonSaveExport(this,"ExportStudents"));
+				buttonSave.setOnAction(new ButtonSaveImport(this,"ImportStudents"));
+
 			}
 			if(number == 2){
 				buttonLoad.setOnAction(new ButtonLoadExportPath(this));
-				buttonSave.setOnAction(new ButtonSaveImport(this,"ImportStudents"));
+				buttonSave.setOnAction(new ButtonSaveExport(this,"ExportStudents"));
 			}
 
 			buttonPane.add(buttonLoad,0,0);
@@ -1343,8 +1350,14 @@ public class GUI {
 
 			finishPane.add(buttonFinish,0,0);
 
+			ScrollPane scroll = new ScrollPane();
+			scroll.setContent(flowPane);
+			flowPane.setStyle("-fx-background-color: #C1DCFE;");
+			scroll.setFitToWidth(true);
+			scroll.setFitToHeight(true);
+
 			messagePane.add(studentData, 1, 0);
-			messagePane.add(flowPane,1,1);
+			messagePane.add(scroll,1,1);
 			messagePane.add(hbox,1,2);
 			messagePane.add(hbox1,1,3);
 			messagePane.add(finishPane,1,4);

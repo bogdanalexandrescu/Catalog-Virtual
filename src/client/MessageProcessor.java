@@ -38,7 +38,7 @@ public class MessageProcessor {
             processStudentAllSituation((Student) messageReceived);
             System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         }
-
+        if(messageReceived instanceof ArrayList<?> && ((ArrayList) messageReceived).size() > 1)
         if (messageReceived instanceof ArrayList<?> && ((ArrayList) messageReceived).get(0) instanceof String && ((ArrayList) messageReceived).get(1) instanceof Subject)
         {
             processStudentSituation((ArrayList<Object>) messageReceived);

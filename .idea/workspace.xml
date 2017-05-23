@@ -64,11 +64,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GUI.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="GUI.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/client/GUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="1328" column="46" selection-start-line="1328" selection-start-column="43" selection-end-line="1328" selection-end-column="46" />
+            <state relative-caret-position="259">
+              <caret line="1039" column="16" selection-start-line="1039" selection-start-column="16" selection-end-line="1039" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gui.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/client/resources/gui.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="1" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -77,18 +87,8 @@
       <file leaf-file-name="MessageProcessor.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/client/MessageProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="669">
-              <caret line="57" column="9" selection-start-line="57" selection-start-column="9" selection-end-line="57" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Client.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/client/Client.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1156">
-              <caret line="73" column="53" selection-start-line="73" selection-start-column="53" selection-end-line="73" selection-end-column="53" />
+            <state relative-caret-position="167">
+              <caret line="40" column="95" selection-start-line="40" selection-start-column="95" selection-end-line="40" selection-end-column="95" />
               <folding />
             </state>
           </provider>
@@ -97,8 +97,8 @@
       <file leaf-file-name="Database.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/database/Database.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="518">
-              <caret line="1270" column="1" selection-start-line="1270" selection-start-column="1" selection-end-line="1270" selection-end-column="1" />
+            <state relative-caret-position="144">
+              <caret line="1248" column="0" selection-start-line="1248" selection-start-column="0" selection-end-line="1248" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#13310#13318#0" expanded="true" />
@@ -114,7 +114,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TeacherThread.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TeacherThread.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/server/TeacherThread.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="134">
@@ -243,17 +243,17 @@
         <option value="$PROJECT_DIR$/src/client/utilities/ButtonEditStudent.java" />
         <option value="$PROJECT_DIR$/src/client/utilities/ButtonFinishEditStudentListener.java" />
         <option value="$PROJECT_DIR$/src/client/utilities/ButtonOptionsStudents.java" />
-        <option value="$PROJECT_DIR$/src/client/GUI.java" />
         <option value="$PROJECT_DIR$/src/client/utilities/ButtonCloseWindowListener.java" />
         <option value="$PROJECT_DIR$/src/client/Client.java" />
-        <option value="$PROJECT_DIR$/src/client/MessageProcessor.java" />
         <option value="$PROJECT_DIR$/src/client/utilities/ButtonLoadImportPath.java" />
         <option value="$PROJECT_DIR$/src/client/utilities/ButtonLoadExportPath.java" />
         <option value="$PROJECT_DIR$/src/client/utilities/ButtonSaveImport.java" />
         <option value="$PROJECT_DIR$/src/client/utilities/ButtonSaveExport.java" />
         <option value="$PROJECT_DIR$/src/server/utilities/XMLConvert.java" />
-        <option value="$PROJECT_DIR$/src/database/Database.java" />
         <option value="$PROJECT_DIR$/src/server/TeacherThread.java" />
+        <option value="$PROJECT_DIR$/src/database/Database.java" />
+        <option value="$PROJECT_DIR$/src/client/MessageProcessor.java" />
+        <option value="$PROJECT_DIR$/src/client/GUI.java" />
       </list>
     </option>
   </component>
@@ -411,7 +411,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="utilities" />
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -950,13 +950,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/resources/gui.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="45" column="26" selection-start-line="45" selection-start-column="19" selection-end-line="45" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/client/utilities/ButtonAddMark.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -1182,14 +1175,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/MessageProcessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="669">
-          <caret line="57" column="9" selection-start-line="57" selection-start-column="9" selection-end-line="57" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/client/utilities/ButtonLoadImportPath.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -1236,18 +1221,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/GUI.java">
+    <entry file="file://$PROJECT_DIR$/src/server/TeacherThread.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="1328" column="46" selection-start-line="1328" selection-start-column="43" selection-end-line="1328" selection-end-column="46" />
+        <state relative-caret-position="134">
+          <caret line="374" column="61" selection-start-line="374" selection-start-column="61" selection-end-line="374" selection-end-column="61" />
+          <folding>
+            <element signature="e#1748#1756#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/resources/gui.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="1" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/database/Database.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="518">
-          <caret line="1270" column="1" selection-start-line="1270" selection-start-column="1" selection-end-line="1270" selection-end-column="1" />
+        <state relative-caret-position="144">
+          <caret line="1248" column="0" selection-start-line="1248" selection-start-column="0" selection-end-line="1248" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#13310#13318#0" expanded="true" />
@@ -1262,13 +1257,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/TeacherThread.java">
+    <entry file="file://$PROJECT_DIR$/src/client/MessageProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="374" column="61" selection-start-line="374" selection-start-column="61" selection-end-line="374" selection-end-column="61" />
-          <folding>
-            <element signature="e#1748#1756#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="167">
+          <caret line="40" column="95" selection-start-line="40" selection-start-column="95" selection-end-line="40" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/GUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="1039" column="16" selection-start-line="1039" selection-start-column="16" selection-end-line="1039" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
