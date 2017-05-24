@@ -24,29 +24,50 @@ public class MessageProcessor {
 
     public void process(Object messageReceived) {
 
-        if (messageReceived instanceof ArrayList<?> && ((ArrayList) messageReceived).get(0) instanceof String)
-        {
-            processArrayListString((ArrayList<String>) messageReceived);
-        }
-        if (messageReceived instanceof String)
-        {
+
+
+        if (messageReceived instanceof String) {
             String message = messageReceived.toString();
             processString(message);
-        }
-        if (messageReceived instanceof Student)
-        {
+        } else if (messageReceived instanceof Student) {
+            processStudentAllSituation((Student) messageReceived);
+
+        } else if (messageReceived instanceof ArrayList<?> && ((ArrayList) messageReceived).size() > 1){
+
+                    if (messageReceived instanceof ArrayList<?> && ((ArrayList) messageReceived).get(0) instanceof String
+                            && ((ArrayList) messageReceived).get(1) instanceof Subject) {
+                        processStudentSituation((ArrayList<Object>) messageReceived);
+
+                    } else if (messageReceived instanceof ArrayList<?> && ((ArrayList) messageReceived).get(0) instanceof String) {
+                                processArrayListString((ArrayList<String>) messageReceived);
+                    }
+                }
+                else if (messageReceived instanceof ArrayList<?> && ((ArrayList) messageReceived).get(0) instanceof String) {
+                    processArrayListString((ArrayList<String>) messageReceived);
+                }
+
+
+/*
+        if (messageReceived instanceof ArrayList<?> && ((ArrayList) messageReceived).get(0) instanceof String) {
+            processArrayListString((ArrayList<String>) messageReceived);
+        } else if (messageReceived instanceof String) {
+            String message = messageReceived.toString();
+            processString(message);
+        } else if (messageReceived instanceof Student) {
             processStudentAllSituation((Student) messageReceived);
             System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        }
-        if(messageReceived instanceof ArrayList<?> && ((ArrayList) messageReceived).size() > 1)
-        if (messageReceived instanceof ArrayList<?> && ((ArrayList) messageReceived).get(0) instanceof String && ((ArrayList) messageReceived).get(1) instanceof Subject)
-        {
+        } else if (messageReceived instanceof ArrayList<?> && ((ArrayList) messageReceived).get(0) instanceof String
+                && ((ArrayList) messageReceived).get(1) instanceof Subject) {
             processStudentSituation((ArrayList<Object>) messageReceived);
         }
-
+*/
     }
-    private void processArrayListString(ArrayList<String> message)
-    {
+
+
+
+
+
+    private void processArrayListString(ArrayList<String> message) {
         if (message.get(0).equals("ImportStudents")) {
             Platform.runLater(new Runnable() {
                 @Override
@@ -57,8 +78,7 @@ public class MessageProcessor {
             });
         }
 
-        if(message.get(0).equals("Teacher"))
-        {
+        if (message.get(0).equals("Teacher")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -69,8 +89,7 @@ public class MessageProcessor {
                 }
             });
         }
-        if(message.get(0).equals("Headmaster"))
-        {
+        if (message.get(0).equals("Headmaster")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -83,76 +102,68 @@ public class MessageProcessor {
                 }
             });
         }
-        if(message.get(0).equals("Students"))
-        {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    // Update UI here.
-                    System.out.println("Afiseaza Students");
-                    gui.setStudents(message);
-                }
-            });
-        }
-        if(message.get(0).equals("SeeTeachers"))
-        {
+        if (message.get(0).equals("Students")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     // Update UI here.
 
-                    gui.teacherMode(gui.getBp(),2,"Teachers");
+                    gui.setStudents(message);
+                }
+            });
+        }
+        if (message.get(0).equals("SeeTeachers")) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // Update UI here.
+
+                    gui.teacherMode(gui.getBp(), 2, "Teachers");
                     gui.setStudents(message);
 
                 }
             });
 
         }
-        if(message.get(0).equals("SeeStudents"))
-        {
+        if (message.get(0).equals("SeeStudents")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     // Update UI here.
 
-                    gui.teacherMode(gui.getBp(),4,"Students");
+                    gui.teacherMode(gui.getBp(), 4, "Students");
                     gui.setStudents(message);
 
                 }
             });
 
         }
-        if(message.get(0).equals("addStudentInterface"))
-        {
+        if (message.get(0).equals("addStudentInterface")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     // Update UI here.
-
-                    gui.teacherMode(gui.getBp(),7,"Students");
+                    gui.teacherMode(gui.getBp(), 7, "Students");
                     gui.setStudents(message);
 
                 }
             });
 
         }
-        if(message.get(0).equals("editStudentsInterface"))
-        {
+        if (message.get(0).equals("editStudentsInterface")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     // Update UI here.
 
-                    gui.teacherMode(gui.getBp(),8,"Students");
+                    gui.teacherMode(gui.getBp(), 8, "Students");
                     gui.setStudents(message);
-
 
                 }
             });
 
         }
-        if(message.get(0).equals("SendStudentName"))
-        {
+        if (message.get(0).equals("SendStudentName")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -163,8 +174,7 @@ public class MessageProcessor {
             });
 
         }
-        if(message.get(0).equals("editStudentInterface"))
-        {
+        if (message.get(0).equals("editStudentInterface")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -172,24 +182,21 @@ public class MessageProcessor {
 
                     gui.setSubjects(message);
 
-
                 }
             });
 
         }
-        if(message.get(0).equals("addSubjectInterface"))
-        {
+        if (message.get(0).equals("addSubjectInterface")) {
             gui.setSubjects(message);
 
         }
-        if(message.get(0).equals("SituationOfStudents"))
-        {
+        if (message.get(0).equals("SituationOfStudents")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     // Update UI here.
-                    System.out.print("lala");
-                    gui.teacherMode(gui.getBp(),5,"Situation of Students");
+
+                    gui.teacherMode(gui.getBp(), 5, "Situation of Students");
                     gui.setStudents(message);
 
                 }
@@ -197,28 +204,25 @@ public class MessageProcessor {
 
         }
 
-        if(message.get(0).equals("SeeSubjects"))
-        {
+        if (message.get(0).equals("SeeSubjects")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     // Update UI here.
 
-                    gui.teacherMode(gui.getBp(),3,"Subjects");
+                    gui.teacherMode(gui.getBp(), 3, "Subjects");
                     gui.setStudents(message);
-                    System.out.println("buba3");
+
                 }
             });
 
         }
 
-        if(message.get(0).equals("AddedMark"))
-        {
+        if (message.get(0).equals("AddedMark")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     // Update UI here.
-                    System.out.println("AddedMark");
                     gui.setTextMessage("Note: successfully added mark to " + message.get(1));
                     gui.getMark().get(gui.getStudents().indexOf(message.get(1)) - 1).setText("");
                     gui.getData().get(gui.getStudents().indexOf(message.get(1)) - 1).setText("");
@@ -226,13 +230,12 @@ public class MessageProcessor {
                 }
             });
         }
-        if(message.get(0).equals("AddedAbsence"))
-        {
+        if (message.get(0).equals("AddedAbsence")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     // Update UI here.
-                    System.out.println("AddedAbsence");
+
                     gui.setTextMessage("Note: successfully added absence to " + message.get(1));
                     gui.getData().get(gui.getStudents().indexOf(message.get(1)) - 1).setText("");
                 }
@@ -241,15 +244,12 @@ public class MessageProcessor {
 
     }
 
-    private void processString(String message)
-    {
-        if(message.equals("DeclineLogin"))
-        {
+    private void processString(String message) {
+        if (message.equals("DeclineLogin")) {
             gui.setPf("");
             gui.setTxtUserName("");
         }
-        if(message.equals("Back"))
-        {
+        if (message.equals("Back")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -260,20 +260,18 @@ public class MessageProcessor {
 
         }
 
-        if(message.equals("SeeImportExport"))
-        {
+        if (message.equals("SeeImportExport")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     // Update UI here.
-                    gui.teacherMode(gui.getBp(),6,"Import/Export Students");
+                    gui.teacherMode(gui.getBp(), 6, "Import/Export Students");
                 }
             });
 
         }
 
-        if(message.equals("Note: wrong date or invalid date format (dd/MM/yyyy)"))
-        {
+        if (message.equals("Note: wrong date or invalid date format (dd/MM/yyyy)")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -283,19 +281,17 @@ public class MessageProcessor {
             });
 
         }
-        if(message.equals("AcceptLoginTeacher"))
-        {
+        if (message.equals("AcceptLoginTeacher")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     // Update UI here.
-                    gui.teacherMode(gui.getBp(),1,"Students");
+                    gui.teacherMode(gui.getBp(), 1, "Students");
                 }
             });
 
         }
-        if(message.equals("AcceptLoginHeadmaster"))
-        {
+        if (message.equals("AcceptLoginHeadmaster")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -306,8 +302,7 @@ public class MessageProcessor {
             });
 
         }
-        if(message.equals("unsuccessfully added mark"))
-        {
+        if (message.equals("unsuccessfully added mark")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -318,16 +313,15 @@ public class MessageProcessor {
 
         }
 
-        if(message.equals("Logout"))
-        {
+        if (message.equals("Logout")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     // Update UI here.
                     gui.loginScreen(gui.getBp());
-                    if(gui.getStages() != null){
+                    if (gui.getStages() != null) {
 
-                        while(!gui.getStages().isEmpty()){
+                        while (!gui.getStages().isEmpty()) {
                             Stage stage = gui.getStages().remove(gui.getStages().size() - 1);
                             stage.close();
                         }
@@ -337,42 +331,31 @@ public class MessageProcessor {
 
         }
 
-
     }
 
-    private void processStudentSituation(ArrayList<Object> message)
-    {
+    private void processStudentSituation(ArrayList<Object> message) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 // Update UI here.
                 Stage stage = new Stage();
                 gui.getStages().add(stage);
-
-                gui.displayAddMark(stage,(String) message.get(0),(Subject) message.get(1));
+                gui.displayAddMark(stage, (String) message.get(0), (Subject) message.get(1));
             }
         });
 
     }
 
-    private void processStudentAllSituation(Student message)
-    {
+    private void processStudentAllSituation(Student message) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 // Update UI here.
                 Stage stage = new Stage();
                 gui.getStages().add(stage);
-                System.out.println(message.getName());
-
-                for(int i = 0; i < message.getSubjects().size(); i++){
-                    System.out.println(message.getSubjects().get(i).getName());
-                    System.out.println(message.getSubjects().get(i).getMarks());
-                    System.out.println(message.getSubjects().get(i).getAbsences());
-                }
 
 
-               gui.displayAddMark(stage,message);
+                gui.displayAddMark(stage, message);
             }
         });
 

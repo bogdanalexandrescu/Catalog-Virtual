@@ -21,21 +21,23 @@ public class ButtonNextStudent implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        ArrayList<String> data = new ArrayList<String>();
 
-        for (int i = 0; i < gui.getCbs().size(); i++){
-            if(gui.getCbs().get(i).isSelected()){
-                data.add(gui.getSubjects().get(i + 1));
+        if(!gui.getAddName().getText().equals("") && !gui.getAddSubject().getText().equals("")) {
+            ArrayList<String> data = new ArrayList<String>();
+
+            for (int i = 0; i < gui.getCbs().size(); i++) {
+                if (gui.getCbs().get(i).isSelected()) {
+                    data.add(gui.getSubjects().get(i + 1));
+                }
             }
-        }
-        if(data.size() != 0){
-            gui.getProcessor().getClient().sendMessage("Add Student");
-            gui.getProcessor().getClient().sendMessage(gui.getAddName().getText() + " " +gui.getAddSubject().getText());
-            gui.getProcessor().getClient().sendMessage(data);
-        }
-        else{
-            gui.getProcessor().getClient().sendMessage("Add Student Simple");
-            gui.getProcessor().getClient().sendMessage(gui.getAddName().getText() + " " +gui.getAddSubject().getText());
+            if (data.size() != 0) {
+                gui.getProcessor().getClient().sendMessage("Add Student");
+                gui.getProcessor().getClient().sendMessage(gui.getAddName().getText() + " " + gui.getAddSubject().getText());
+                gui.getProcessor().getClient().sendMessage(data);
+            } else {
+                gui.getProcessor().getClient().sendMessage("Add Student Simple");
+                gui.getProcessor().getClient().sendMessage(gui.getAddName().getText() + " " + gui.getAddSubject().getText());
+            }
         }
 
     }

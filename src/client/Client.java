@@ -18,14 +18,12 @@ public class Client {
     private ObjectInputStream input;
     private ObjectOutputStream output;
     private Object message;
-    private Scanner scanner;
     private MessageProcessor processor;
 
     public Client(String IP, int port){
 
         this.IP = IP;
         this.port = port;
-        scanner = new Scanner(System.in);
         processor = new MessageProcessor(this);
 
 
@@ -104,7 +102,7 @@ public class Client {
     public void close() {
 
         try
-        {   scanner.close();
+        {
             output.close();
             input.close();
             socket.close();

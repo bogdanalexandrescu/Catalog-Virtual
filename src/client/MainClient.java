@@ -14,7 +14,7 @@ public class MainClient extends Application{
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         Client client = new Client ("localhost",9999);
         client.start();
     }

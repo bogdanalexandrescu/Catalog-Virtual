@@ -52,6 +52,7 @@ public class ButtonAddMark implements EventHandler<ActionEvent> {
             gui.getProcessor().getClient().sendMessage("AddMark");
             gui.getProcessor().getClient().sendMessage(name);
             gui.getProcessor().getClient().sendMessage(subject);
+            gui.getProcessor().getClient().sendMessage(gui.getTextNameTeacher().getText());
             gui.getProcessor().getClient().sendMessage(Integer.parseInt(gui.getMark().get(gui.getStudents().indexOf(name) - 1).getText()));
             gui.getProcessor().getClient().sendMessage(gui.getData().get(gui.getStudents().indexOf(name) - 1).getText());
         }

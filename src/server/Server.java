@@ -33,7 +33,7 @@ public class Server {
         }
     }
 
-    public void start() throws IOException {
+    public void start() {
 
         System.out.println("Waiting...");
 

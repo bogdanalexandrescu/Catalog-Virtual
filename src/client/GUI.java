@@ -86,8 +86,6 @@ public class GUI {
 
 	public void setSubjects(ArrayList<String> subjects) {
 		this.subjects = subjects;
-		System.out.println(subjects);
-		System.out.print("1111111111");
 		cbs = new ArrayList<CheckBox>();
 
 		for(int i = 1 ; i < subjects.size(); i++){
@@ -409,7 +407,8 @@ public class GUI {
 		if (presentation == 1) {
 			vbox1 = teacherPresentation();
 		} else {
-			System.out.print("yuuuuu");
+
+
 			vbox1 = headmasterPresentation();
 		}
 
@@ -490,7 +489,7 @@ public class GUI {
 		 * if(presentation != 1){ for(int i = 1 ; i < 21; i++){
 		 * rankInitialization(menu,i,"#C1DCFE",
 		 * "Radu Denis","Edit","Delete","LALA"); } }
-		 * 
+		 *
 		 */
 
 		vboxTable.add(menusp, 0, 0);
@@ -560,7 +559,7 @@ public class GUI {
 			if (title.equals("Situation of Students")) {
 				vboxAdd.add(rankingTopInitialization("#008FE9", "Option", "Options", "Name", "Path", "Options", 430, "StudentSituation"), 0, 0);
 				addOption(boxAdd, "#C1DCFE", "Export XML Situation", "");
-				System.out.print("lalala");
+
 
 			}
 			if (title.equals("Teachers")) {
@@ -806,7 +805,7 @@ public class GUI {
 	}
 
 	private GridPane rankingTopInitialization(String color, String stringMark, String mat, String stringData,
-			String stringOne, String stringTwo, double width, String option) {
+											  String stringOne, String stringTwo, double width, String option) {
 
 		GridPane messagePane = new GridPane();
 		messagePane.setPrefSize(width, 30);
@@ -968,7 +967,7 @@ public class GUI {
 	}
 
 	private void rankInitialization(VBox discution, int number, String color, String name, String subject,
-			String buttonOne, String buttonTwo, String buttonThree, String option) {
+									String buttonOne, String buttonTwo, String buttonThree, String option) {
 
 		GridPane messagePane = new GridPane();
 		messagePane.setPrefSize(500, 40);
@@ -1119,7 +1118,7 @@ public class GUI {
 			GridPane gpMark = new GridPane();
 			gpMark.setPadding(new Insets(2, 0, 0, 0));
 			if(subject.length()>=5)
-			subject = subject.substring(0, 5);
+				subject = subject.substring(0, 5);
 			Label markStudent = new Label(subject);
 			markStudent.setPrefWidth(40);
 			markStudent.setPadding(new Insets(8, 0, 0, 0));
@@ -1369,7 +1368,7 @@ public class GUI {
 			studentData.setHgap(10);
 			studentData.setPadding(new Insets(8, 0, 0, 65));
 
-
+			addName.setText("");
 			addName.setPrefSize(130, 10);
 			addName.setPromptText("Last Name");
 			addName.setOnKeyPressed(new EnterKeyAddStudentListener(this));

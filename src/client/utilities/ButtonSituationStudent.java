@@ -33,6 +33,8 @@ public class ButtonSituationStudent implements EventHandler<ActionEvent> {
         gui.getProcessor().getClient().sendMessage("StudentSituation");
         gui.getProcessor().getClient().sendMessage(name);
         gui.getProcessor().getClient().sendMessage(subject);
+        System.out.print("merge");
+
 
     }
 }
