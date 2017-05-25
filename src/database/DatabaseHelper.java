@@ -35,7 +35,7 @@ public class DatabaseHelper {
 		return dbHelper;
 	}
 
-	public Connection getConnection(){
+	public Connection getConnection() {
 		return con;
 	}
 }

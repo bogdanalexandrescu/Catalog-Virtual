@@ -10,28 +10,26 @@ import javafx.scene.layout.HBox;
  */
 public class ButtonLoginListener implements EventHandler<ActionEvent> {
 
-    private GUI gui;
+	private GUI gui;
 
-    public ButtonLoginListener(GUI gui) {
-        this.gui = gui;
-    }
+	public ButtonLoginListener(GUI gui) {
+		this.gui = gui;
+	}
 
-    @Override
-    public void handle(ActionEvent event) {
+	@Override
+	public void handle(ActionEvent event) {
 
-        gui.getProcessor().getClient().sendMessage("Login");
-        gui.getProcessor().getClient().sendMessage(gui.getTxtUserName().getText());
-        System.out.println(gui.getTxtUserName().getText());
-        gui.getProcessor().getClient().sendMessage(gui.getPf().getText());
-        System.out.println(gui.getPf().getText());
+		gui.getProcessor().getClient().sendMessage("Login");
+		gui.getProcessor().getClient().sendMessage(gui.getTxtUserName().getText());
+		gui.getProcessor().getClient().sendMessage(gui.getPf().getText());
 
-        if(gui.getCb().getSelectionModel().getSelectedItem() != null) {
-            if (gui.getCb().getSelectionModel().getSelectedItem().equals("Teacher")) {
-                gui.getProcessor().getClient().sendMessage("profesor");
-            } else {
-                gui.getProcessor().getClient().sendMessage("admin");
-            }
-        }
+		if (gui.getCb().getSelectionModel().getSelectedItem() != null) {
+			if (gui.getCb().getSelectionModel().getSelectedItem().equals("Teacher")) {
+				gui.getProcessor().getClient().sendMessage("profesor");
+			} else {
+				gui.getProcessor().getClient().sendMessage("admin");
+			}
+		}
 
-    }
+	}
 }

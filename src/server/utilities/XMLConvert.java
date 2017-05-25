@@ -7,15 +7,14 @@ import java.util.ArrayList;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.UnmarshalException;
 import javax.xml.bind.Unmarshaller;
 
 import database.Database;
-import server.Absence;
-import server.Mark;
-import server.Student;
-import server.StudentsWrapper;
-import server.Subject;
+import entities.Absence;
+import entities.Mark;
+import entities.Student;
+import entities.StudentsWrapper;
+import entities.Subject;
 
 public class XMLConvert {
 	public void convertRaporStudentToXML(String nume, String path) {
@@ -39,33 +38,38 @@ public class XMLConvert {
 		}
 	}
 
-	public void insertStudentsFromXML(String fileURL) throws JAXBException {
+	public void insertStudentsFromXML(String fileURL) throws JAXBException, ImportNereusitException {
 		StudentsWrapper sw = null;
 		Database db = new Database();
 
 		File file = new File(fileURL);
-		JAXBContext jaxbContext = JAXBContext.newInstance(StudentsWrapper.class);
+		JAXBContext jaxbContext = JAXBContext.newInstance(StudentsWrapper.class, Student.class);
 
 		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-		sw = (StudentsWrapper) jaxbUnmarshaller.unmarshal(file);
-		for (Student s : sw.getStudents()) {
-			try {
-				db.insertElevi(s.getName());
+		if (jaxbUnmarshaller.unmarshal(file) instanceof StudentsWrapper) {
+			sw = (StudentsWrapper) jaxbUnmarshaller.unmarshal(file);
+			for (Student s : sw.getStudents()) {
+				try {
+					db.insertElevi(s.getName());
 
-				for (Subject sb : s.getSubjects()) {
-					db.insertElevMaterie(s.getName(), sb.getName());
-					for (Mark m : sb.getMarks()) {
-						db.insertNotaElevWithDate(s.getName(), sb.getName(), m.getMark(), m.getData());
+					for (Subject sb : s.getSubjects()) {
+						if (!db.selectNumeMaterii().contains(sb.getName()))
+							db.insertMaterie(sb.getName());
+						db.insertElevMaterie(s.getName(), sb.getName());
+						for (Mark m : sb.getMarks()) {
+							db.insertNotaElevWithDate(s.getName(), sb.getName(), m.getMark(), m.getData());
+						}
+						for (Absence a : sb.getAbsences()) {
+							db.insertAbsentaElevWithDate(s.getName(), sb.getName(), a.getData());
+						}
 					}
-					for (Absence a : sb.getAbsences()) {
-						db.insertAbsentaElevWithDate(s.getName(), sb.getName(), a.getData());
-					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-		}
+		} else
+			throw new ImportNereusitException();
 
 	}
 

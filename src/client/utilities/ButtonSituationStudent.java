@@ -10,31 +10,22 @@ import javafx.stage.Stage;
  */
 public class ButtonSituationStudent implements EventHandler<ActionEvent> {
 
-    private GUI gui;
-    private String name;
-    private String subject;
+	private GUI gui;
+	private String name;
+	private String subject;
 
+	public ButtonSituationStudent(GUI gui, String name, String subject) {
+		this.gui = gui;
+		this.name = name;
+		this.subject = subject;
 
+	}
 
+	@Override
+	public void handle(ActionEvent event) {
+		gui.getProcessor().getClient().sendMessage("StudentSituation");
+		gui.getProcessor().getClient().sendMessage(name);
+		gui.getProcessor().getClient().sendMessage(subject);
 
-    public ButtonSituationStudent(GUI gui, String name, String subject) {
-        this.gui = gui;
-        this.name = name;
-        this.subject = subject;
-
-    }
-
-
-
-
-
-    @Override
-    public void handle(ActionEvent event) {
-        gui.getProcessor().getClient().sendMessage("StudentSituation");
-        gui.getProcessor().getClient().sendMessage(name);
-        gui.getProcessor().getClient().sendMessage(subject);
-        System.out.print("merge");
-
-
-    }
+	}
 }

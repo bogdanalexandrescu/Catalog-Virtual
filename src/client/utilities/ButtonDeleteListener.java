@@ -9,26 +9,23 @@ import javafx.event.EventHandler;
  */
 public class ButtonDeleteListener implements EventHandler<ActionEvent> {
 
-    private GUI gui;
-    private String name;
-    private String subject;
+	private GUI gui;
+	private String name;
+	private String subject;
 
+	public ButtonDeleteListener(GUI gui, String name, String title) {
+		this.gui = gui;
+		this.name = name;
+		this.subject = title;
 
+	}
 
-    public ButtonDeleteListener(GUI gui, String name, String title) {
-        this.gui = gui;
-        this.name = name;
-        this.subject = title;
+	@Override
+	public void handle(ActionEvent event) {
+		gui.getProcessor().getClient().sendMessage("Delete");
+		gui.getProcessor().getClient().sendMessage(gui.getTextNameHeadmaster().getText());
+		gui.getProcessor().getClient().sendMessage(name);
+		gui.getProcessor().getClient().sendMessage(subject);
 
-    }
-
-    @Override
-    public void handle(ActionEvent event) {
-        gui.getProcessor().getClient().sendMessage("Delete");
-        gui.getProcessor().getClient().sendMessage(gui.getTextNameHeadmaster().getText());
-        gui.getProcessor().getClient().sendMessage(name);
-        gui.getProcessor().getClient().sendMessage(subject);
-
-
-    }
+	}
 }

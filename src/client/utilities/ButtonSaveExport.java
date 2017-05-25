@@ -9,34 +9,29 @@ import javafx.event.EventHandler;
  */
 public class ButtonSaveExport implements EventHandler<ActionEvent> {
 
-    private GUI gui;
-    private String option;
+	private GUI gui;
+	private String option;
 
-    public ButtonSaveExport(GUI gui, String option) {
-        this.gui = gui;
-        this.option = option;
-    }
+	public ButtonSaveExport(GUI gui, String option) {
+		this.gui = gui;
+		this.option = option;
+	}
 
-    @Override
-    public void handle(ActionEvent event) {
+	@Override
+	public void handle(ActionEvent event) {
 
-        if (option.equals("ExportStudents")) {
-            System.out.println(option);
-            System.out.println(gui.getPathExport().getText());
-            gui.getProcessor().getClient().sendMessage(option);
-            gui.getProcessor().getClient().sendMessage(gui.getPathExport().getText());
-            gui.getPathExport().setText("");
-        }
-        if (option.equals("ExportSituation")) {
-            System.out.println(gui.getStudentExport().getText());
-            System.out.println(option);
-            System.out.println(gui.getPathExport().getText());
-            gui.getProcessor().getClient().sendMessage(option);
-            gui.getProcessor().getClient().sendMessage(gui.getStudentExport().getText());
-            gui.getProcessor().getClient().sendMessage(gui.getPathExport().getText());
-            gui.getStudentExport().setText("");
-            gui.getPathExport().setText("");
-        }
+		if (option.equals("ExportStudents")) {
+			gui.getProcessor().getClient().sendMessage(option);
+			gui.getProcessor().getClient().sendMessage(gui.getPathExport().getText());
+			gui.getPathExport().setText("");
+		}
+		if (option.equals("ExportSituation")) {
+			gui.getProcessor().getClient().sendMessage(option);
+			gui.getProcessor().getClient().sendMessage(gui.getStudentExport().getText());
+			gui.getProcessor().getClient().sendMessage(gui.getPathExport().getText());
+			gui.getStudentExport().setText("");
+			gui.getPathExport().setText("");
+		}
 
-    }
+	}
 }

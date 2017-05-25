@@ -1,4 +1,4 @@
-package server;
+package entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 /**
  * Created by teo on 16.04.2017.
  */
-public class Subject implements Serializable{
+public class Subject implements Serializable {
 
 	String name;
 	String nameTeacher;
@@ -64,11 +64,7 @@ public class Subject implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Subject{" +
-				"name='" + name + '\'' +
-				", nameTeacher='" + nameTeacher + '\'' +
-				", marks=" + marks +
-				", absences=" + absences +
-				'}';
+		return "Subject{" + "name='" + name + '\'' + ", nameTeacher='" + nameTeacher + '\'' + ", marks=" + marks
+				+ ", absences=" + absences + '}';
 	}
 }

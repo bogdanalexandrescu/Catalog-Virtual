@@ -1,4 +1,4 @@
-package server;
+package entities;
 
 import java.io.Serializable;
 
@@ -41,6 +41,6 @@ public class Mark implements Serializable {
 
 	@Override
 	public String toString() {
-		return "* " + "mark = " + mark + ", date = '" + data + '\''  ;
+		return "* " + "mark = " + mark + ", date = '" + data + '\'';
 	}
 }

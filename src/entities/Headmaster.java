@@ -1,4 +1,4 @@
-package server;
+package entities;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ public class Headmaster {
 		this.db = db;
 	}
 
-	public Headmaster(){
+	public Headmaster() {
 	}
 
 	public String getName() {

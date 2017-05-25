@@ -9,28 +9,19 @@ import javafx.event.EventHandler;
  */
 public class ButtonAllSituationStudent implements EventHandler<ActionEvent> {
 
-    private GUI gui;
-    private String name;
+	private GUI gui;
+	private String name;
 
+	public ButtonAllSituationStudent(GUI gui, String name) {
+		this.gui = gui;
+		this.name = name;
 
+	}
 
+	@Override
+	public void handle(ActionEvent event) {
+		gui.getProcessor().getClient().sendMessage("StudentAllSituation");
+		gui.getProcessor().getClient().sendMessage(name);
 
-
-    public ButtonAllSituationStudent(GUI gui, String name) {
-        this.gui = gui;
-        this.name = name;
-
-    }
-
-
-
-
-
-    @Override
-    public void handle(ActionEvent event) {
-        gui.getProcessor().getClient().sendMessage("StudentAllSituation");
-        gui.getProcessor().getClient().sendMessage(name);
-
-
-    }
+	}
 }

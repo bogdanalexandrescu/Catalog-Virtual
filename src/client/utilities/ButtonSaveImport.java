@@ -9,25 +9,21 @@ import javafx.event.EventHandler;
  */
 public class ButtonSaveImport implements EventHandler<ActionEvent> {
 
-    private GUI gui;
-    private String option;
+	private GUI gui;
+	private String option;
 
-    public ButtonSaveImport(GUI gui,String option) {
-        this.gui = gui;
-        this.option = option;
-    }
+	public ButtonSaveImport(GUI gui, String option) {
+		this.gui = gui;
+		this.option = option;
+	}
 
+	@Override
+	public void handle(ActionEvent event) {
 
-
-    @Override
-    public void handle(ActionEvent event) {
-
-        if(option.equals("ImportStudents")) {
-            System.out.println(option);
-            System.out.println(gui.getPathImport().getText());
-            gui.getProcessor().getClient().sendMessage(option);
-            gui.getProcessor().getClient().sendMessage(gui.getPathImport().getText());
-            gui.getPathImport().setText("");
-        }
-    }
+		if (option.equals("ImportStudents")) {
+			gui.getProcessor().getClient().sendMessage(option);
+			gui.getProcessor().getClient().sendMessage(gui.getPathImport().getText());
+			gui.getPathImport().setText("");
+		}
+	}
 }

@@ -28,34 +28,29 @@ import static java.lang.Integer.parseInt;
  */
 public class ButtonAddMark implements EventHandler<ActionEvent> {
 
-    private GUI gui;
-    private String name;
-    private String subject;
+	private GUI gui;
+	private String name;
+	private String subject;
 
+	public ButtonAddMark(GUI gui, String name, String subject) {
+		this.gui = gui;
+		this.name = name;
+		this.subject = subject;
 
+	}
 
+	@Override
+	public void handle(ActionEvent event) {
+		if (!gui.getMark().get(gui.getStudents().indexOf(name) - 1).getText().equals("")) {
+			gui.getProcessor().getClient().sendMessage("AddMark");
+			gui.getProcessor().getClient().sendMessage(name);
+			gui.getProcessor().getClient().sendMessage(subject);
+			gui.getProcessor().getClient().sendMessage(gui.getTextNameTeacher().getText());
+			gui.getProcessor().getClient()
+					.sendMessage(Integer.parseInt(gui.getMark().get(gui.getStudents().indexOf(name) - 1).getText()));
+			gui.getProcessor().getClient()
+					.sendMessage(gui.getData().get(gui.getStudents().indexOf(name) - 1).getText());
+		}
 
-    public ButtonAddMark(GUI gui, String name, String subject) {
-        this.gui = gui;
-        this.name = name;
-        this.subject = subject;
-
-    }
-
-
-
-
-
-    @Override
-    public void handle(ActionEvent event) {
-        if(!gui.getMark().get(gui.getStudents().indexOf(name) - 1).getText().equals("")){
-            gui.getProcessor().getClient().sendMessage("AddMark");
-            gui.getProcessor().getClient().sendMessage(name);
-            gui.getProcessor().getClient().sendMessage(subject);
-            gui.getProcessor().getClient().sendMessage(gui.getTextNameTeacher().getText());
-            gui.getProcessor().getClient().sendMessage(Integer.parseInt(gui.getMark().get(gui.getStudents().indexOf(name) - 1).getText()));
-            gui.getProcessor().getClient().sendMessage(gui.getData().get(gui.getStudents().indexOf(name) - 1).getText());
-        }
-
-    }
+	}
 }

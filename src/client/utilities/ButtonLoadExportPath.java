@@ -11,20 +11,19 @@ import javafx.stage.Stage;
  */
 public class ButtonLoadExportPath implements EventHandler<ActionEvent> {
 
-    private GUI gui;
-    private FileChooser fc;
+	private GUI gui;
+	private FileChooser fc;
 
-    public ButtonLoadExportPath(GUI gui) {
-        this.gui = gui;
-    }
+	public ButtonLoadExportPath(GUI gui) {
+		this.gui = gui;
+	}
 
-    @Override
-    public void handle(ActionEvent event) {
-        fc = new FileChooser();
-        fc.setTitle("Select a file to load datas");
-        String path;
-        path = fc.showOpenDialog(new Stage()).getAbsolutePath().replace("\\","\\\\");
-        System.out.println(path);
-        gui.setPathExport(path.concat(".xml"));
-    }
+	@Override
+	public void handle(ActionEvent event) {
+		fc = new FileChooser();
+		fc.setTitle("Select a file to load datas");
+		String path;
+		path = fc.showOpenDialog(new Stage()).getAbsolutePath().replace("\\", "\\\\");
+		gui.setPathExport(path);
+	}
 }

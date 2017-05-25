@@ -9,14 +9,14 @@ import javafx.event.EventHandler;
  */
 public class ButtonStudentSituationListener implements EventHandler<ActionEvent> {
 
-    private GUI gui;
+	private GUI gui;
 
-    public ButtonStudentSituationListener(GUI gui) {
-        this.gui = gui;
-    }
+	public ButtonStudentSituationListener(GUI gui) {
+		this.gui = gui;
+	}
 
-    @Override
-    public void handle(ActionEvent event) {
-        gui.getProcessor().getClient().sendMessage("SituationOfStudents");
-    }
+	@Override
+	public void handle(ActionEvent event) {
+		gui.getProcessor().getClient().sendMessage("SituationOfStudents");
+	}
 }

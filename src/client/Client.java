@@ -12,105 +12,94 @@ import java.util.Scanner;
  */
 public class Client {
 
-    private String IP;
-    private int port;
-    private Socket socket;
-    private ObjectInputStream input;
-    private ObjectOutputStream output;
-    private Object message;
-    private MessageProcessor processor;
+	private String IP;
+	private int port;
+	private Socket socket;
+	private ObjectInputStream input;
+	private ObjectOutputStream output;
+	private Object message;
+	private MessageProcessor processor;
 
-    public Client(String IP, int port){
+	public Client(String IP, int port) {
 
-        this.IP = IP;
-        this.port = port;
-        processor = new MessageProcessor(this);
+		this.IP = IP;
+		this.port = port;
+		processor = new MessageProcessor(this);
 
+	}
 
-    }
+	public void connectToServer() {
 
-    public void connectToServer() {
+		try {
+			socket = new Socket(IP, port);
 
-        try {
-            socket = new Socket(IP, port);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+	}
 
-    }
+	public void setUpStreams() {
+		try {
+			output = new ObjectOutputStream(socket.getOutputStream());
+			output.flush();
+			input = new ObjectInputStream(socket.getInputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-    public void setUpStreams() {
-        try {
-            output = new ObjectOutputStream(socket.getOutputStream());
-            output.flush();
-            input = new ObjectInputStream(socket.getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	public void start() {
 
+		connectToServer();
+		setUpStreams();
 
-    public void start() {
+		System.out.println("You are connected!!");
 
+		final Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (true) {
 
-        connectToServer();
-        setUpStreams();
+					try {
 
-        System.out.println("You are connected!!");
+						message = input.readObject();
+						if (message.equals("Close App"))
+							break;
+						processor.process(message);
 
-        final Thread thread = new Thread(new Runnable()
-        {
-            @Override
-            public void run() {
-                while( true ){
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				close();
+			}
+		});
+		thread.start();
 
-                    try {
+	}
 
+	public void sendMessage(Object message) {
 
-                        message =  input.readObject();
-                        if (message.equals("Close App"))
-                            break;
-                        processor.process(message);
+		try {
+			output.writeObject(message);
+			output.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
+	public void close() {
 
-
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                close();
-            }
-        });
-        thread.start();
-
-
-    }
-
-    public void sendMessage(Object message) {
-
-        try {
-            output.writeObject(message);
-            output.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void close() {
-
-        try
-        {
-            output.close();
-            input.close();
-            socket.close();
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
+		try {
+			output.close();
+			input.close();
+			socket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

@@ -9,20 +9,20 @@ import javafx.event.EventHandler;
  */
 public class ButtonBackListener implements EventHandler<ActionEvent> {
 
-    private GUI gui;
+	private GUI gui;
 
-    public ButtonBackListener(GUI gui) {
-        this.gui = gui;
-    }
+	public ButtonBackListener(GUI gui) {
+		this.gui = gui;
+	}
 
-    @Override
-    public void handle(ActionEvent event) {
+	@Override
+	public void handle(ActionEvent event) {
 
-        if(gui.getCb().getSelectionModel().getSelectedItem() != null) {
+		if (gui.getCb().getSelectionModel().getSelectedItem() != null) {
 
-                gui.getProcessor().getClient().sendMessage("Back");
+			gui.getProcessor().getClient().sendMessage("Back");
 
-        }
+		}
 
-    }
+	}
 }

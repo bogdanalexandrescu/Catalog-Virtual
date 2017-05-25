@@ -9,26 +9,24 @@ import javafx.event.EventHandler;
  */
 public class ButtonAddAbsence implements EventHandler<ActionEvent> {
 
-    private GUI gui;
-    private String name;
-    private String subject;
+	private GUI gui;
+	private String name;
+	private String subject;
 
+	public ButtonAddAbsence(GUI gui, String name, String subject) {
+		this.gui = gui;
+		this.name = name;
+		this.subject = subject;
 
+	}
 
-    public ButtonAddAbsence(GUI gui, String name, String subject) {
-        this.gui = gui;
-        this.name = name;
-        this.subject = subject;
+	@Override
+	public void handle(ActionEvent event) {
+		gui.getProcessor().getClient().sendMessage("AddAbsence");
+		gui.getProcessor().getClient().sendMessage(name);
+		gui.getProcessor().getClient().sendMessage(subject);
+		gui.getProcessor().getClient().sendMessage(gui.getTextNameTeacher().getText());
+		gui.getProcessor().getClient().sendMessage(gui.getData().get(gui.getStudents().indexOf(name) - 1).getText());
 
-    }
-
-    @Override
-    public void handle(ActionEvent event) {
-        gui.getProcessor().getClient().sendMessage("AddAbsence");
-        gui.getProcessor().getClient().sendMessage(name);
-        gui.getProcessor().getClient().sendMessage(subject);
-        gui.getProcessor().getClient().sendMessage(gui.getTextNameTeacher().getText());
-        gui.getProcessor().getClient().sendMessage(gui.getData().get(gui.getStudents().indexOf(name) - 1).getText());
-
-    }
+	}
 }

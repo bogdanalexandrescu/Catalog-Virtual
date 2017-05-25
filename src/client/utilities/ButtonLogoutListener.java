@@ -11,18 +11,16 @@ import javafx.stage.Stage;
  */
 public class ButtonLogoutListener implements EventHandler<ActionEvent> {
 
-    private GUI gui;
+	private GUI gui;
 
-    public ButtonLogoutListener(GUI gui) {
-        this.gui = gui;
-    }
+	public ButtonLogoutListener(GUI gui) {
+		this.gui = gui;
+	}
 
-    @Override
-    public void handle(ActionEvent event) {
-        gui.getProcessor().getClient().sendMessage("Logout");
+	@Override
+	public void handle(ActionEvent event) {
+		gui.getProcessor().getClient().sendMessage("Logout");
 
-
-
-    }
+	}
 
 }

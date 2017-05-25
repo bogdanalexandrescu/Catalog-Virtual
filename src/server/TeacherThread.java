@@ -1,6 +1,9 @@
 package server;
 
 import database.Database;
+import entities.Student;
+import entities.Subject;
+import server.utilities.ImportNereusitException;
 import server.utilities.XMLConvert;
 
 import javax.xml.bind.JAXBException;
@@ -77,6 +80,9 @@ public class TeacherThread implements Runnable {
 						// TODO Auto-generated catch block
 						data.add("Import nereusit");
 						e.printStackTrace();
+					} catch (ImportNereusitException e) {
+						data.add("Import nereusit");
+						e.printStackTrace();
 					}
 					sendMessage(data);
 				}
@@ -127,26 +133,25 @@ public class TeacherThread implements Runnable {
 					String teacher = (String) readMessage();
 					int mark = (int) readMessage();
 					String data = (String) readMessage();
-					if(db.selectProfesorByMaterie(subject) != null)
-					if(db.selectProfesorByMaterie(subject).equals(teacher)){
-						if (mark >= 1 && mark <= 10) {
-							if (checkData(data)) {
+					if (db.selectProfesorByMaterie(subject) != null)
+						if (db.selectProfesorByMaterie(subject).equals(teacher)) {
+							if (mark >= 1 && mark <= 10) {
+								if (checkData(data)) {
 
-								db.insertNotaElevWithDate(name, subject, mark, data);
-								ArrayList<String> dataMark = new ArrayList<String>();
-								dataMark.add("AddedMark");
-								dataMark.add(name);
-								sendMessage(dataMark);
+									db.insertNotaElevWithDate(name, subject, mark, data);
+									ArrayList<String> dataMark = new ArrayList<String>();
+									dataMark.add("AddedMark");
+									dataMark.add(name);
+									sendMessage(dataMark);
+								} else {
+									sendMessage("Note: wrong date or invalid date format (dd/MM/yyyy)");
+								}
+
 							} else {
-								sendMessage("Note: wrong date or invalid date format (dd/MM/yyyy)");
+
+								sendMessage("unsuccessfully added mark");
 							}
-
-						} else {
-
-							sendMessage("unsuccessfully added mark");
 						}
-					}
-
 
 				}
 
@@ -158,17 +163,17 @@ public class TeacherThread implements Runnable {
 					String teacher = (String) readMessage();
 					String data = (String) readMessage();
 
-					if(db.selectProfesorByMaterie(subject) != null)
-					if(db.selectProfesorByMaterie(subject).equals(teacher)){
-						if (checkData(data)) {
-							db.insertAbsentaElevWithDate(name, subject, data);
-							dataAbsence.add("AddedAbsence");
-							dataAbsence.add(name);
-							sendMessage(dataAbsence);
-						} else {
-							sendMessage("Note: wrong date or invalid date format (dd/MM/yyyy)");
+					if (db.selectProfesorByMaterie(subject) != null)
+						if (db.selectProfesorByMaterie(subject).equals(teacher)) {
+							if (checkData(data)) {
+								db.insertAbsentaElevWithDate(name, subject, data);
+								dataAbsence.add("AddedAbsence");
+								dataAbsence.add(name);
+								sendMessage(dataAbsence);
+							} else {
+								sendMessage("Note: wrong date or invalid date format (dd/MM/yyyy)");
+							}
 						}
-					}
 
 				}
 				if (message.equals("addSubjectAdmin")) {
@@ -203,7 +208,7 @@ public class TeacherThread implements Runnable {
 
 					ArrayList<String> checkMaterii = new ArrayList<String>();
 					checkMaterii = db.selectNumeMaterii();
-					if(checkMaterii.contains(subject)){
+					if (checkMaterii.contains(subject)) {
 						db.insertProfesor(name, pass, subject);
 
 						ArrayList<String> data = new ArrayList<String>();
@@ -262,7 +267,6 @@ public class TeacherThread implements Runnable {
 					data.add(subj);
 					sendMessage(data);
 
-
 				}
 				if (message.equals("SeeImportExport")) {
 
@@ -271,13 +275,11 @@ public class TeacherThread implements Runnable {
 				}
 				if (message.equals("StudentAllSituation")) {
 
-
 					String name = (String) readMessage();
 					Student student = db.selectRaportElev(name);
 					sendMessage(student);
 
 				}
-
 
 				if (message.equals("Logout")) {
 					sendMessage("Logout");
@@ -336,7 +338,6 @@ public class TeacherThread implements Runnable {
 					data.add(0, "editStudentInterface");
 					sendMessage(data);
 
-
 					data = db.selectNumeElevi();
 					data.add(0, "editStudentsInterface");
 					sendMessage(data);
@@ -353,7 +354,7 @@ public class TeacherThread implements Runnable {
 
 					String name = (String) readMessage();
 					String subject = (String) readMessage();
-					db.insertElevMaterie(name,subject);
+					db.insertElevMaterie(name, subject);
 
 					ArrayList<String> data = new ArrayList<String>();
 					data.add("SendStudentName");
@@ -365,7 +366,6 @@ public class TeacherThread implements Runnable {
 					data = db.selectMateriiByElev(name);
 					data.add(0, "editStudentInterface");
 					sendMessage(data);
-
 
 					data = db.selectNumeElevi();
 					data.add(0, "editStudentsInterface");
@@ -376,8 +376,8 @@ public class TeacherThread implements Runnable {
 					String name = (String) readMessage();
 					String subject = (String) readMessage();
 					String date = (String) readMessage();
-					if(checkData(date)){
-						db.deleteNotaElev(name,subject,date);
+					if (checkData(date)) {
+						db.deleteNotaElev(name, subject, date);
 						ArrayList<String> data = new ArrayList<String>();
 						data.add("SendStudentName");
 						data.add(name);
@@ -389,12 +389,10 @@ public class TeacherThread implements Runnable {
 						data.add(0, "editStudentInterface");
 						sendMessage(data);
 
-
 						data = db.selectNumeElevi();
 						data.add(0, "editStudentsInterface");
 						sendMessage(data);
 					}
-
 
 				}
 				if (message.equals("DeleteStudentAbsence")) {
@@ -402,8 +400,8 @@ public class TeacherThread implements Runnable {
 					String name = (String) readMessage();
 					String subject = (String) readMessage();
 					String date = (String) readMessage();
-					if(checkData(date)){
-						db.deleteAbsentaElev(name,subject,date);
+					if (checkData(date)) {
+						db.deleteAbsentaElev(name, subject, date);
 						ArrayList<String> data = new ArrayList<String>();
 						data.add("SendStudentName");
 						data.add(name);
@@ -415,24 +413,21 @@ public class TeacherThread implements Runnable {
 						data.add(0, "editStudentInterface");
 						sendMessage(data);
 
-
 						data = db.selectNumeElevi();
 						data.add(0, "editStudentsInterface");
 						sendMessage(data);
 					}
-
 
 				}
 				if (message.equals("FinishEditStudent")) {
 
 					String oldName = (String) readMessage();
 					String newName = (String) readMessage();
-					db.updateNumeElev(oldName,newName);
+					db.updateNumeElev(oldName, newName);
 					ArrayList<String> data = new ArrayList<String>();
 					data = db.selectNumeElevi();
 					data.add(0, "SeeStudents");
 					sendMessage(data);
-
 
 				}
 
@@ -440,7 +435,7 @@ public class TeacherThread implements Runnable {
 
 					String name = (String) readMessage();
 					String subject = (String) readMessage();
-					db.deleteMaterieElev(name,subject);
+					db.deleteMaterieElev(name, subject);
 
 					ArrayList<String> data = new ArrayList<String>();
 					data.add("SendStudentName");
@@ -453,7 +448,6 @@ public class TeacherThread implements Runnable {
 					data.add(0, "editStudentInterface");
 					sendMessage(data);
 
-
 					data = db.selectNumeElevi();
 					data.add(0, "editStudentsInterface");
 					sendMessage(data);
@@ -462,9 +456,9 @@ public class TeacherThread implements Runnable {
 
 					String name = (String) readMessage();
 					db.insertElevi(name);
-					ArrayList<String> data = ( ArrayList<String> ) readMessage();
-					for(int i = 0; i < data.size(); i++){
-						db.insertElevMaterie(name,data.get(i));
+					ArrayList<String> data = (ArrayList<String>) readMessage();
+					for (int i = 0; i < data.size(); i++) {
+						db.insertElevMaterie(name, data.get(i));
 					}
 
 					data = db.selectNumeElevi();
@@ -531,7 +525,6 @@ public class TeacherThread implements Runnable {
 						data.add("" + db.selectNumeElevi().size());
 						data.add("" + db.selectNumeMaterii().size());
 						sendMessage(data);
-
 
 						data = new ArrayList<String>();
 						data = db.selectNumeProfesori();

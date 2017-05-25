@@ -9,16 +9,16 @@ import javafx.event.EventHandler;
  */
 public class ButtonEditSubjectListener implements EventHandler<ActionEvent> {
 
-    private GUI gui;
+	private GUI gui;
 
-    public ButtonEditSubjectListener(GUI gui) {
-        this.gui = gui;
-    }
+	public ButtonEditSubjectListener(GUI gui) {
+		this.gui = gui;
+	}
 
-    @Override
-    public void handle(ActionEvent event) {
+	@Override
+	public void handle(ActionEvent event) {
 
-        gui.getProcessor().getClient().sendMessage("SeeSubjects");
+		gui.getProcessor().getClient().sendMessage("SeeSubjects");
 
-    }
+	}
 }
